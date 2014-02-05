@@ -35,13 +35,65 @@ class AppController extends Controller {
 	public $helpers = array(
 		'Bootstrap.AuthBs',
 		'Bootstrap.Bootstrap',
-		'Html'
+		'Html',
+		'Paginator'
 	);
 
 	public function beforeFilter() {
 
 		// Carregar Layout bootstrap
 		$this->layout = 'Bootstrap.bootstrap';
+
+		$menus = array(
+			array(
+			'Menu' => array(
+				'title' => 'Menu Superior'
+			),
+			'Links' => array(
+				array(
+				'Link' => array(
+					'id' => 1,
+					'text' => 'Módulos'
+				),
+				'children' => array(
+					array(
+						'Link' => array(
+							'id' => 1,
+							'text' => 'Chamada',
+							'plugin' => null,
+							'controller' => 'chamadas',
+							'action' => 'index'
+						)
+					)
+				)
+				),
+				array(
+				'Link' => array(
+					'id' => 1,
+					'text' => 'Tabelas'
+				),
+				'children' => array(
+					array(
+						'Link' => array(
+							'id' => 1,
+							'text' => 'Assuntos',
+							'plugin' => null,
+							'controller' => 'assuntos',
+							'action' => 'index'
+						)
+					)
+				)
+				)
+			)
+			)
+		);
+
+		$this->set('menus', $menus);
+
+		$usuario = array(
+			'nome' => 'Humberto Cruz'
+		);
+		$this->set('usuario', $usuario);
 	}
 
 }

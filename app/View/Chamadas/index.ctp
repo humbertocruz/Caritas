@@ -1,4 +1,5 @@
 <?php echo $this->Bootstrap->pageHeader('Chamadas'); ?>
+
 <?php echo $this->Element('Bootstrap.table/table-create',array(
 	'title'=>'Chamadas',
 	'state'=>'info',
