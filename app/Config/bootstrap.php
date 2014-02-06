@@ -112,5 +112,7 @@ CakePlugin::load(
         //'Authen' => array('bootstrap'=>true,'routes' => true),
         //'Admin' => array('bootstrap'=>true,'routes' => true),
         //'Server' => array('bootstrap'=>true,'routes' => true),
+        
+        'Caritas'
     )
 );

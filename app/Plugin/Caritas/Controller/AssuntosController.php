@@ -1,13 +1,15 @@
 <?php
-class ChamadasController extends AppController {
+class AssuntosController extends CaritasAppController {
+
+	public $uses = array('Caritas.Assunto');
 
 	public function index() {
 		// Configura Titulo da Pagina
-		$this->set('title_for_layout','Chamadas - Lista');
+		$this->set('title_for_layout','Assuntos - Lista');
 
 		// Carrega dados do BD
-		$chamadas = $this->Paginate('Chamada');
-		$this->set('Chamadas',$chamadas);
+		$assuntos = $this->Assunto->find('all');
+		$this->set('Assuntos',$assuntos);
 
 	}
 

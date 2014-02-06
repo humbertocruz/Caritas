@@ -1,9 +1,9 @@
 <?php
 /**
- * Application level Controller
+ * Application model for CakePHP.
  *
- * This file is application-wide controller file. You can put all
- * application-wide controller-related methods here.
+ * This file is application-wide model file. You can put all
+ * application-wide model-related methods here.
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -14,25 +14,20 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Controller
+ * @package       app.Model
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('Controller', 'Controller');
+App::uses('Model', 'Model');
 
 /**
- * Application Controller
+ * Application model for Cake.
  *
- * Add your application-wide methods in the class below, your controllers
+ * Add your application-wide methods in the class below, your models
  * will inherit them.
  *
- * @package		app.Controller
- * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
+ * @package       app.Model
  */
-class AppController extends Controller {
-
-
-	public function beforeFilter() {
-	}
+class CaritasAppModel extends AppModel {
 }

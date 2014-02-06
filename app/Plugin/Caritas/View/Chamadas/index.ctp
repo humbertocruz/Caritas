@@ -5,7 +5,7 @@
 	'state'=>'info',
 	'fields' => array(
 		'Data',
-		'Instituição'
+		'Instituição/Fornecedor'
 	)
 )); ?>
 <?php foreach ($Chamadas as $Chamada) { ?>
