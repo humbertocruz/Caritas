@@ -8,12 +8,26 @@ class ChamadasController extends CaritasAppController {
 		$this->set('title_for_layout','Chamadas - Lista');
 
 		// Carrega dados do BD
+		$this->Chamada->Behaviors->attach('Containable');
+		$this->Chamada->contain(
+			'Contato',
+			'Instituicao',
+			'Instituicao.ContatosInstituicao',
+			'Instituicao.ContatosInstituicao.Contato',
+			'Instituicao.InstituicoesEndereco',
+			'Instituicao.InstituicoesEndereco.Cidade',
+			'Fornecedor',
+			'Fornecedor.FornecedoresEndereco',
+			'Fornecedor.FornecedoresEndereco.Cidade',
+			'Assunto'
+		);
+		
 		$chamadas = $this->Paginate('Chamada');
 		$this->set('Chamadas',$chamadas);
 
 	}
 
-	public function add() {
+	public function add($id = null) {
 		// Configura Titulo da Pagina
 		$this->set('title_for_layout','Chamadas - Adicionar');
 
@@ -34,6 +48,48 @@ class ChamadasController extends CaritasAppController {
 		
 
 		$this->render('form');
+	}
+	
+	public function edit($id = null) {
+		// Configura Titulo da Pagina
+		$this->set('title_for_layout','Chamadas - Editar');
+		
+		$Chamada = $this->Chamada->read(null, $id);
+
+		$TiposChamada = $this->Chamada->TiposChamada->find('list', array('fields'=>array('id','nome')));
+		$this->set('TiposChamada',$TiposChamada);
+
+		$Assuntos = $this->Chamada->Assunto->find('list', array('fields'=>array('id','nome')));
+		$this->set('Assuntos',$Assuntos);
+
+		$Estados = $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
+		$this->set('Estados', $Estados);
+		
+		$conditions = array(
+			'Cidade.estado_id' => $Chamada['Chamada']['estado_id']
+		);
+		$Cidades = $this->Chamada->Cidade->find('list', array('fields'=>array('id','nome'),'conditions'=>$conditions));
+		$this->set('Cidades', $Cidades);
+		
+		$this->set('Instituicoes',array());
+		
+		$this->set('Fornecedores',array());
+		
+		$this->set('Pedidos',array());
+		$this->set('Contatos',array());
+		
+		$this->request->data = $Chamada;
+		
+
+		$this->render('form');
+		
+	}
+	
+	public function del($id = null) {
+	
+		$this->Session->setFlash('Chamada Excluída com sucesso!');
+		$this->redirect(array('action'=>'index'));
+		
 	}
 
 }

@@ -16,9 +16,10 @@
 
 <?php echo $this->Bootstrap->select('assunto_id', array('options'=>$Assuntos,'label'=>'Assunto')); ?>
 
-<?php echo $this->Bootstrap->input('data_inicio', array('value'=>date('Y-m-d'), 
-'type'=>'date','label'=>'Data Início')); ?>
+<?php echo $this->Bootstrap->input('data_inicio', array('type'=>'text','label'=>'Data Início')); ?>
 
 <?php echo $this->Bootstrap->select('tipo_chamada_id', array('options'=>$TiposChamada,'label'=>'Tipo de Chamada')); ?>
+
+<?php echo $this->Bootstrap->text('solicitacao', array('labl'=>'Solicitação')); ?>
 
 <?php echo $this->Form->end(); ?>
