@@ -2,7 +2,12 @@
 class ChamadasController extends CaritasAppController {
 
 	public $uses = array('Caritas.Chamada');
-
+	public $paginate = array(
+		'limit' => 25,
+		'order' => array(
+			'Chamada.data_inicio' => 'desc'
+		)
+	);
 	public function index() {
 		// Configura Titulo da Pagina
 		$this->set('title_for_layout','Chamadas - Lista');
@@ -21,6 +26,7 @@ class ChamadasController extends CaritasAppController {
 			'Fornecedor.FornecedoresEndereco.Cidade',
 			'Assunto'
 		);
+		$filtros = $this->Session->read('Filtros.Chamadas');
 		
 		$chamadas = $this->Paginate('Chamada');
 		$this->set('Chamadas',$chamadas);
