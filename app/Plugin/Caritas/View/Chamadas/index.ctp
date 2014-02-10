@@ -4,12 +4,9 @@ echo $this->Bootstrap->pageHeader('Chamadas');
 $filters = array(
 	array(
 		'type'=>'select',
-		'model'=>'Cidade',
+		'model'=>'Chamada',
 		'field'=>'estado_id',
 		'options' => $filters['estados']
-	),
-	array(
-		'type'=>'text'
 	)
 );
 echo $this->Bootstrap->filters($filters);

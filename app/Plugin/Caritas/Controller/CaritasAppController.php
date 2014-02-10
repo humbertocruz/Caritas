@@ -44,8 +44,6 @@ class CaritasAppController extends AppController {
 	public function beforeFilter() {
 	
 		// Filtros
-		$estados = $this->Estado->find('list', array('fields'=>array('id','nome')));
-		$this->set('filters', array('estados'=>$estados));
 		if ($this->request->isPost()) {
 			if (isset($this->request->data['filter'])) {
 				unset($this->request->data['filter']);

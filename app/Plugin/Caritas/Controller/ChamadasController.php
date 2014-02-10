@@ -9,6 +9,10 @@ class ChamadasController extends CaritasAppController {
 		)
 	);
 	public function index() {
+		// Filtros
+		$estados = $this->Estado->find('list', array('fields'=>array('id','nome')));
+		$this->set('filters', array('estados'=>$estados));
+		
 		// Configura Titulo da Pagina
 		$this->set('title_for_layout','Chamadas - Lista');
 
@@ -28,7 +32,7 @@ class ChamadasController extends CaritasAppController {
 		);
 		$filtros = $this->Session->read('Filtros.Chamadas');
 		
-		$chamadas = $this->Paginate('Chamada');
+		$chamadas = $this->Paginate('Chamada',$filtros);
 		$this->set('Chamadas',$chamadas);
 
 	}
