@@ -42,14 +42,6 @@ class CaritasAppController extends AppController {
 	public $uses = array('Caritas.Estado');
 
 	public function beforeFilter() {
-	
-		// Filtros
-		if ($this->request->isPost()) {
-			if (isset($this->request->data['filter'])) {
-				unset($this->request->data['filter']);
-				$this->Session->write('Filtros.'.$this->name, $this->request->data );
-			}
-		}
 
 		// Carregar Layout bootstrap
 		$this->layout = 'Bootstrap.bootstrap';

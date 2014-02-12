@@ -8,10 +8,30 @@ class ChamadasController extends CaritasAppController {
 			'Chamada.data_inicio' => 'desc'
 		)
 	);
-	public function index() {
+	private function filters() {
 		// Filtros
-		$estados = $this->Estado->find('list', array('fields'=>array('id','nome')));
+		
+		// Configura sessao
+		if ($this->request->isPost()) {
+			if (isset($this->request->data['filter'])) {
+				unset($this->request->data['filter']);
+				foreach($this->request->data as $key=>$value) {
+					if ($value == '0') {
+						unset ($this->request->data[$key]);
+					}
+				}
+				$this->Session->write('Filtros.'.$this->name, $this->request->data );
+			}
+		}
+		// Carrega lista de estados
+		$estados = array('0'=>'Nenhum') + $this->Estado->find('list', array('fields'=>array('id','nome')));
 		$this->set('filters', array('estados'=>$estados));
+		// Carrega sessao
+		$filtros = $this->Session->read('Filtros.Chamadas');
+	}
+	public function index() {
+		// Configura Filtros
+		$this->filters();
 		
 		// Configura Titulo da Pagina
 		$this->set('title_for_layout','Chamadas - Lista');
@@ -30,14 +50,19 @@ class ChamadasController extends CaritasAppController {
 			'Fornecedor.FornecedoresEndereco.Cidade',
 			'Assunto'
 		);
-		$filtros = $this->Session->read('Filtros.Chamadas');
 		
+		$filtros = $this->Session->read('Filtros.Chamadas');
 		$chamadas = $this->Paginate('Chamada',$filtros);
 		$this->set('Chamadas',$chamadas);
 
 	}
 
 	public function add($id = null) {
+	
+		if ($this->request->isPost()) {
+			pr($this->request->data);
+		}
+		$this->request->data['Chamada']['chamada_id'] = $id;
 		// Configura Titulo da Pagina
 		$this->set('title_for_layout','Chamadas - Adicionar');
 
@@ -47,7 +72,7 @@ class ChamadasController extends CaritasAppController {
 		$Assuntos = $this->Chamada->Assunto->find('list', array('fields'=>array('id','nome')));
 		$this->set('Assuntos',$Assuntos);
 
-		$Estados = $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
+		$Estados = array('0'=>'Selecione o Estado') + $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
 		$this->set('Estados', $Estados);
 		
 		$this->set('Cidades', array());
@@ -72,13 +97,13 @@ class ChamadasController extends CaritasAppController {
 		$Assuntos = $this->Chamada->Assunto->find('list', array('fields'=>array('id','nome')));
 		$this->set('Assuntos',$Assuntos);
 
-		$Estados = $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
+		$Estados = array('0'=>'Selecione o Estado') + $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
 		$this->set('Estados', $Estados);
 		
 		$conditions = array(
 			'Cidade.estado_id' => $Chamada['Chamada']['estado_id']
 		);
-		$Cidades = $this->Chamada->Cidade->find('list', array('fields'=>array('id','nome'),'conditions'=>$conditions));
+		$Cidades = array('0'=>'Selecione a Cidade') + $this->Chamada->Cidade->find('list', array('fields'=>array('id','nome'),'conditions'=>$conditions));
 		$this->set('Cidades', $Cidades);
 		
 		$this->set('Instituicoes',array());
@@ -89,7 +114,6 @@ class ChamadasController extends CaritasAppController {
 		$this->set('Contatos',array());
 		
 		$this->request->data = $Chamada;
-		
 
 		$this->render('form');
 		
@@ -99,6 +123,43 @@ class ChamadasController extends CaritasAppController {
 	
 		$this->Session->setFlash('Chamada Excluída com sucesso!');
 		$this->redirect(array('action'=>'index'));
+		
+	}
+	
+	public function carrega_cidades($estado_id = 0) {
+		
+		//if ($estado == 0) return false;
+		$this->layout = false;
+		
+		$cidades = array('0'=>'Selecione a Cidade') + $this->Chamada->Cidade->find('list', array('fields'=>array('id','nome'),'conditions'=>array('Cidade.estado_id'=>$estado_id)));
+		$this->set('cidades',$cidades);
+		
+	}
+	
+	public function carrega_instituicoes($cidade_id = 0) {
+		
+		//if ($estado == 0) return false;
+		$this->layout = false;
+		
+		$instituicao_id = $this->Chamada->Instituicao->InstituicoesEndereco->find('list', array('fields'=>array('instituicao_id'),'conditions'=>array('InstituicoesEndereco.cidade_id'=>$cidade_id)));
+		$instituicoes = array('0'=>'Selecione a Instituição') + $this->Chamada->Instituicao->find('list', array('fields'=>array('id','nome_fantasia'),'conditions'=>array('Instituicao.id IN'=>$instituicao_id)));
+		$this->set('instituicoes',$instituicoes);
+		
+	}
+	
+	public function carrega_fornecedores($cidade_id = 0) {
+		
+		//if ($estado == 0) return false;
+		$this->layout = false;
+		
+		$fornecedor_id = $this->Chamada->Fornecedor->FornecedoresEndereco->find('list', array('fields'=>array('fornecedor_id'),'conditions'=>array('FornecedoresEndereco.cidade_id'=>$cidade_id)));
+		if ($fornecedor_id) {
+		$fornecedor_id = array('0') + $fornecedor_id;
+		$fornecedores = array('0'=>'Selecione o Fornecedor') + $this->Chamada->Fornecedor->find('list', array('fields'=>array('id','nome_fantasia'),'conditions'=>array('Fornecedor.id IN'=>$fornecedor_id)));
+		$this->set('fornecedores', $fornecedores);
+		} else {
+		$this->set('fornecedores', array('0'=>'Nenhum Fornecedor encontrado!'));	
+		}
 		
 	}
 
