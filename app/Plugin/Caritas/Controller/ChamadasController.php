@@ -61,7 +61,7 @@ class ChamadasController extends CaritasAppController {
 	public function add($id = null) {
 	
 		if ($this->request->isPost()) {
-			pr($this->request->data);
+			//pr($this->request->data);
 		}
 		$this->request->data['Chamada']['chamada_id'] = $id;
 		// Configura Titulo da Pagina
@@ -82,6 +82,10 @@ class ChamadasController extends CaritasAppController {
 		$this->set('Pedidos',array());
 		$this->set('Contatos',array());
 		
+		// Verifica Valores gravados BelongsTo
+		if ($this->Session->check('BelongsForms.ChamadaAddForm')) {
+			$this->request->data = $this->Session->read('BelongsForms.ChamadaAddForm');
+		}
 
 		$this->render('form');
 	}

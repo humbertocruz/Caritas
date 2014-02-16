@@ -42,6 +42,17 @@ class CaritasAppController extends AppController {
 	public $uses = array('Caritas.Estado');
 
 	public function beforeFilter() {
+	
+		// Controle de Dados BelongsTo
+		if ($this->request->isPost()) {
+			if (isset($this->request->data['BelongsFormId'])) {
+				$this->Session->write('BelongsForms.'.$this->request->data['BelongsFormId'],$this->request->data);
+			}
+		}
+		
+		if($this->Session->check('BelongsForms')){
+			$this->set('belongsForms',$this->Session->read('BelongsForms'));
+		}
 
 		// Carregar Layout bootstrap
 		$this->layout = 'Bootstrap.bootstrap';
