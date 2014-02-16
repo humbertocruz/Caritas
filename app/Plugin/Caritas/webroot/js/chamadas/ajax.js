@@ -1,9 +1,15 @@
 $(document).ready(function(){
-	$('.Chamadainst_forn').find(':input').change(function(){
+	$('#Chamadainst_forn').change(function(){
 		if (this.value == 1) {
+			// Seleciona Instituicao
+			$('#Chamadainstituicao_id').parent().show();
+			$('#Chamadafornecedor_id').parent().hide();
 			$('#Chamadainstituicao_id').removeAttr('disabled');
 			$('#Chamadafornecedor_id').attr('disabled','disabled');
 		} else {
+			// Seleciona Fornecedor
+			$('#Chamadainstituicao_id').parent().hide();
+			$('#Chamadafornecedor_id').parent().show();
 			$('#Chamadafornecedor_id').removeAttr('disabled');
 			$('#Chamadainstituicao_id').attr('disabled','disabled');
 		}
@@ -32,4 +38,20 @@ $(document).ready(function(){
 			}
 		});
 	});
+	
+	$('#Chamadainstituicao_id').change(function(){
+		$.ajax({
+			'url':'/caritas/chamadas/carrega_contatos/'+this.value,
+			'success':function(data) {
+				$('#Chamadacontato_id').html(data);
+			}
+		});
+		$.ajax({
+			'url':'/caritas/chamadas/carrega_historico/'+this.value,
+			'success':function(data) {
+				$('#historico').html(data);
+			}
+		});
+	});
+	
 });

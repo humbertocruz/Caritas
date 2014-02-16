@@ -20,7 +20,7 @@ class ChamadasController extends CaritasAppController {
 						unset ($this->request->data[$key]);
 					}
 				}
-				$this->Session->write('Filtros.'.$this->name, $this->request->data );
+				$this->Session->write('Filtros.Chamadas', $this->request->data );
 			}
 		}
 		// Carrega lista de estados
@@ -28,6 +28,7 @@ class ChamadasController extends CaritasAppController {
 		$this->set('filters', array('estados'=>$estados));
 		// Carrega sessao
 		$filtros = $this->Session->read('Filtros.Chamadas');
+		$this->set('filters_chamada', $filtros);
 	}
 	public function index() {
 		// Configura Filtros
@@ -128,7 +129,6 @@ class ChamadasController extends CaritasAppController {
 	
 	public function carrega_cidades($estado_id = 0) {
 		
-		//if ($estado == 0) return false;
 		$this->layout = false;
 		
 		$cidades = array('0'=>'Selecione a Cidade') + $this->Chamada->Cidade->find('list', array('fields'=>array('id','nome'),'conditions'=>array('Cidade.estado_id'=>$estado_id)));
@@ -138,7 +138,6 @@ class ChamadasController extends CaritasAppController {
 	
 	public function carrega_instituicoes($cidade_id = 0) {
 		
-		//if ($estado == 0) return false;
 		$this->layout = false;
 		
 		$instituicao_id = $this->Chamada->Instituicao->InstituicoesEndereco->find('list', array('fields'=>array('instituicao_id'),'conditions'=>array('InstituicoesEndereco.cidade_id'=>$cidade_id)));
@@ -149,7 +148,6 @@ class ChamadasController extends CaritasAppController {
 	
 	public function carrega_fornecedores($cidade_id = 0) {
 		
-		//if ($estado == 0) return false;
 		$this->layout = false;
 		
 		$fornecedor_id = $this->Chamada->Fornecedor->FornecedoresEndereco->find('list', array('fields'=>array('fornecedor_id'),'conditions'=>array('FornecedoresEndereco.cidade_id'=>$cidade_id)));
@@ -162,5 +160,30 @@ class ChamadasController extends CaritasAppController {
 		}
 		
 	}
+	
+	public function carrega_contatos($instituicao_id = 0) {
+		
+		$this->layout = false;
+		
+		$contato_id = $this->Chamada->Contato->ContatosInstituicao->find('list', array('fields'=>array('contato_id'),'conditions'=>array('ContatosInstituicao.instituicao_id'=>$instituicao_id)));
+		$contatos = array('0'=>'Selecione o Contato') + $this->Chamada->Contato->find('list', array('fields'=>array('id','nome'),'conditions'=>array('Contato.id IN'=>$contato_id)));
+		$this->set('contatos',$contatos);
+		
+	}
+	
+	public function carrega_historico($instituicao_id = 0) {
+	
+		$this->layout = false;
+		// Carrega dados do BD
+		$this->Chamada->Behaviors->attach('Containable');
+		$this->Chamada->contain(
+			'Contato',
+			'Assunto'
+		);
+		$historico = $this->Chamada->find('all', array('order'=>array('Chamada.data_inicio'=>'DESC'),'conditions'=>array('Chamada.instituicao_id'=>$instituicao_id)));
+		$this->set('historico', $historico);
+	
+	}
+
 
 }

@@ -4,13 +4,15 @@ App::uses('Helper', 'View');
 
 class CaritasHelper extends AppHelper {
 
-	private function filter_type($filter) {
-		switch ($filter['type']) {
+	private function filter_type($field, $field_value) {
+		switch ($field['type']) {
 			case 'select':
 				ob_start(); ?>
-				<select class="form-control" name="data[<?php echo $filter['model'].'.'.$filter['field'].']';?>">
-				<?php foreach($filter['options'] as $key => $value) { ?>
-					<option value="<?php echo $key; ?>"><?php echo $value;?></option>
+				<select class="form-control" name="data[<?php echo $field['model'].'.'.$field['field'].']';?>">
+				<?php foreach($field['options'] as $key => $value) { 
+					$selected = ($key === $field_value)?('selected="selected"'):('');
+				?>
+					<option <?php echo $selected;?> value="<?php echo $key; ?>"><?php echo $value;?></option>
 				<?php } ?>
 				</select>
 				<?php return ob_get_clean();
@@ -23,13 +25,15 @@ class CaritasHelper extends AppHelper {
 		}
 	}
 	
-	public function filters($fields = array()) { ob_start(); ?>
+	public function filters($fields = array(), $data = array()) { ob_start(); ?>
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<form method="post" class="form-inline">
 					<input type="hidden" name="filter" value="1">
-					<?php foreach($fields as $field) { ?>
-					<?php echo $this->filter_type($field); ?>
+					<?php foreach($fields as $field) { 
+						$data_field = (isset($data[$field['model'].'.'.$field['field']]))?($data[$field['model'].'.'.$field['field']]):('0');
+					?>
+					<?php echo $this->filter_type($field, $data_field); ?>
 					<?php } ?>
 					<input type="submit" class="btn btn-default" value="Filtrar">
 				</form>

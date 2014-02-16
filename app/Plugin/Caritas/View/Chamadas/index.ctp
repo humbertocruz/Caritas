@@ -9,7 +9,7 @@ $filters = array(
 		'options' => $filters['estados']
 	)
 );
-echo $this->Caritas->filters($filters);
+echo $this->Caritas->filters($filters, $filters_chamada);
 
 echo $this->Element('Bootstrap.table/table-create',array(
 	'title'=>'Chamadas',
