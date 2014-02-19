@@ -35,8 +35,7 @@ class CaritasAppController extends AppController {
 	public $helpers = array(
 		'Bootstrap.AuthBs',
 		'Bootstrap.Bootstrap',
-		'Html',
-		'Paginator'
+		'Html'
 	);
 	
 	public $uses = array('Caritas.Estado');

@@ -53,6 +53,20 @@ $(document).ready(function(){
 			}
 		});
 	});
+	$('#Chamadafornecedor_id').change(function(){
+		$.ajax({
+			'url':'/caritas/chamadas/carrega_contatos_forn/'+this.value,
+			'success':function(data) {
+				$('#Chamadacontato_id').html(data);
+			}
+		});
+		$.ajax({
+			'url':'/caritas/chamadas/carrega_historico_forn/'+this.value,
+			'success':function(data) {
+				$('#historico').html(data);
+			}
+		});
+	});
 	
 	// Belongs URL
 	$('.btn-belongs').click(function(){

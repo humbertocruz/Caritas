@@ -8,6 +8,16 @@ class ChamadasController extends CaritasAppController {
 			'Chamada.data_inicio' => 'desc'
 		)
 	);
+	public function beforeFilter() {
+		
+		if ($this->Session->check('BelongsForms.ChamadaAddForm')) {
+			$this->request->data = $this->Session->read('BelongsForms.ChamadaAddForm');
+			if ($this->request->data['Chamada']['instituicao_id'] == 0) unset($this->request->data['Chamada']['instituicao_id']);
+			if ($this->request->data['Chamada']['fornecedor_id'] == 0) unset($this->request->data['Chamada']['fornecedor_id']);
+			$this->Session->delete('BelongsForms.ChamadaAddForm');
+		}
+		parent::beforeFilter();
+	}
 	private function filters() {
 		// Filtros
 		
@@ -59,7 +69,7 @@ class ChamadasController extends CaritasAppController {
 	}
 
 	public function add($id = null) {
-	
+		
 		if ($this->request->isPost()) {
 			//pr($this->request->data);
 		}
@@ -76,16 +86,77 @@ class ChamadasController extends CaritasAppController {
 		$Estados = array('0'=>'Selecione o Estado') + $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
 		$this->set('Estados', $Estados);
 		
-		$this->set('Cidades', array());
-		$this->set('Instituicoes',array());
-		$this->set('Fornecedores',array());
-		$this->set('Pedidos',array());
-		$this->set('Contatos',array());
+		if (isset($this->request->data['Chamada']['estado_id'])) {
+			$conditions = array(
+				'Cidade.estado_id' => $this->request->data['Chamada']['estado_id']
+			);
+			$Cidades = array('0'=>'Selecione a Cidade') + $this->Chamada->Cidade->find('list', array('fields'=>array('id','nome'),'conditions'=>$conditions));
+		} else {
+			$Cidades = array();
+		}
+		$this->set('Cidades', $Cidades);
+		
+		if (isset($this->request->data['Chamada']['cidade_id'])) {
+			$conditions = array(
+				'InstituicoesEndereco.cidade_id' => $this->request->data['Chamada']['cidade_id']
+			);
+			$InstituicoesEndereco = $this->Chamada->Instituicao->InstituicoesEndereco->find('list', array('fields'=>array('instituicao_id'),'conditions'=>$conditions));
+			array_push($InstituicoesEndereco, '0');
+			array_push($InstituicoesEndereco, '0');
+			$Instituicoes = array('0'=>'Selecione a Instituição') + $this->Chamada->Instituicao->find('list', array('fields'=>array('id','nome_fantasia'),'conditions'=>array('Instituicao.id IN'=>$InstituicoesEndereco)));
+			$conditions = array(
+				'FornecedoresEndereco.cidade_id' => $this->request->data['Chamada']['cidade_id']
+			);
+			$FornecedoresEndereco = $this->Chamada->Fornecedor->FornecedoresEndereco->find('list', array('fields'=>array('fornecedor_id'),'conditions'=>$conditions));
+			array_push($FornecedoresEndereco, '0');
+			array_push($FornecedoresEndereco, '0');
+			$Fornecedor = array('0'=>'Selecione o Fornecedor') + $this->Chamada->Fornecedor->find('list', array('fields'=>array('id','nome_fantasia'),'conditions'=>array('Fornecedor.id IN'=>$FornecedoresEndereco)));
+		} else {
+			$Instituicoes = array();
+			$Fornecedor = array();
+		}
+		$this->set('Instituicoes',$Instituicoes);
+		$this->set('Fornecedores',$Fornecedor);
+		
+		if (isset($this->request->data['Chamada']['instituicao_id'])) {
+			$this->Chamada->Behaviors->attach('Containable');
+			$this->Chamada->contain(
+				'Contato',
+				'Assunto'
+			);
+			$historico = $this->Chamada->find('all', array('order'=>array('Chamada.data_inicio'=>'DESC'),'conditions'=>array('Chamada.instituicao_id'=>$this->request->data['Chamada']['instituicao_id'])));
+			
+			$conditions = array(
+				'ContatosInstituicao.instituicao_id'=>$this->request->data['Chamada']['instituicao_id']
+			);
+			$ContatoInstitucao = $this->Chamada->Contato->ContatosInstituicao->find('list',array('fields'=>array('contato_id'),'conditions'=>$conditions));
+			$Contatos = $this->Chamada->Contato->find('list',array('fields'=>array('id','nome'),'conditions'=>array('Contato.id IN'=>$ContatoInstitucao)));
+		} else {
+			$Contatos = array();
+			$historico = array();
+		}
+		if (isset($this->request->data['Chamada']['fornecedor_id'])) {
+			$this->Chamada->Behaviors->attach('Containable');
+			$this->Chamada->contain(
+				'Contato',
+				'Assunto'
+			);
+			$historico = $this->Chamada->find('all', array('order'=>array('Chamada.data_inicio'=>'DESC'),'conditions'=>array('Chamada.fornecedor_id'=>$this->request->data['Chamada']['fornecedor_id'])));
+			
+			$conditions = array(
+				'ContatosFornecedor.fornecedor_id'=>$this->request->data['Chamada']['fornecedor_id']
+			);
+			$ContatoFornecedor= $this->Chamada->Contato->ContatosFornecedor->find('list',array('fields'=>array('contato_id'),'conditions'=>$conditions));
+			array_push($ContatoFornecedor, '0');
+			$Contatos = $this->Chamada->Contato->find('list',array('fields'=>array('id','nome'),'conditions'=>array('Contato.id IN'=>$ContatoFornecedor)));
+		} else {
+			$Contatos = array();
+			$historico = array();
+		}
+		$this->set('Contatos',$Contatos);
+		$this->set('historico',$historico);
 		
 		// Verifica Valores gravados BelongsTo
-		if ($this->Session->check('BelongsForms.ChamadaAddForm')) {
-			$this->request->data = $this->Session->read('BelongsForms.ChamadaAddForm');
-		}
 
 		$this->render('form');
 	}
@@ -111,13 +182,36 @@ class ChamadasController extends CaritasAppController {
 		$Cidades = array('0'=>'Selecione a Cidade') + $this->Chamada->Cidade->find('list', array('fields'=>array('id','nome'),'conditions'=>$conditions));
 		$this->set('Cidades', $Cidades);
 		
+		/*
+		if($Chamada['Chamada']['instituicao_id'] != null) {
+			$conditions = array(
+				'Cidade.estado_id' => $Chamada['Chamada']['estado_id']
+				);
+			$instituicoes = array('0'=>'Selecione a Instituição') + $this->Chamada->Instituicao->find('list', array('fields'=>array('id','nome_fantasia'),'conditions'=>$conditions));
+		} else {
+			$conditions = array(
+				'Cidade.estado_id' => $Chamada['Chamada']['estado_id']
+				);
+			$fornecedores = array('0'=>'Selecione a Instituição') + $this->Chamada->Instituicao->find('list', array('fields'=>array('id','nome_fantasia'),'conditions'=>$conditions));
+			
+		}
+		*/
+		
 		$this->set('Instituicoes',array());
 		
 		$this->set('Fornecedores',array());
 		
-		$this->set('Pedidos',array());
+		//$this->set('Pedidos',array());
 		$this->set('Contatos',array());
 		
+		
+		$this->Chamada->Behaviors->attach('Containable');
+		$this->Chamada->contain(
+			'Contato',
+			'Assunto'
+		);
+		$historico = $this->Chamada->find('all', array('order'=>array('Chamada.data_inicio'=>'DESC'),'conditions'=>array('Chamada.instituicao_id'=>$Chamada['Chamada']['instituicao_id'])));
+		$this->set('historico',$historico);
 		$this->request->data = $Chamada;
 
 		$this->render('form');
@@ -170,6 +264,8 @@ class ChamadasController extends CaritasAppController {
 		$this->layout = false;
 		
 		$contato_id = $this->Chamada->Contato->ContatosInstituicao->find('list', array('fields'=>array('contato_id'),'conditions'=>array('ContatosInstituicao.instituicao_id'=>$instituicao_id)));
+		array_push($contato_id, '0');
+		array_push($contato_id, '0');
 		$contatos = array('0'=>'Selecione o Contato') + $this->Chamada->Contato->find('list', array('fields'=>array('id','nome'),'conditions'=>array('Contato.id IN'=>$contato_id)));
 		$this->set('contatos',$contatos);
 		
@@ -186,6 +282,36 @@ class ChamadasController extends CaritasAppController {
 		);
 		$historico = $this->Chamada->find('all', array('order'=>array('Chamada.data_inicio'=>'DESC'),'conditions'=>array('Chamada.instituicao_id'=>$instituicao_id)));
 		$this->set('historico', $historico);
+	
+	}
+	
+	public function carrega_contatos_forn($fornecedor_id = 0) {
+		
+		$this->layout = false;
+		
+		$contato_id = $this->Chamada->Contato->ContatosFornecedor->find('list', array('fields'=>array('contato_id'),'conditions'=>array('ContatosFornecedor.fornecedor_id'=>$fornecedor_id)));
+		array_push($contato_id, '0');
+		array_push($contato_id, '0');
+		$contatos = array('0'=>'Selecione o Contato') + $this->Chamada->Contato->find('list', array('fields'=>array('id','nome'),'conditions'=>array('Contato.id IN'=>$contato_id)));
+		$this->set('contatos',$contatos);
+		
+		$this->render('carrega_contatos');
+		
+	}
+	
+	public function carrega_historico_forn($fornecedor_id = 0) {
+	
+		$this->layout = false;
+		// Carrega dados do BD
+		$this->Chamada->Behaviors->attach('Containable');
+		$this->Chamada->contain(
+			'Contato',
+			'Assunto'
+		);
+		$historico = $this->Chamada->find('all', array('order'=>array('Chamada.data_inicio'=>'DESC'),'conditions'=>array('Chamada.fornecedor_id'=>$fornecedor_id)));
+		$this->set('historico', $historico);
+		
+		$this->render('carrega_historico');
 	
 	}
 

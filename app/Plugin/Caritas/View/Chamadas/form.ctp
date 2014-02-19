@@ -15,11 +15,11 @@
 
 <?php echo $this->Bootstrap->belongs('cidade_id', array('options'=>$Cidades,'label'=>'Cidade','url'=>'/cidades')); ?>
 
-<?php echo $this->Bootstrap->select('inst_forn', array('options'=>array('1'=>'Instituição','2'=>'Fornecedor'),'value'=>'1','label'=>'Tipo')); ?>
+<?php echo $this->Bootstrap->select('inst_forn', array('options'=>array('1'=>'Instituição','2'=>'Fornecedor'),'label'=>'Tipo')); ?>
 
 <?php echo $this->Bootstrap->select('instituicao_id', array('options'=>$Instituicoes,'label'=>'Instituição')); ?>
 
-<?php echo $this->Bootstrap->select('fornecedor_id', array('options'=>$Fornecedores,'label'=>'Fornecedor','disabled'=>'disabled','hide'=>'hide')); ?>
+<?php echo $this->Bootstrap->select('fornecedor_id', array('options'=>$Fornecedores,'label'=>'Fornecedor')); ?>
 
 <?php echo $this->Bootstrap->select('contato_id', array('options'=>$Contatos,'label'=>'Contato')); ?>
 
@@ -37,7 +37,23 @@
 
 	</div>
 	<div class="col-md-4" id="historico">
-		Histórico
+		<table class="table table-bordered">
+			<thead>
+				<h3>Histórico de Chamadas</h3>
+			</thead>
+			<tr>
+				<th>Início</th>
+				<th>Assunto</th>
+				<th>Contato</th>
+			</tr>
+			<?php foreach ($historico as $dado) { ?>
+			<tr>
+				<td><?php echo $this->AuthBs->brdate($dado['Chamada']['data_inicio']); ?></td>
+				<td><?php echo $dado['Contato']['nome']; ?></td>
+				<td><?php echo $dado['Assunto']['nome']; ?></td>
+			</tr>
+			<?php } ?>
+		</table>
 	</div>
 </div>
 
