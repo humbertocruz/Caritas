@@ -314,6 +314,16 @@ class ChamadasController extends CaritasAppController {
 		$this->render('carrega_historico');
 	
 	}
+	
+	public function carrega_contato($contato_id) {
+		$this->layout = false;
+		$this->Chamada->Contato->Behaviors->attach('Containable');
+		$this->Chamada->Contato->contain(
+			'ContatosFone'
+		);
+		$contato = $this->Chamada->Contato->read(null, $contato_id);
+		$this->set('contato',$contato);
+	}
 
 
 }

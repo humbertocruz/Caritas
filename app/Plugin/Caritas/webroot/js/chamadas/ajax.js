@@ -49,6 +49,7 @@ $(document).ready(function(){
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_historico/'+this.value,
 			'success':function(data) {
+				$('#historico-title').html('Histórico da Instituição');
 				$('#historico').html(data);
 			}
 		});
@@ -63,7 +64,17 @@ $(document).ready(function(){
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_historico_forn/'+this.value,
 			'success':function(data) {
+				$('#historico-title').html('Histórico do Fornecedor');	
 				$('#historico').html(data);
+			}
+		});
+	});
+	
+	$('#Chamadacontato_id').change(function(){
+		$.ajax({
+			'url':'/caritas/chamadas/carrega_contato/'+this.value,
+			'success':function(data) {
+				$('#contato-box').html(data);
 			}
 		});
 	});

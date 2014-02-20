@@ -17,11 +17,14 @@
 
 <?php echo $this->Bootstrap->select('inst_forn', array('options'=>array('1'=>'Instituição','2'=>'Fornecedor'),'label'=>'Tipo')); ?>
 
-<?php echo $this->Bootstrap->select('instituicao_id', array('options'=>$Instituicoes,'label'=>'Instituição')); ?>
+<?php echo $this->Bootstrap->belongs('instituicao_id', array('options'=>$Instituicoes,'label'=>'Instituição','url'=>'/instituicoes')); ?>
 
-<?php echo $this->Bootstrap->select('fornecedor_id', array('options'=>$Fornecedores,'label'=>'Fornecedor')); ?>
+<?php echo $this->Bootstrap->belongs('fornecedor_id', array('options'=>$Fornecedores,'label'=>'Fornecedor','url'=>'/fornecedores')); ?>
 
-<?php echo $this->Bootstrap->select('contato_id', array('options'=>$Contatos,'label'=>'Contato')); ?>
+<?php echo $this->Bootstrap->belongs('contato_id', array('options'=>$Contatos,'label'=>'Contato','url'=>'/contatos')); ?>
+
+<div id="contato-box" class="alert">
+</div>
 
 <?php echo $this->Bootstrap->select('tipo_chamada_id', array('options'=>$TiposChamada,'label'=>'Tipo de Chamada')); ?>
 
@@ -36,11 +39,10 @@
 <?php echo $this->Form->end(); ?>
 
 	</div>
-	<div class="col-md-4" id="historico">
-		<table class="table table-bordered">
-			<thead>
-				<h3>Histórico de Chamadas</h3>
-			</thead>
+	<div class="col-md-4 alert alert-success" id="historico-div">
+		<h3 id="historico-title">Histórico</h3>
+		<div id="historico" style="max-height: 700px; overflow: auto;">
+		<table class="table table-bordered" style="background-color: #fff;">
 			<tr>
 				<th>Início</th>
 				<th>Assunto</th>
@@ -54,6 +56,7 @@
 			</tr>
 			<?php } ?>
 		</table>
+		</div>
 	</div>
 </div>
 

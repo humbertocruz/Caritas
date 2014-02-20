@@ -1,7 +1,4 @@
-<table class="table table-bordered">
-	<thead>
-		<h3>Histórico de Chamadas</h3>
-	</thead>
+<table class="table table-bordered" style="background-color: #fff;">
 	<tr>
 		<th>Início</th>
 		<th>Assunto</th>
