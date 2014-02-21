@@ -1,11 +1,6 @@
 <table>
 <tr>
 	<td>
-	<?php echo $contato['Contato']['nome']; ?>
-	</td>
-</tr>
-<tr>
-	<td>
 	<?php foreach($contato['ContatosFone'] as $fones) { ?>
 		<?php echo $fones['fone'].'<br>'; ?>
 	<?php } ?>
@@ -13,7 +8,9 @@
 </tr>
 <tr>
 	<td>
-	Emails
+	<?php foreach($contato['ContatosEmail'] as $emails) { ?>
+		<?php echo $emails['email'].'<br>'; ?>
+	<?php } ?>
 	</td>
 </tr>
 <tr>

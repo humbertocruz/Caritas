@@ -16,6 +16,10 @@ class Contato extends CaritasAppModel {
 		'ContatosFone' => array(
 			'className' => 'Caritas.ContatosFone',
 			'foreignKey' => 'contato_id'
+		),
+		'ContatosEmail' => array(
+			'className' => 'Caritas.ContatosEmail',
+			'foreignKey' => 'contato_id'
 		)
 	);
 

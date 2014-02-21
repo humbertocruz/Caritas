@@ -2,6 +2,15 @@
 
 class Chamada extends CaritasAppModel {
 
+	public $validade = array(
+		'data_inicio' => array(
+			'rule'			=> 'date',
+			'message'		=> 'Digite uma data válida!',
+			'required'		=> true,
+			'allowEmpty'	=> false
+		)
+	);
+
 	public $belongsTo = array(
 
 		'Instituicao' => array(
