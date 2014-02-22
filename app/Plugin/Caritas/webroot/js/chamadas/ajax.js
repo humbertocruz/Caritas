@@ -1,34 +1,50 @@
 $(document).ready(function(){
-	$('#Chamadainst_forn').change(function(){
-		if (this.value == 1) {
-			// Seleciona Instituicao
-			$('#Chamadainstituicao_id').parent().show();
-			$('#Chamadafornecedor_id').parent().hide();
-			$('#Chamadainstituicao_id').removeAttr('disabled');
-			$('#Chamadafornecedor_id').attr('disabled','disabled');
+	
+	$('#tipoTab a').click(function(){
+		if ($(this).attr('href') == '#tipo_inst') {
+			$('#Chamadainst_forn').val(1);
 		} else {
-			// Seleciona Fornecedor
-			$('#Chamadainstituicao_id').parent().hide();
-			$('#Chamadafornecedor_id').parent().show();
-			$('#Chamadafornecedor_id').removeAttr('disabled');
-			$('#Chamadainstituicao_id').attr('disabled','disabled');
+			$('#Chamadainst_forn').val(2);
 		}
 	});
-
+	
 	$('#Chamadaestado_id').change(function(){
+		// Apaga Combos
+		$('#Chamadainstituicao_id').html('');
+		$('#Chamadafornecedor_id').html('');
+		$('#Chamadacontato_id').html('');
+		$('#historico').html('');
+		$('#contato-box').html('');
+		// End
+		$('#Chamadacidade_id').popover({
+			'placement':'top',
+			'title':'Aguarde',
+			'content':'Carregando dados...'
+		}).popover('show');
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_cidades/'+this.value,
 			'success':function(data) {
-				$('#Chamadacidade_id').html(data);
+				$('#Chamadacidade_id').html(data).popover('destroy');
 			}
 		});
 	});
 	
 	$('#Chamadacidade_id').change(function(){
+		// Apaga Combos
+		$('#Chamadafornecedor_id').html('');
+		$('#Chamadacontato_id').html('');
+		$('#historico').html('');
+		$('#contato-box').html('');
+		// End
+		$('#Chamadainstituicao_id').popover({
+			'placement':'top',
+			'title':'Aguarde',
+			'content':'Carregando dados...'
+		}).popover('show');
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_instituicoes/'+this.value,
 			'success':function(data) {
-				$('#Chamadainstituicao_id').html(data);
+				$('#Chamadainstituicao_id').html(data).popover('destroy');
 			}
 		});
 		$.ajax({
@@ -40,16 +56,29 @@ $(document).ready(function(){
 	});
 	
 	$('#Chamadainstituicao_id').change(function(){
+		// Apaga Combos
+		$('#contato-box').html('');
+		// End
+		$('#Chamadacontato_id').popover({
+			'placement':'top',
+			'title':'Aguarde',
+			'content':'Carregando dados...'
+		}).popover('show');
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_contatos/'+this.value,
 			'success':function(data) {
-				$('#Chamadacontato_id').html(data);
+				$('#Chamadacontato_id').html(data).popover('destroy');
 			}
 		});
+		$('#historico-title').popover({
+			'placement':'top',
+			'title':'Aguarde',
+			'content':'Carregando dados...'
+		}).popover('show');
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_historico/'+this.value,
 			'success':function(data) {
-				$('#historico-title').html('Histórico da Instituição');
+				$('#historico-title').html('Histórico da Instituição').popover('destroy');
 				$('#historico').html(data);
 			}
 		});

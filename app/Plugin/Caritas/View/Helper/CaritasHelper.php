@@ -10,7 +10,7 @@ class CaritasHelper extends AppHelper {
 				ob_start(); ?>
 				<select class="form-control" name="data[<?php echo $field['model'].'.'.$field['field'].']';?>">
 				<?php foreach($field['options'] as $key => $value) { 
-					$selected = ($key === $field_value)?('selected="selected"'):('');
+					$selected = ($key == $field_value)?('selected="selected"'):('');
 				?>
 					<option <?php echo $selected;?> value="<?php echo $key; ?>"><?php echo $value;?></option>
 				<?php } ?>

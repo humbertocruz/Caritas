@@ -7,6 +7,12 @@ $filters = array(
 		'model'=>'Chamada',
 		'field'=>'estado_id',
 		'options' => $filters['estados']
+	),
+	array(
+		'type'=>'select',
+		'model'=>'Chamada',
+		'field'=>'assunto_id',
+		'options' => $filters['assuntos']
 	)
 );
 echo $this->Caritas->filters($filters, $filters_chamada);
@@ -33,8 +39,8 @@ foreach ($Chamadas as $Chamada) { ?>
 		<?php echo $this->Bootstrap->chamadaActions($Chamada['Chamada']['id']); ?>
 	</td>
 	<td><?php echo $this->AuthBs->brdate($Chamada['Chamada']['data_inicio']);?></td>
-	<td><?php echo $Chamada['Instituicao']['nome_fantasia']; ?></td>
-	<td><?php echo (isset($Chamada['Instituicao']['InstituicoesEndereco'][0]['Cidade']['estado_id']))?($Chamada['Instituicao']['InstituicoesEndereco'][0]['Cidade']['estado_id']):('Sem Endereço'); ?></td>
+	<td><?php echo ($Chamada['Chamada']['instituicao_id'])?( $Chamada['Instituicao']['nome_fantasia'] ):( $Chamada['Fornecedor']['nome_fantasia'] ); ?></td>
+	<td><?php echo (isset($Chamada['Instituicao']['InstituicoesEndereco'][0]['Cidade']['estado_id']))?($Chamada['Instituicao']['InstituicoesEndereco'][0]['Cidade']['estado_id']):($Chamada['Fornecedor']['FornecedoresEndereco'][0]['Cidade']['estado_id']); ?></td>
 	<td><?php echo $Chamada['Contato']['nome']; ?></td>
 	<td><?php echo $Chamada['Assunto']['nome']; ?></td>
 	<td><?php echo $Chamada['Chamada']['solicitacao']; ?></td>

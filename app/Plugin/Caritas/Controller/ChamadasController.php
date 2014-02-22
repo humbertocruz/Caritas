@@ -3,7 +3,7 @@ class ChamadasController extends CaritasAppController {
 
 	public $uses = array('Caritas.Chamada');
 	public $paginate = array(
-		'limit' => 25,
+		'limit' => 15,
 		'order' => array(
 			'Chamada.data_inicio' => 'desc'
 		)
@@ -33,9 +33,11 @@ class ChamadasController extends CaritasAppController {
 				$this->Session->write('Filtros.Chamadas', $this->request->data );
 			}
 		}
-		// Carrega lista de estados
-		$estados = array('0'=>'Nenhum') + $this->Estado->find('list', array('fields'=>array('id','nome')));
-		$this->set('filters', array('estados'=>$estados));
+		// Carrega listas para filtro
+		$estados = array('0'=>'Nenhum') + $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
+		$assuntos = array('0'=>'Nenhum') + $this->Chamada->Assunto->find('list', array('fields'=>array('id','nome')));
+		$this->set('filters', array('estados'=>$estados,'assuntos'=>$assuntos));
+		
 		// Carrega sessao
 		$filtros = $this->Session->read('Filtros.Chamadas');
 		$this->set('filters_chamada', $filtros);
@@ -221,7 +223,6 @@ class ChamadasController extends CaritasAppController {
 		$Chamada = $this->Chamada->read(null, $id);
 		
 		// Nao editar a data_inicio
-		unset($Chamada['Chamada']['data_inicio']);
 
 		$TiposChamada = $this->Chamada->TiposChamada->find('list', array('fields'=>array('id','nome')));
 		$this->set('TiposChamada',$TiposChamada);
@@ -249,12 +250,12 @@ class ChamadasController extends CaritasAppController {
 			$fornecedores = array();
 		} else {
 			$conditions = array(
-				'FornecedoresENdereco.cidade_id' => $Chamada['Chamada']['cidade_id']
+				'FornecedoresEndereco.cidade_id' => $Chamada['Chamada']['cidade_id']
 				);
 			$fornecedoresEndereco = $this->Chamada->Fornecedor->FornecedoresEndereco->find('list', array('fields'=>array('fornecedor_id'),'conditions'=>$conditions));
 			array_push($fornecedoresEndereco, '0');
 			array_push($fornecedoresEndereco, '0');
-			$fornecedores = array('0'=>'Selecione a Instituição') + $this->Chamada->Fornecedor->find('list', array('fields'=>array('id','nome_fantasia'),'conditions'=>array('Fornecedor.id IN'=>$forneceoresEndereco)));
+			$fornecedores = array('0'=>'Selecione a Instituição') + $this->Chamada->Fornecedor->find('list', array('fields'=>array('id','nome_fantasia'),'conditions'=>array('Fornecedor.id IN'=>$fornecedoresEndereco)));
 			$instituicoes = array();
 		}
 		
