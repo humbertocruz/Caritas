@@ -277,6 +277,8 @@ class ChamadasController extends CaritasAppController {
 				'ContatosInstituicao.instituicao_id'=>$Chamada['Chamada']['instituicao_id']
 			);
 			$ContatoInstitucao = $this->Chamada->Contato->ContatosInstituicao->find('list',array('fields'=>array('contato_id'),'conditions'=>$conditions));
+			array_push($ContatoInstitucao, '0');
+			array_push($ContatoInstitucao, '0');
 			$Contatos = $this->Chamada->Contato->find('list',array('fields'=>array('id','nome'),'conditions'=>array('Contato.id IN'=>$ContatoInstitucao)));
 		} else {
 			$this->Chamada->Behaviors->attach('Containable');
@@ -407,9 +409,12 @@ class ChamadasController extends CaritasAppController {
 		$this->Chamada->Contato->Behaviors->attach('Containable');
 		$this->Chamada->Contato->contain(
 			'ContatosFone',
-			'ContatosEmail'
+			'ContatosEmail',
+			'ContatosInstituicao',
+			'ContatosInstituicao.Cargo'
 		);
 		$contato = $this->Chamada->Contato->read(null, $contato_id);
+		
 		$this->set('contato',$contato);
 	}
 

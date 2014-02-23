@@ -76,6 +76,15 @@ class CaritasAppController extends AppController {
 							'controller' => 'chamadas',
 							'action' => 'index'
 						)
+					),
+					array(
+						'Link' => array(
+							'id' => 1,
+							'text' => 'Contato',
+							'plugin' => 'caritas',
+							'controller' => 'contatos',
+							'action' => 'index'
+						)
 					)
 				)
 				),

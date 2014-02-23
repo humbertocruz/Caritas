@@ -46,7 +46,7 @@
 		<div class="panel panel-success">
 			<div class="panel-heading">Contato</div>
 			<div class="panel-body">
-				<?php echo $this->Bootstrap->belongs('contato_id', array('options'=>$Contatos,'label'=>'Contato','url'=>'/contatos')); ?>
+				<?php echo $this->Bootstrap->belongs('contato_id', array('options'=>$Contatos,'label'=>'Contato','url'=>'/contatos/edit/')); ?>
 				<div id="contato-box" class="alert">
 					<?php if (isset($this->data['Contato'])) { ?>
 					<table>
