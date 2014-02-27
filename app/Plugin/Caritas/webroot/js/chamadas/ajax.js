@@ -84,26 +84,43 @@ $(document).ready(function(){
 		});
 	});
 	$('#Chamadafornecedor_id').change(function(){
+		// Apaga Combos
+		$('#contato-box').html('');
+		$('#Chamadacontato_id').popover({
+			'placement':'top',
+			'title':'Aguarde',
+			'content':'Carregando dados...'
+		}).popover('show');
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_contatos_forn/'+this.value,
 			'success':function(data) {
-				$('#Chamadacontato_id').html(data);
+				$('#Chamadacontato_id').html(data).popover('destroy');
 			}
 		});
+		$('#historico-title').popover({
+			'placement':'top',
+			'title':'Aguarde',
+			'content':'Carregando dados...'
+		}).popover('show');
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_historico_forn/'+this.value,
 			'success':function(data) {
-				$('#historico-title').html('Histórico do Fornecedor');	
+				$('#historico-title').html('Histórico do Fornecedor').popover('destroy');	
 				$('#historico').html(data);
 			}
 		});
 	});
 	
 	$('#Chamadacontato_id').change(function(){
+		$('#contato-box').popover({
+			'placement':'top',
+			'title':'Aguarde',
+			'content':'Carregando dados...'
+		}).popover('show');
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_contato/'+this.value,
 			'success':function(data) {
-				$('#contato-box').html(data);
+				$('#contato-box').html(data).popover('destroy');
 			}
 		});
 	});

@@ -411,6 +411,7 @@ class ChamadasController extends CaritasAppController {
 			'ContatosFone',
 			'ContatosFone.TiposFone',
 			'ContatosEmail',
+			'ContatosEmail.TiposEmail',
 			'ContatosInstituicao',
 			'ContatosInstituicao.Cargo'
 		);
@@ -420,7 +421,35 @@ class ChamadasController extends CaritasAppController {
 		
 		// Tabelas adicionais
 		$TiposFone = $this->Chamada->Contato->ContatosFone->TiposFone->find('list',array('fields'=>array('id','nome')));
-		$this->set('TiposFone', $TiposFone); 
+		$this->set('TiposFone', $TiposFone);
+
+		$TiposEmail = $this->Chamada->Contato->ContatosEmail->TiposEmail->find('list',array('fields'=>array('id','nome')));
+		$this->set('TiposEmail', $TiposEmail);
+		
+	}
+	
+	public function exclui_fone_contato($id = 0) {
+		$this->Chamada->Contato->ContatosFone->delete($id);
+		$this->render(false);
+	}
+	
+	public function edit_fone_contato($id = 0) {
+		$data = $this->request->data;
+		if ($id == 0) unset($data['ContatosFone']['id']);
+		$this->Chamada->Contato->ContatosFone->save($data);
+		$this->render(false);
+	}
+	
+	public function exclui_email_contato($id = 0) {
+		$this->Chamada->Contato->ContatosEmail->delete($id);
+		$this->render(false);
+	}
+	
+	public function edit_email_contato($id = 0) {
+		$data = $this->request->data;
+		if ($id == 0) unset($data['ContatosFone']['id']);
+		$this->Chamada->Contato->ContatosEmail->save($data);
+		$this->render(false);
 	}
 
 
