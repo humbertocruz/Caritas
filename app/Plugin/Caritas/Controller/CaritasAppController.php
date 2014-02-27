@@ -38,7 +38,7 @@ class CaritasAppController extends AppController {
 		'Html'
 	);
 	
-	public $uses = array('Caritas.Estado');
+	//public $uses = array('Caritas.Estado');
 
 	public function beforeFilter() {
 	

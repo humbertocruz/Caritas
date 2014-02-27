@@ -22,5 +22,12 @@ class Contato extends CaritasAppModel {
 			'foreignKey' => 'contato_id'
 		)
 	);
+	
+	public $belongsTo = array(
+		'Sexo' => array(
+			'className' => 'Caritas.Sexo',
+			'foreignKey' => 'sexo_id'
+		)
+	);
 
 }

@@ -1,7 +1,5 @@
 <?php
 class ContatosController extends CaritasAppController {
-
-	public $uses = array('Contato');
 	
 	public function index() {
 		
@@ -11,12 +9,31 @@ class ContatosController extends CaritasAppController {
 	}
 	
 	public function add() {
+		if ($this->request->isPost()) {
+			$data = $this->request->data;
+			$this->Contato->save($data);
+			$this->Session->setFlash('Contato gravado com sucesso!');
+			$this->redirect(array('action'=>'index'));
+		} else {
+			$Sexos = $this->Contato->Sexo->find('list', array('fields'=>array('id','nome')));
+			$this->set('Sexos',$Sexos);
+		}
 		$this->render('form');
 	}
 	
 	public function edit($contato_id = null) {
-		$this->request->data = $this->Contato->read(null, $contato_id);
-		$this->render('form');
+		if ($this->request->isPost()) {
+			$data = $this->request->data;
+			$data['Contato']['id'] = $contato_id;
+			$this->Contato->save($data);
+			$this->Session->setFlash('Contato gravado com sucesso!');
+			$this->redirect(array('action'=>'index'));
+		} else {	
+			$this->request->data = $this->Contato->read(null, $contato_id);
+			$Sexos = $this->Contato->Sexo->find('list', array('fields'=>array('id','nome')));
+			$this->set('Sexos',$Sexos);
+			$this->render('form');
+		}
 	}
 	
 	public function del($contato_id = null) {

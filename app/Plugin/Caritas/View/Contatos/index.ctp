@@ -1,22 +1,6 @@
 <?php
 echo $this->Bootstrap->pageHeader('Contatos');
 
-$filters = array(
-	array(
-		'type'=>'select',
-		'model'=>'Contato',
-		'field'=>'estado_id',
-		'options' => $filters['estados']
-	),
-	array(
-		'type'=>'select',
-		'model'=>'Chamada',
-		'field'=>'assunto_id',
-		'options' => $filters['assuntos']
-	)
-);
-echo $this->Caritas->filters($filters, $filters_chamada);
-
 echo $this->Element('Bootstrap.table/table-create',array(
 	'title'=>'Contatos',
 	'state'=>'info'

@@ -409,6 +409,7 @@ class ChamadasController extends CaritasAppController {
 		$this->Chamada->Contato->Behaviors->attach('Containable');
 		$this->Chamada->Contato->contain(
 			'ContatosFone',
+			'ContatosFone.TiposFone',
 			'ContatosEmail',
 			'ContatosInstituicao',
 			'ContatosInstituicao.Cargo'
@@ -416,6 +417,10 @@ class ChamadasController extends CaritasAppController {
 		$contato = $this->Chamada->Contato->read(null, $contato_id);
 		
 		$this->set('contato',$contato);
+		
+		// Tabelas adicionais
+		$TiposFone = $this->Chamada->Contato->ContatosFone->TiposFone->find('list',array('fields'=>array('id','nome')));
+		$this->set('TiposFone', $TiposFone); 
 	}
 
 
