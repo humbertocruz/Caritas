@@ -75,7 +75,7 @@
 					<input type="hidden" name="data[ContatosFone][contato_id]" id="ChamadaContatosFoneContatoId">
 					<div class="form-group">
 						<label for="ChamadaContatosFoneNome">Número</label>
-						<input type="text" class="form-control" name="data[ContatosFone][fone]" id="ChamadaContatosFoneNome">
+						<input type="text" class="form-control mask-fone" name="data[ContatosFone][fone]" id="ChamadaContatosFoneNome">
 					</div>
 					<div class="form-group">
 						<label for="ChamadaContatosFoneTiposFoneId">Tipo</label>
@@ -189,7 +189,19 @@
 		});
 		$('.glyphicon-pencil.fone, .btn-add-fone').click(function(){
 			$('#edit-fone-data').text($(this).data('desc'));
-			$('#EditaChamadaContatosFoneId').val($(this).data('id'));
+			if ($(this).data('id')) {
+				fone_id = $(this).data('id');
+				$('#EditaChamadaContatosFoneId').val(fone_id);
+				$.ajax({
+					'url':'/caritas/chamadas/ler_fone_contato/'+fone_id,
+					'dataType':'json',
+					'success': function(data) {
+						$('#ChamadaContatosFoneNome').val(data.ContatosFone.fone);
+						$('#ChamadaContatosFoneTiposFoneId').val(data.ContatosFone.tipo_fone_id);
+					}
+				});
+				
+			}
 			$('#ChamadaContatosFoneContatoId').val($('#Chamadacontato_id').val());
 			$('#edit-fone').modal('show');
 		});
@@ -224,7 +236,19 @@
 
 		$('.glyphicon-pencil.email, .btn-add-email').click(function(){
 			$('#edit-email-data').text($(this).data('desc'));
-			$('#EditaChamadaContatosEmailId').val($(this).data('id'));
+			if ($(this).data('id')) {
+				email_id = $(this).data('id');
+				$('#EditaChamadaContatosEmailId').val(email_id);
+				$.ajax({
+					'url':'/caritas/chamadas/ler_email_contato/'+email_id,
+					'dataType':'json',
+					'success': function(data) {
+						$('#ChamadaContatosEmailEmail').val(data.ContatosEmail.email);
+						$('#ChamadaContatosEmailTiposEmailId').val(data.ContatosEmail.tipo_email_id);
+					}
+				});
+				
+			}
 			$('#ChamadaContatosEmailContatoId').val($('#Chamadacontato_id').val());
 			$('#edit-email').modal('show');
 		});

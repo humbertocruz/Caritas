@@ -433,6 +433,12 @@ class ChamadasController extends CaritasAppController {
 		$this->render(false);
 	}
 	
+	public function ler_fone_contato($id = 0) {
+		$this->layout = false;
+		$ContatoFone = $this->Chamada->Contato->ContatosFone->read(null, $id);
+		$this->set('ContatoFone', $ContatoFone);
+	}
+	
 	public function edit_fone_contato($id = 0) {
 		$data = $this->request->data;
 		if ($id == 0) unset($data['ContatosFone']['id']);
@@ -443,6 +449,12 @@ class ChamadasController extends CaritasAppController {
 	public function exclui_email_contato($id = 0) {
 		$this->Chamada->Contato->ContatosEmail->delete($id);
 		$this->render(false);
+	}
+	
+	public function ler_email_contato($id = 0) {
+		$this->layout = false;
+		$ContatoEmail = $this->Chamada->Contato->ContatosEmail->read(null, $id);
+		$this->set('ContatoEmail', $ContatoEmail);
 	}
 	
 	public function edit_email_contato($id = 0) {

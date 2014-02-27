@@ -121,6 +121,7 @@ $(document).ready(function(){
 			'url':'/caritas/chamadas/carrega_contato/'+this.value,
 			'success':function(data) {
 				$('#contato-box').html(data).popover('destroy');
+				$(".mask-fone").inputmask("(99) 9999[9]-9999");
 			}
 		});
 	});
