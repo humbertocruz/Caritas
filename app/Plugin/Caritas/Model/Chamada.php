@@ -51,6 +51,10 @@ class Chamada extends CaritasAppModel {
 		'TiposChamada' => array(
 			'className' => 'Caritas.TiposChamada',
 			'foreignKey' => 'tipo_chamada_id'
+		),
+		'Status' => array(
+			'className' => 'Caritas.Status',
+			'foreignKey' => 'status_id'
 		)
 	);
 

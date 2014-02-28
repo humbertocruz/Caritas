@@ -3,23 +3,40 @@ echo $this->Bootstrap->pageHeader('Chamadas');
 
 $filters = array(
 	array(
+		'label'=>'UF',
 		'type'=>'select',
 		'model'=>'Chamada',
 		'field'=>'estado_id',
 		'options' => $filters['estados']
 	),
 	array(
+		'label'=>'Município',
+		'type'=>'select',
+		'model'=>'Chamada',
+		'field'=>'cidade_id',
+		'options' => $filters['municipios']
+	),
+	array(
+		'label'=>'Assunto',
 		'type'=>'select',
 		'model'=>'Chamada',
 		'field'=>'assunto_id',
 		'options' => $filters['assuntos']
 	),
 	array(
+		'label'=>'Finalizada',
 		'type'=>'select',
 		'model'=>'Chamada',
 		'field'=>'data_fim',
 		'options' => $filters['finalizada']
-	)
+	),
+	array(
+		'label'=>'Status',
+		'type'=>'select',
+		'model'=>'Chamada',
+		'field'=>'status_id',
+		'options' => $filters['status']
+	)	
 );
 echo $this->Caritas->filters($filters, $filters_chamada);
 

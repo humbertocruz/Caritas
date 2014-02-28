@@ -71,6 +71,7 @@
 				<?php echo $this->Bootstrap->input('data_inicio', array('type'=>'date','label'=>'Data Início', 'defaultValue'=>date('Y-m-d'), 'readonly'=>'readonly')); ?>
 				<?php echo $this->Bootstrap->select('tipo_chamada_id', array('options'=>$TiposChamada,'label'=>'Tipo de Chamada')); ?>
 				<?php echo $this->Bootstrap->belongs('assunto_id', array('options'=>$Assuntos,'label'=>'Assunto','url'=>'/assuntos')); ?>
+				<?php echo $this->Bootstrap->belongs('status_id', array('options'=>$Status,'label'=>'Status','url'=>'/status')); ?>
 				<?php echo $this->Bootstrap->text('solicitacao', array('label'=>'Solicitação')); ?>
 			</div>
 		</div>
@@ -112,6 +113,8 @@
 
 <script>
 $(document).ready(function(){
-	$('#Chamadacontato_id').change();
+	if ($('#Chamadacontato_id').val()) {
+		$('#Chamadacontato_id').change();
+	}
 });
 </script>

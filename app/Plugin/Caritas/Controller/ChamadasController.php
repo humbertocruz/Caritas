@@ -36,10 +36,12 @@ class ChamadasController extends CaritasAppController {
 			}
 		}
 		// Carrega listas para filtro
-		$estados = array('0'=>'Nenhum') + $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
-		$assuntos = array('0'=>'Nenhum') + $this->Chamada->Assunto->find('list', array('fields'=>array('id','nome')));
+		$estados = array('0'=>'Todos') + $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
+		$municipios = array('0'=>'Todos');
+		$assuntos = array('0'=>'Todos') + $this->Chamada->Assunto->find('list', array('fields'=>array('id','nome')));
 		$finalizada = array('0'=>'Todas','1'=>'Não Finalizadas','2'=>'Finalizadas');
-		$this->set('filters', array('estados'=>$estados,'assuntos'=>$assuntos,'finalizada'=>$finalizada));
+		$status = array('0'=>'Todos') + $this->Chamada->Status->find('list', array('fields'=>array('id','nome')));
+		$this->set('filters', array('estados'=>$estados,'assuntos'=>$assuntos,'finalizada'=>$finalizada,'status'=>$status,'municipios'=>$municipios));
 		
 		// Carrega sessao
 		$filtros = $this->Session->read('Filtros.Chamadas');
@@ -270,6 +272,10 @@ class ChamadasController extends CaritasAppController {
 		$Estados = array('0'=>'Selecione o Estado') + $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
 		$this->set('Estados', $Estados);
 		
+		$Status = array('0'=>'Selecione o Status') + $this->Chamada->Status->find('list', array('fields'=>array('id','nome')));
+		$this->set('Status', $Status);
+		
+		
 		$conditions = array(
 			'Cidade.estado_id' => $Chamada['Chamada']['estado_id']
 		);
@@ -379,7 +385,8 @@ class ChamadasController extends CaritasAppController {
 		$data = array(
 			'Chamada' => array(
 				'id' => $id,
-				'data_fim' => date('Y-m-d')
+				'data_fim' => date('Y-m-d'),
+				'status_id' => 3
 			)
 		);
 		$this->Chamada->save($data);
