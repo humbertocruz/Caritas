@@ -38,7 +38,7 @@ class CaritasAppController extends AppController {
 		'Html'
 	);
 	
-	//public $uses = array('Caritas.Estado');
+	public $uses = array('Caritas.Projeto');
 
 	public function beforeFilter() {
 	
@@ -55,6 +55,15 @@ class CaritasAppController extends AppController {
 				$projeto_id = $this->request->data['Escolha']['Projeto']['id'];
 				$this->Session->write('Escolha.projeto_id', $projeto_id);
 			}
+		}
+		$this->set('escolha_projetos', $this->Projeto->find('list', array('fields'=>array('id','nome'))));
+		
+		if ($this->Session->check('Escolha.projeto_id')) { 
+			$this->set('escolhido_projeto_id', $this->Session->read('Escolha.projeto_id'));
+			$this->escolhido_projeto_id = $this->Session->read('Escolha.projeto_id');
+		} else {
+			$this->set('escolhido_projeto_id', 0);
+			$this->escolhido_projeto_id = 0;
 		}
 		
 		if($this->Session->check('BelongsForms')){

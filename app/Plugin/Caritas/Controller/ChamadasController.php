@@ -72,8 +72,11 @@ class ChamadasController extends CaritasAppController {
 		//$this->Session->delete('Filtros.Chamadas');
 		$filtros = $this->Session->read('Filtros.Chamadas');
 		if (!is_array($filtros)) $filtros = array();
-		// Filtro Constante
+		// Filtro Constante chamada pai
 		$filtros = array('Chamada.chamada_id'=>null)+$filtros;
+		
+		// Filtro Constante Projeto
+		$filtros = array('Chamada.projeto_id'=>$this->escolhido_projeto_id)+$filtros;
 		
 		$chamadas = $this->Paginate('Chamada',$filtros);
 		$this->set('Chamadas',$chamadas);
