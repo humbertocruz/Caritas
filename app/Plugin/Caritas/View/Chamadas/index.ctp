@@ -1,3 +1,10 @@
+<style>
+	.form-group {
+		float: left;
+		margin-right: 15px;
+	}
+</style>
+
 <?php
 echo $this->Bootstrap->pageHeader('Chamadas');
 

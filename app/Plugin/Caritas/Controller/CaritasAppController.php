@@ -49,6 +49,14 @@ class CaritasAppController extends AppController {
 			}
 		}
 		
+		// Escolha do Projeto
+		if ($this->request->isPost()) {
+			if (isset($this->request->data['Escolha'])) { 
+				$projeto_id = $this->request->data['Escolha']['Projeto']['id'];
+				$this->Session->write('Escolha.projeto_id', $projeto_id);
+			}
+		}
+		
 		if($this->Session->check('BelongsForms')){
 			$this->set('belongsForms',$this->Session->read('BelongsForms'));
 		}
