@@ -35,17 +35,27 @@ class ChamadasController extends CaritasAppController {
 				$this->Session->write('Filtros.Chamadas', $this->request->data );
 			}
 		}
+		// Carrega sessao
+		$filtros = $this->Session->read('Filtros.Chamadas');
+		$this->set('filters_chamada', $filtros);
+		
 		// Carrega listas para filtro
 		$estados = array('0'=>'Todos') + $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
-		$municipios = array('0'=>'Todos');
+		//pr($filtros);
+		if (isset($filtros['Chamada.estado_id'])) {
+			$conditions = array(
+				'Cidade.estado_id' => $filtros['Chamada.estado_id']
+			);
+			$Cidades = $this->Chamada->Cidade->find('list', array('conditions'=>$conditions,'fields'=>array('id','nome')));
+		} else {
+			$Cidades = array();
+		}
+		$municipios = array('0'=>'Todos')+$Cidades;
 		$assuntos = array('0'=>'Todos') + $this->Chamada->Assunto->find('list', array('fields'=>array('id','nome')));
 		$finalizada = array('0'=>'Todas','1'=>'Não Finalizadas','2'=>'Finalizadas');
 		$status = array('0'=>'Todos') + $this->Chamada->Status->find('list', array('fields'=>array('id','nome')));
 		$this->set('filters', array('estados'=>$estados,'assuntos'=>$assuntos,'finalizada'=>$finalizada,'status'=>$status,'municipios'=>$municipios));
 		
-		// Carrega sessao
-		$filtros = $this->Session->read('Filtros.Chamadas');
-		$this->set('filters_chamada', $filtros);
 	}
 	public function index() {
 		// Configura Filtros

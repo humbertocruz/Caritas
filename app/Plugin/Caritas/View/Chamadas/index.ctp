@@ -52,8 +52,11 @@ echo $this->Element('Bootstrap.table/table-create',array(
 	'state'=>'info'
 	)
 ); 
-?>
-<?php if (count($Chamadas) == 0) { ?>
+if ($escolhido_projeto_id == 0) { ?>
+<tr>
+	<td colspan="8">Escolha o Projeto no menu superior!</td>
+</tr>
+<?php } elseif (count($Chamadas) == 0) { ?>
 <tr>
 	<td colspan="8">Nenhuma Chamada encontrada!</td>
 </tr>

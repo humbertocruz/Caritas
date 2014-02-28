@@ -39,6 +39,22 @@ class CaritasAppController extends AppController {
 	);
 	
 	public $uses = array('Caritas.Projeto');
+	
+	public $components = array(
+		'Auth' => array(
+			'loginAction' => array(
+				'controller' => 'atendentes',
+				'action' => 'login',
+				'plugin' => 'caritas'
+			),
+			'authError' => 'Did you really think you are allowed to see that?',
+			'authenticate' => array(
+				'Form' => array(
+					'fields' => array('username' => 'email','password'=>'senha')
+				)
+			)
+		)
+	);
 
 	public function beforeFilter() {
 	
