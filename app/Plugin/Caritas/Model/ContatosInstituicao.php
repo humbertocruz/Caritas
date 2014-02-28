@@ -16,6 +16,10 @@ class ContatosInstituicao extends CaritasAppModel {
 		'Cargo' => array(
 			'className' => 'Caritas.Cargo',
 			'foreignKey' => 'cargo_id'
+		),
+		'SituacoesContato' => array(
+			'className' => 'Caritas.SituacoesContato',
+			'foreignKey' => 'situacao_contato_id'
 		)
 	);
 

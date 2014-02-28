@@ -10,6 +10,13 @@ class Chamada extends CaritasAppModel {
 			'allowEmpty'	=> false
 		)
 	);
+	
+	public $hasMany = array(
+		'Filhas' => array(
+			'className' => 'Caritas.Chamada',
+			'foreignKey' => 'chamada_id'
+		),
+	);
 
 	public $belongsTo = array(
 

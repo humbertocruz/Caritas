@@ -8,8 +8,8 @@
 		<div id="contato-telefones" class="panel-collapse collapse in">
 			<div class="panel-body">
 				<?php foreach($contato['ContatosFone'] as $fones) { ?>
-				<span data-desc="<?php echo $fones['fone']; ?> - <?php echo $fones['TiposFone']['nome'];?>" data-id="<?php echo $fones['id'];?>" style="color:#f63; cursor:pointer;" class="glyphicon glyphicon-trash fone"></span>&nbsp;
-				<span data-id="<?php echo $fones['id'];?>" style="color:#36f; cursor:pointer;" class="glyphicon glyphicon-pencil fone"></span>&nbsp;
+				<span data-desc="<?php echo $fones['fone']; ?> - <?php echo $fones['TiposFone']['nome'];?>" data-id="<?php echo $fones['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-trash fone"></span>&nbsp;
+				<span data-id="<?php echo $fones['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-pencil fone"></span>&nbsp;
 				<?php echo $fones['fone']; ?> - <?php echo $fones['TiposFone']['nome'];?><br>
 				<?php } ?>
 			</div>
@@ -27,8 +27,8 @@
 		<div id="contato-emails" class="panel-collapse collapse">
 			<div class="panel-body">
 				<?php foreach($contato['ContatosEmail'] as $emails) { ?>
-				<span data-desc="<?php echo $emails['email']; ?> - <?php echo $emails['TiposEmail']['nome'];?>" data-id="<?php echo $emails['id'];?>" style="color:#f63; cursor:pointer;" class="glyphicon glyphicon-trash email"></span>&nbsp;
-				<span data-id="<?php echo $emails['id'];?>" style="color:#36f; cursor:pointer;" class="glyphicon glyphicon-pencil email"></span>&nbsp;
+				<span data-desc="<?php echo $emails['email']; ?> - <?php echo $emails['TiposEmail']['nome'];?>" data-id="<?php echo $emails['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-trash email"></span>&nbsp;
+				<span data-id="<?php echo $emails['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-pencil email"></span>&nbsp;
 				<?php echo $emails['email']; ?> - <?php echo $emails['TiposEmail']['nome'];?><br>
 				<?php } ?>
 			</div>
@@ -46,13 +46,13 @@
 		<div id="contato-cargos" class="panel-collapse collapse">
 			<div class="panel-body">
 				<?php foreach($contato['ContatosInstituicao'] as $instituicao) { ?>
-				<span data-desc="<?php echo $instituicao['Cargo']['nome'].'- '.$this->AuthBs->brdate($instituicao['data_inicio']).' - '.$instituicao['data_fim']; ?>" data-id="<?php echo $emails['id'];?>" style="color:#f63; cursor:pointer;" class="glyphicon glyphicon-trash cargo"></span>&nbsp;
-				<span data-id="<?php echo $emails['id'];?>" style="color:#36f; cursor:pointer;" class="glyphicon glyphicon-pencil cargo"></span>&nbsp;
+				<span data-desc="<?php echo $instituicao['Cargo']['nome'].'- '.$this->AuthBs->brdate($instituicao['data_inicio']).' - '.$instituicao['data_fim']; ?>" data-id="<?php echo $instituicao['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-trash cargo-instituicao"></span>&nbsp;
+				<span data-id="<?php echo $instituicao['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-pencil cargo-instituicao"></span>&nbsp;
 				<?php echo $instituicao['Cargo']['nome'].' - '.$this->AuthBs->brdate($instituicao['data_inicio']).' - '.$instituicao['data_fim']; ?><br>
 				<?php } ?>
 			</div>
 			<div class="panel-footer">
-				<span class="btn btn-primary btn-add-email">Novo Cargo</span>
+				<span class="btn btn-primary btn-add-cargo">Novo Cargo</span>
 			</div>
 		</div>
 	</div>
@@ -170,6 +170,72 @@
 	</div>
 </div>
 
+<div class="modal" id="edit-cargo-instituicao">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Cargo</h4>
+			</div>
+			<div class="modal-body">
+				<form id="EditaFormCargoInstituiacao">
+					<input type="hidden" name="data[ContatosInstituicao][id]" id="EditaChamadaContatosInstituicaoId">
+					<input type="hidden" name="data[ContatosInstituicao][contato_id]" id="ChamadaContatosInstituicaoContatoId">
+					<div class="form-group">
+						<label for="ChamadaContatosInstituiacaoCargoId">Cargo</label>
+						<select class="form-control" id="ChamadaContatosInstituiacaoCargoId" name="data[ContatosInstituicao][cargo_id]">
+							<?php foreach($Cargos as $key => $value) { ?>
+							<option value="<?php echo $key;?>"><?php echo $value;?></option>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="ChamadaContatosInstituiacaoDataInicio">Data Início</label>
+						<input type="date" class="form-control mask-date" name="data[ContatosInstituiacao][data_inicio]" id="ChamadaContatosInstituiacaoDataInicio">
+					</div>
+					<div class="form-group">
+						<label for="ChamadaContatosInstituiacaoDataFim">Data Fim</label>
+						<input type="date" class="form-control mask-date" name="data[ContatosInstituiacao][data_fim]" id="ChamadaContatosInstituiacaoDataFim">
+					</div>
+					<div class="form-group">
+						<label for="ChamadaContatosInstituiacaoSituacaoContatoId">Situação</label>
+						<select class="form-control" id="ChamadaContatosInstituiacaoSituacaoContatoId" name="data[ContatosInstituicao][situacao_contato_id]">
+							<?php foreach($SituacoesContato as $key => $value) { ?>
+							<option value="<?php echo $key;?>"><?php echo $value;?></option>
+							<?php } ?>
+						</select>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-primary">Salvar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal" id="del-cargo-instituicao">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Excluir Cargo</h4>
+			</div>
+			<div class="modal-body">
+				<span id="del-cargo-instituicao-data"></span>
+				<br><br>Tem Certeza ?<br>
+				<form id="ExcluiFormCargoInstituiacao">
+					<input type="hidden" name="data[ContatosInstituicao][id]" id="ExcluiChamadaContatosInstituicaoId">
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-danger">Excluir</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
 	$(document).ready(function() {
 		// Telefone
@@ -259,6 +325,55 @@
 				'data': $('#EditaFormEmail').serialize(),
 				'success': function(data) {
 					$('#edit-email').modal('hide');
+					$('#Chamadacontato_id').change();
+				}
+			});
+		});
+		
+		// Cargo
+		$('.glyphicon-trash.cargo-instituicao').click(function() {
+			$('#ExcluiChamadaContatosInstituicaoId').val($(this).data('id'));
+			$('#del-cargo-instituicao-data').text($(this).data('desc'));
+			$('#del-cargo-instituicao').modal('show');
+		});
+		$('#del-cargo-instituicao .btn-danger').click(function(){
+			$.ajax({
+				'url': '/caritas/chamadas/exclui_cargo_contato_instituicao/'+$('#ExcluiChamadaContatosInstituicaoId').val(),
+				'success': function(data) {
+					$('#del-cargo-instituiacao').modal('hide');
+					$('#Chamadacontato_id').change();
+				}
+			});
+		});
+
+
+		$('.glyphicon-pencil.cargo-instituicao, .btn-add-cargo').click(function(){
+			$('#edit-cargo-data').text($(this).data('desc'));
+			if ($(this).data('id')) {
+				cargo_id = $(this).data('id');
+				$('#EditaChamadaContatosInstituicaoId').val(cargo_id);
+				$.ajax({
+					'url':'/caritas/chamadas/ler_cargo_contato_instituicao/'+cargo_id,
+					'dataType':'json',
+					'success': function(data) {
+						//console.log(data);
+						$('#ChamadaContatosInstituiacaoCargoId').val(data.ContatosInstituicao.cargo_id);
+						$('#ChamadaContatosInstituiacaoDataInicio').val(data.ContatosInstituicao.data_inicio);
+						
+					}
+				});
+				
+			}
+			$('#ChamadaContatosCargoContatoId').val($('#Chamadacontato_id').val());
+			$('#edit-cargo').modal('show');
+		});
+		$('#edit-cargo-instituiacao .btn-primary').click(function(){
+			$.ajax({
+				'url': '/caritas/chamadas/edit_cargo_contato/'+$('#EditaChamadaContatosCargoId').val(),
+				'type': 'post',
+				'data': $('#EditaFormCargo').serialize(),
+				'success': function(data) {
+					$('#edit-cargo').modal('hide');
 					$('#Chamadacontato_id').change();
 				}
 			});

@@ -2,6 +2,18 @@
 
 <?php echo $this->Bootstrap->pageHeader('Chamadas'); ?>
 
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#tab-chamadas" data-toggle="tab">Chamadas</a></li>
+  <?php if ($action_name == 'edit') { ?>
+  <li><a href="#tab-procedimentos" data-toggle="tab">Procedimentos</a></li>
+  <?php if ($this->request->data['Chamada']['chamada_id'] == 0) { ?>
+  <li><a href="#tab-filhas" data-toggle="tab">Chamadas Filhas</a></li>
+  <?php } ?>
+  <?php } ?>
+</ul>
+<br>
+<div class="tab-content">
+  <div class="tab-pane active" id="tab-chamadas">
 <div class="row">
 	<div class="col-md-8">
 		<?php echo $this->Form->create('Chamada',array('type'=>'post')); ?>
@@ -48,29 +60,7 @@
 			<div class="panel-body">
 				<?php echo $this->Bootstrap->belongs('contato_id', array('options'=>$Contatos,'label'=>'Contato','url'=>'/contatos/edit/')); ?>
 				<div id="contato-box" class="alert">
-					<?php if (isset($this->data['Contato'])) { ?>
-					<table>
-						<tr>
-							<td>
-								<?php foreach($this->data['Contato']['ContatosFone'] as $fones) { ?>
-									<?php echo $fones['fone'].'<br>'; ?>
-								<?php } ?>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<?php foreach($this->data['Contato']['ContatosEmail'] as $emails) { ?>
-									<?php echo $emails['email'].'<br>'; ?>
-								<?php } ?>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								Cargos
-							</td>
-						</tr>
-					</table>
-					<?php } ?>
+					
 				</div>
 			</div>
 		</div>
@@ -111,11 +101,17 @@
 			</div>
 		</div>
 	</div>
-	<style>
-		#historico-div.affix {
-			width: 358px;
-			margin-top: -100px;
-			margin-bottom: 100px;
-		}
-	</style>
 </div>
+  <div class="tab-pane" id="tab-procedimentos">
+	  Procedimentos
+  </div>
+  <div class="tab-pane" id="tab-filhas">
+	  <?php echo $this->Element('Chamadas/filhas'); ?>
+  </div>
+</div>
+
+<script>
+$(document).ready(function(){
+	$('#Chamadacontato_id').change();
+});
+</script>
