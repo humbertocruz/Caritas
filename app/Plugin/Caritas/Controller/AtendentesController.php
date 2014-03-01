@@ -16,6 +16,8 @@ class AtendentesController extends CaritasAppController {
 	public function logout() {
 		
 		$this->Auth->logout();
+		$this->Session->setFlash('Você saiu do sistema!');
+		$this->redirect('/');
 	}
 
 }
