@@ -4,9 +4,14 @@ class AtendentesController extends CaritasAppController {
 	public function login() {
 	
 		if ($this->request->isPost()) {
+					
+			echo $this->Auth->password($this->request->data['Atendente']['senha']);
 			
-			if ($this->Auth->login($this->data)) {
+			if ($this->Auth->login()) {
+				$this->Session->setFlash('Login');
 				echo 'Autenticado!';
+			} else {
+				$this->Session->setFlash('Erro no Login');
 			}
 			
 		}

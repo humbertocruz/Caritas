@@ -50,6 +50,7 @@ class CaritasAppController extends AppController {
 			'authError' => 'Did you really think you are allowed to see that?',
 			'authenticate' => array(
 				'Form' => array(
+					'userModel' => 'Atendente',
 					'fields' => array('username' => 'email','password'=>'senha')
 				)
 			)
