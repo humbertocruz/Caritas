@@ -155,6 +155,9 @@ class ChamadasController extends CaritasAppController {
 
 		$Assuntos = $this->Chamada->Assunto->find('list', array('fields'=>array('id','nome')));
 		$this->set('Assuntos',$Assuntos);
+		
+		$Prioridades = $this->Chamada->Prioridade->find('list', array('fields'=>array('id','nome')));
+		$this->set('Prioridades',$Prioridades);
 
 		$Estados = array('0'=>'Selecione o Estado') + $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
 		$this->set('Estados', $Estados);
@@ -288,6 +291,8 @@ class ChamadasController extends CaritasAppController {
 		$Status = array('0'=>'Selecione o Status') + $this->Chamada->Status->find('list', array('fields'=>array('id','nome')));
 		$this->set('Status', $Status);
 		
+		$Prioridades = $this->Chamada->Prioridade->find('list', array('fields'=>array('id','nome')));
+		$this->set('Prioridades',$Prioridades);
 		
 		$conditions = array(
 			'Cidade.estado_id' => $Chamada['Chamada']['estado_id']

@@ -55,6 +55,10 @@ class Chamada extends CaritasAppModel {
 		'Status' => array(
 			'className' => 'Caritas.Status',
 			'foreignKey' => 'status_id'
+		),
+		'Prioridade' => array(
+			'className' => 'Caritas.Prioridade',
+			'foreignKey' => 'prioridade_id'
 		)
 	);
 

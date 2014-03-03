@@ -153,11 +153,7 @@ class CaritasAppController extends AppController {
 		);
 
 		$this->set('menus', $menus);
-
-		$usuario = array(
-			'nome' => 'Humberto Cruz'
-		);
-		$this->set('usuario', $usuario);
+		$this->set('usuario', $this->Auth->user());
 	}
 
 }

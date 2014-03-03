@@ -72,6 +72,7 @@
 				<?php echo $this->Bootstrap->select('tipo_chamada_id', array('options'=>$TiposChamada,'label'=>'Tipo de Chamada')); ?>
 				<?php echo $this->Bootstrap->belongs('assunto_id', array('options'=>$Assuntos,'label'=>'Assunto','url'=>'/assuntos')); ?>
 				<?php echo $this->Bootstrap->belongs('status_id', array('options'=>$Status,'label'=>'Status','url'=>'/status')); ?>
+				<?php echo $this->Bootstrap->belongs('prioridade_id', array('options'=>$Prioridades,'label'=>'Prioridade','url'=>'/prioridades')); ?>
 				<?php echo $this->Bootstrap->text('solicitacao', array('label'=>'Solicitação')); ?>
 			</div>
 		</div>
