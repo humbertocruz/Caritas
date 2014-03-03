@@ -1,17 +1,19 @@
 <?php
 class AtendentesController extends CaritasAppController {
+
+	public function home() {
+		
+	}
 	
 	public function login() {
 	
 		if ($this->request->isPost()) {
-					
-			echo $this->Auth->password($this->request->data['Atendente']['senha']);
 			
 			if ($this->Auth->login()) {
-				$this->Session->setFlash('Login');
-				echo 'Autenticado!';
+				$this->Session->setFlash('Atendente autenticado com successo!');
+				$this->redirect('/');
 			} else {
-				$this->Session->setFlash('Erro no Login');
+				$this->Session->setFlash('Erro na autenticação do Atendente!');
 			}
 			
 		}
