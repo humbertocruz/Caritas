@@ -73,14 +73,24 @@ class CaritasAppController extends AppController {
 				$this->Session->write('Escolha.projeto_id', $projeto_id);
 			}
 		}
-		$this->set('escolha_projetos', $this->Projeto->find('list', array('fields'=>array('id','nome'))));
-		
-		if ($this->Session->check('Escolha.projeto_id')) { 
-			$this->set('escolhido_projeto_id', $this->Session->read('Escolha.projeto_id'));
-			$this->escolhido_projeto_id = $this->Session->read('Escolha.projeto_id');
+		$user = $this->Auth->user();
+		$projetos_atendente = $this->Projeto->AtendentesProjeto->find('list', array('fields'=>array('atendente_id','projeto_id'),'conditions'=>array('atendente_id'=>$user['id'])));
+		$this->set('escolha_projetos', $this->Projeto->find('list', array('fields'=>array('id','nome'),'conditions'=>array('id'=>$projetos_atendente))));
+
+		if (count($projetos_atendente) == 1) {
+			//pr($projetos_atendente[$user['id']]);
+			$this->set('escolhido_projeto_id', $projetos_atendente[$user['id']]);
+			$this->escolhido_projeto_id = $projetos_atendente[$user['id']];
 		} else {
-			$this->set('escolhido_projeto_id', 0);
-			$this->escolhido_projeto_id = 0;
+			
+			if ($this->Session->check('Escolha.projeto_id')) { 
+				$this->set('escolhido_projeto_id', $this->Session->read('Escolha.projeto_id'));
+				$this->escolhido_projeto_id = $this->Session->read('Escolha.projeto_id');
+			} else {
+				$this->set('escolhido_projeto_id', 0);
+				$this->escolhido_projeto_id = 0;
+			}
+		
 		}
 		
 		if($this->Session->check('BelongsForms')){

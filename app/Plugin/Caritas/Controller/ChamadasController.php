@@ -88,6 +88,8 @@ class ChamadasController extends CaritasAppController {
 		// Filtro Constante Projeto
 		$filtros = array('Chamada.projeto_id'=>$this->escolhido_projeto_id)+$filtros;
 		
+		//pr($filtros);
+		
 		$chamadas = $this->Paginate('Chamada',$filtros);
 		$this->set('Chamadas',$chamadas);
 
