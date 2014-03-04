@@ -113,6 +113,7 @@ CakePlugin::load(
         //'Admin' => array('bootstrap'=>true,'routes' => true),
         //'Server' => array('bootstrap'=>true,'routes' => true),
         
-        'Caritas'
+        'Caritas',
+        'Admin'
     )
 );

@@ -1,7 +1,7 @@
 <?php
-class AtendentesController extends CaritasAppController {
+class AtendentesController extends AdminAppController {
 
-	public $uses = array('Atendente');
+	public $uses = array('Caritas.Atendente');
 
 	public function home() {
 		

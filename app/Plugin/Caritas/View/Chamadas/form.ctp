@@ -58,7 +58,9 @@
 		<div class="panel panel-success">
 			<div class="panel-heading">Contato</div>
 			<div class="panel-body">
-				<?php echo $this->Bootstrap->belongs('contato_id', array('options'=>$Contatos,'label'=>'Contato','url'=>'/contatos/edit/')); ?>
+				<?php echo $this->Bootstrap->select('contato_id', array('options'=>$Contatos,'label'=>'Contato')); ?>
+				<span class="btn btn-success disabled" id="contato-novo">Adicionar</span>
+				<hr>
 				<div id="contato-box" class="alert">
 					
 				</div>
@@ -112,11 +114,88 @@
   </div>
 </div>
 
+<div class="modal" id="modal-novo-contato">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Contato</h4>
+			</div>
+			<div class="modal-body">
+				<form id="NovoFormContato">
+					<input type="hidden" name="data[ContatosInstituicao][instituicao_id]" id="NovoChamadaContatosInstituiacaoInstituicaoId">
+					<input type="hidden" name="data[ContatosFornecedor][fornecedor_id]" id="NovoChamadaContatosFornecedorFornecedorId">
+					<div class="form-group">
+						<label for="ChamadaContatosNome">Nome</label>
+						<input type="text" class="form-control" name="data[Contatos][nome]" id="ChamadaContatosNome">
+					</div>
+					<div class="form-group">
+						<label for="ChamadaContatosDataNascimento">Nascimento</label>
+						<input type="date" class="form-control mask-date" name="data[Contatos][data_nascimento]" id="ChamadaContatosDataNascimento">
+					</div>
+					<div class="form-group">
+						<label for="ChamadaContatosCpf">CPF</label>
+						<input type="text" class="form-control" name="data[Contatos][cpf]" id="ChamadaContatosCpf">
+					</div>
+					<div class="form-group">
+						<label for="ChamadaContatosSexoId">Sexo</label>
+						<select class="form-control" id="ChamadaContatosSexoId" name="data[Contatos[sexo_id]">
+							<?php foreach($Sexos as $key => $value) { ?>
+							<option value="<?php echo $key;?>"><?php echo $value;?></option>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="ChamadaContatosInstituiacaoCargoId">Cargo</label>
+						<select class="form-control" id="ChamadaContatosInstituiacaoCargoId" name="data[ContatosInstituicao][cargo_id]">
+							<?php foreach($Cargos as $key => $value) { ?>
+							<option value="<?php echo $key;?>"><?php echo $value;?></option>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="ChamadaContatosInstituiacaoDataInicio">Data Início</label>
+						<input type="date" class="form-control mask-date" name="data[ContatosInstituiacao][data_inicio]" id="ChamadaContatosInstituiacaoDataInicio">
+					</div>
+					<div class="form-group">
+						<label for="ChamadaContatosInstituiacaoDataFim">Data Fim</label>
+						<input type="date" class="form-control mask-date" name="data[ContatosInstituiacao][data_fim]" id="ChamadaContatosInstituiacaoDataFim">
+					</div>
+					<div class="form-group">
+						<label for="ChamadaContatosInstituiacaoSituacaoContatoId">Situação</label>
+						<select class="form-control" id="ChamadaContatosInstituiacaoSituacaoContatoId" name="data[ContatosInstituicao][situacao_contato_id]">
+							<?php foreach($SituacoesContato as $key => $value) { ?>
+							<option value="<?php echo $key;?>"><?php echo $value;?></option>
+							<?php } ?>
+						</select>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-primary">Salvar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
 $(document).ready(function(){
 	if ($('#Chamadacontato_id').val()) {
 		$('#Chamadacontato_id').change();
 	}
+	
+	// Contato
+		$('#contato-novo').click(function(){
+			if ($('#Chamadainst_forn').val() == 1) {
+				$('#NovoChamadaContatosInstituiacaoInstituicaoId').val($('#Chamadainstituicao_id').val());
+			} else {
+				$('#NovoChamadaContatosFornecedorFornecedorId').val($('#Chamadafornecedor_id').val());
+			}
+			$('#modal-novo-contato').modal('show');
+		});
+	
+	
 });
 </script>
 

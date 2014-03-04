@@ -298,6 +298,16 @@ class ChamadasController extends CaritasAppController {
 		$Prioridades = $this->Chamada->Prioridade->find('list', array('fields'=>array('id','nome')));
 		$this->set('Prioridades',$Prioridades);
 		
+		$SituacoesContato = $this->Chamada->Contato->ContatosInstituicao->SituacoesContato->find('list', array('fields'=>array('id','nome')));
+		$this->set('SituacoesContato', $SituacoesContato);
+		
+		$Cargos = $this->Chamada->Contato->ContatosInstituicao->Cargo->find('list', array('fields'=>array('id','nome')));
+		$this->set('Cargos', $Cargos);
+		
+		$Sexos = $this->Chamada->Contato->Sexo->find('list', array('fields'=>array('id','nome')));
+		$this->set('Sexos',$Sexos);
+
+				
 		$conditions = array(
 			'Cidade.estado_id' => $Chamada['Chamada']['estado_id']
 		);
@@ -506,7 +516,7 @@ class ChamadasController extends CaritasAppController {
 	
 	}
 	
-	public function carrega_contato($contato_id) {
+	public function carrega_contato($contato_id = null, $inst_forn = 1, $inst_forn_id = null) {
 		$this->layout = false;
 		$this->Chamada->Contato->Behaviors->attach('Containable');
 		$this->Chamada->Contato->contain(
@@ -515,9 +525,22 @@ class ChamadasController extends CaritasAppController {
 			'ContatosEmail',
 			'ContatosEmail.TiposEmail',
 			'ContatosInstituicao',
-			'ContatosInstituicao.Cargo'
+			'ContatosInstituicao.Cargo',
+			'ContatosFornecedor',
+			'ContatosFornecedor.Cargo'
 		);
-		$contato = $this->Chamada->Contato->read(null, $contato_id);
+		if ($inst_forn == 1) {
+			$conditions = array(
+				'ContatosInstituiacao.instituiacao_id' => $inst_forn_id
+			);
+		} else {
+			$conditions = array(
+				'ContatosInstituiacao.fornecedor_id' => $inst_forn_id
+			);
+		}
+		$contato = $this->Chamada->Contato->read(null, $contato_id, array('conditions'=>$conditions));
+		
+		$this->set('inst_forn', $inst_forn);
 		
 		$this->set('contato',$contato);
 		
@@ -528,11 +551,12 @@ class ChamadasController extends CaritasAppController {
 		$TiposEmail = $this->Chamada->Contato->ContatosEmail->TiposEmail->find('list',array('fields'=>array('id','nome')));
 		$this->set('TiposEmail', $TiposEmail);
 		
-		$Cargos = $this->Chamada->Contato->ContatosInstituicao->Cargo->find('list', array('fields'=>array('id','nome')));
-		$this->set('Cargos', $Cargos);
-		
 		$SituacoesContato = $this->Chamada->Contato->ContatosInstituicao->SituacoesContato->find('list', array('fields'=>array('id','nome')));
 		$this->set('SituacoesContato', $SituacoesContato);
+		
+		$Cargos = $this->Chamada->Contato->ContatosInstituicao->Cargo->find('list', array('fields'=>array('id','nome')));
+		$this->set('Cargos', $Cargos);
+
 		
 	}
 	
@@ -575,42 +599,35 @@ class ChamadasController extends CaritasAppController {
 	}
 	
 	// Cargos Instituicao
-	public function exclui_cargo_contato_instituicao($id = 0) {
-		$this->Chamada->Contato->ContatosInstituicao->delete($id);
+	public function exclui_cargo_contato($id = 0, $inst_forn = 1) {
+		if ($inst_forn == 1) {
+			$this->Chamada->Contato->ContatosInstituicao->delete($id);
+		} else {
+			$this->Chamada->Contato->ContatosFornecedor->delete($id);
+		}
 		$this->render(false);
 	}
 	
-	public function ler_cargo_contato_instituicao($id = 0) {
+	public function ler_cargo_contato($id = 0, $inst_forn = 1) {
 		$this->layout = false;
-		$ContatoCargo = $this->Chamada->Contato->ContatosInstituicao->read(null, $id);
+		if ($inst_forn == 1) {
+			$ContatoCargo = $this->Chamada->Contato->ContatosInstituicao->read(null, $id);
+		} else {
+			$ContatoCargo = $this->Chamada->Contato->ContatosFornecedor->read(null, $id);
+		}
 		$this->set('ContatoCargo', $ContatoCargo);
 	}
 	
-	public function edit_cargo_contato_instituicao($id = 0) {
+	public function edit_cargo_contato($id = 0, $inst_forn = 1) {
 		$data = $this->request->data;
-		if ($id == 0) unset($data['ContatosFone']['id']);
-		$this->Chamada->Contato->ContatosInstituiacao->save($data);
+		if ($inst_forn == 1) {
+			if ($id == 0) unset($data['ContatosInstituicao']['id']);
+			$this->Chamada->Contato->ContatosInstituicao->save($data);
+		} else {
+			if ($id == 0) unset($data['ContatosFornecedor']['id']);
+			$this->Chamada->Contato->ContatosFornecedor->save($data);
+		}
 		$this->render(false);
 	}
-
-	// Cargos Fornecedor
-	public function exclui_cargo_contato_fornecedor($id = 0) {
-		$this->Chamada->Contato->ContatosFornecedor->delete($id);
-		$this->render(false);
-	}
-	
-	public function ler_cargo_contato_fornecedor($id = 0) {
-		$this->layout = false;
-		$ContatoCargo = $this->Chamada->Contato->ContatosFornecedor->read(null, $id);
-		$this->set('ContatoCargo', $ContatoCargo);
-	}
-	
-	public function edit_cargo_contato_fornecedor($id = 0) {
-		$data = $this->request->data;
-		if ($id == 0) unset($data['ContatosForncedor']['id']);
-		$this->Chamada->Contato->ContatosFornecedor->save($data);
-		$this->render(false);
-	}
-
 
 }

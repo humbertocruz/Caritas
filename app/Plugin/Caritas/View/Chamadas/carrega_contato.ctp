@@ -45,10 +45,19 @@
 		</div>
 		<div id="contato-cargos" class="panel-collapse collapse">
 			<div class="panel-body">
+				<?php if ($inst_forn == 1) { ?>
 				<?php foreach($contato['ContatosInstituicao'] as $instituicao) { ?>
-				<span data-desc="<?php echo $instituicao['Cargo']['nome'].'- '.$this->AuthBs->brdate($instituicao['data_inicio']).' - '.$instituicao['data_fim']; ?>" data-id="<?php echo $instituicao['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-trash cargo-instituicao"></span>&nbsp;
-				<span data-id="<?php echo $instituicao['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-pencil cargo-instituicao"></span>&nbsp;
+				<span data-desc="<?php echo $instituicao['Cargo']['nome'].'- '.$this->AuthBs->brdate($instituicao['data_inicio']).' - '.$instituicao['data_fim']; ?>" data-id="<?php echo $instituicao['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-trash cargo"></span>&nbsp;
+				<span data-id="<?php echo $instituicao['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-pencil cargo"></span>&nbsp;
 				<?php echo $instituicao['Cargo']['nome'].' - '.$this->AuthBs->brdate($instituicao['data_inicio']).' - '.$instituicao['data_fim']; ?><br>
+				<?php } ?>
+				<?php } ?>
+				<?php if ($inst_forn == 2) { ?>
+				<?php foreach($contato['ContatosFornecedor'] as $fornecedor) { ?>
+				<span data-desc="<?php echo $fornecedor['Cargo']['nome'].'- '.$this->AuthBs->brdate($fornecedor['data_inicio']).' - '.$fornecedor['data_fim']; ?>" data-id="<?php echo $fornecedor['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-trash cargo"></span>&nbsp;
+				<span data-id="<?php echo $fornecedor['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-pencil cargo"></span>&nbsp;
+				<?php echo $fornecedor['Cargo']['nome'].' - '.$this->AuthBs->brdate($fornecedor['data_inicio']).' - '.$fornecedor['data_fim']; ?><br>
+				<?php } ?>
 				<?php } ?>
 			</div>
 			<div class="panel-footer">
@@ -170,7 +179,7 @@
 	</div>
 </div>
 
-<div class="modal" id="edit-cargo-instituicao">
+<div class="modal" id="edit-cargo">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -179,27 +188,27 @@
 			</div>
 			<div class="modal-body">
 				<form id="EditaFormCargoInstituiacao">
-					<input type="hidden" name="data[ContatosInstituicao][id]" id="EditaChamadaContatosInstituicaoId">
-					<input type="hidden" name="data[ContatosInstituicao][contato_id]" id="ChamadaContatosInstituicaoContatoId">
+					<input type="hidden" name="data[ContatosInst_Forn][id]" id="EditaChamadaContatosInstFornId">
+					<input type="hidden" name="data[Contato][id]" id="ChamadaContatosInstituicaoContatoId">
 					<div class="form-group">
-						<label for="ChamadaContatosInstituiacaoCargoId">Cargo</label>
-						<select class="form-control" id="ChamadaContatosInstituiacaoCargoId" name="data[ContatosInstituicao][cargo_id]">
+						<label for="ChamadaContatosInstFornCargoId">Cargo</label>
+						<select class="form-control" id="ChamadaContatosInstFornCargoId" name="data[ContatosInstForn][cargo_id]">
 							<?php foreach($Cargos as $key => $value) { ?>
 							<option value="<?php echo $key;?>"><?php echo $value;?></option>
 							<?php } ?>
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="ChamadaContatosInstituiacaoDataInicio">Data Início</label>
-						<input type="date" class="form-control mask-date" name="data[ContatosInstituiacao][data_inicio]" id="ChamadaContatosInstituiacaoDataInicio">
+						<label for="ChamadaContatosInstFornDataInicio">Data Início</label>
+						<input type="date" class="form-control mask-date" name="data[ContatosInstForn][data_inicio]" id="ChamadaContatosInstFornDataInicio">
 					</div>
 					<div class="form-group">
-						<label for="ChamadaContatosInstituiacaoDataFim">Data Fim</label>
-						<input type="date" class="form-control mask-date" name="data[ContatosInstituiacao][data_fim]" id="ChamadaContatosInstituiacaoDataFim">
+						<label for="ChamadaContatosInstFornDataFim">Data Fim</label>
+						<input type="date" class="form-control mask-date" name="data[ContatosInstForn][data_fim]" id="ChamadaContatosInstFornDataFim">
 					</div>
 					<div class="form-group">
-						<label for="ChamadaContatosInstituiacaoSituacaoContatoId">Situação</label>
-						<select class="form-control" id="ChamadaContatosInstituiacaoSituacaoContatoId" name="data[ContatosInstituicao][situacao_contato_id]">
+						<label for="ChamadaContatosInstFornSituacaoContatoId">Situação</label>
+						<select class="form-control" id="ChamadaContatosInstFornSituacaoContatoId" name="data[ContatosInstForn][situacao_contato_id]">
 							<?php foreach($SituacoesContato as $key => $value) { ?>
 							<option value="<?php echo $key;?>"><?php echo $value;?></option>
 							<?php } ?>
@@ -214,7 +223,7 @@
 		</div>
 	</div>
 </div>
-<div class="modal" id="del-cargo-instituicao">
+<div class="modal" id="del-cargo">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -224,8 +233,8 @@
 			<div class="modal-body">
 				<span id="del-cargo-instituicao-data"></span>
 				<br><br>Tem Certeza ?<br>
-				<form id="ExcluiFormCargoInstituiacao">
-					<input type="hidden" name="data[ContatosInstituicao][id]" id="ExcluiChamadaContatosInstituicaoId">
+				<form id="ExcluiFormCargoInstForn">
+					<input type="hidden" name="data[ContatosInstForn][id]" id="ExcluiChamadaContatosInstFornId">
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -238,6 +247,7 @@
 
 <script>
 	$(document).ready(function() {
+		
 		// Telefone
 		$('.glyphicon-trash.fone').click(function() {
 			$('#ExcluiChamadaContatosFoneId').val($(this).data('id'));
@@ -331,34 +341,33 @@
 		});
 		
 		// Cargo
-		$('.glyphicon-trash.cargo-instituicao').click(function() {
-			$('#ExcluiChamadaContatosInstituicaoId').val($(this).data('id'));
-			$('#del-cargo-instituicao-data').text($(this).data('desc'));
-			$('#del-cargo-instituicao').modal('show');
+		$('.glyphicon-trash.cargo').click(function() {
+			$('#ExcluiChamadaContatosInstFornId').val($(this).data('id'));
+			$('#del-cargo-InstForn-data').text($(this).data('desc'));
+			$('#del-cargo-InstForn').modal('show');
 		});
 		$('#del-cargo-instituicao .btn-danger').click(function(){
 			$.ajax({
-				'url': '/caritas/chamadas/exclui_cargo_contato_instituicao/'+$('#ExcluiChamadaContatosInstituicaoId').val(),
+				'url': '/caritas/chamadas/exclui_cargo_contato/'+$('#ExcluiChamadaContatosInstFornId').val()+'/'+$('#ChamadaInstituiacaoId').val(),
 				'success': function(data) {
-					$('#del-cargo-instituiacao').modal('hide');
+					$('#del-cargo-InstForn').modal('hide');
 					$('#Chamadacontato_id').change();
 				}
 			});
 		});
 
 
-		$('.glyphicon-pencil.cargo-instituicao, .btn-add-cargo').click(function(){
+		$('.glyphicon-pencil.cargo, .btn-add-cargo').click(function(){
 			$('#edit-cargo-data').text($(this).data('desc'));
 			if ($(this).data('id')) {
 				cargo_id = $(this).data('id');
-				$('#EditaChamadaContatosInstituicaoId').val(cargo_id);
+				$('#EditaChamadaContatosInstFornId').val(cargo_id);
 				$.ajax({
-					'url':'/caritas/chamadas/ler_cargo_contato_instituicao/'+cargo_id,
+					'url':'/caritas/chamadas/ler_cargo_contato/'+cargo_id+'/'+$('#Chamadainst_forn').val()+'/'+$('#ChamadaInstituiacaoId').val(),
 					'dataType':'json',
 					'success': function(data) {
-						//console.log(data);
-						$('#ChamadaContatosInstituiacaoCargoId').val(data.ContatosInstituicao.cargo_id);
-						$('#ChamadaContatosInstituiacaoDataInicio').val(data.ContatosInstituicao.data_inicio);
+						$('#ChamadaContatosInstFornCargoId').val(data.ContatosInstForn.cargo_id);
+						$('#ChamadaContatosInstFornDataInicio').val(data.ContatosInstForn.data_inicio);
 						
 					}
 				});
@@ -367,7 +376,7 @@
 			$('#ChamadaContatosCargoContatoId').val($('#Chamadacontato_id').val());
 			$('#edit-cargo').modal('show');
 		});
-		$('#edit-cargo-instituiacao .btn-primary').click(function(){
+		$('#edit-cargo .btn-primary').click(function(){
 			$.ajax({
 				'url': '/caritas/chamadas/edit_cargo_contato/'+$('#EditaChamadaContatosCargoId').val(),
 				'type': 'post',

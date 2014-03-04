@@ -30,15 +30,13 @@ App::uses('Controller', 'Controller');
  * @package		app.Controller
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
-class CaritasAppController extends AppController {
+class AdminAppController extends AppController {
 
 	public $helpers = array(
 		'Bootstrap.AuthBs',
 		'Bootstrap.Bootstrap',
 		'Html'
 	);
-	
-	public $uses = array('Caritas.Projeto');
 	
 	public $components = array(
 		'Auth' => array(
@@ -66,52 +64,13 @@ class CaritasAppController extends AppController {
 			}
 		}
 		
-		// Escolha do Projeto
-		if ($this->request->isPost()) {
-			if (isset($this->request->data['Escolha'])) { 
-				$projeto_id = $this->request->data['Escolha']['Projeto']['id'];
-				$this->Session->write('Escolha.projeto_id', $projeto_id);
-			}
-		}
-		
-		$user = $this->Auth->user();
-		$projetos_atendente = $this->Projeto->AtendentesProjeto->find('list', array('fields'=>array('id','projeto_id'),'conditions'=>array('atendente_id'=>$user['id'])));
-		$this->set('escolha_projetos', $this->Projeto->find('list', array('fields'=>array('id','nome'),'conditions'=>array('id'=>$projetos_atendente))));
-		
-		$conditions = array(
-			'Chamada.atendente_id' => $user['id'],
-			'Chamada.data_fim' => null
-		);
-		$emaberto = $this->Projeto->Chamada->find('count', array('conditions'=>$conditions));
-		$this->set('emaberto', $emaberto);
-
-
-		if (count($projetos_atendente) == 1) {
-			$this->set('escolhido_projeto_id', $projetos_atendente[$user['id']]);
-			$this->escolhido_projeto_id = $projetos_atendente[$user['id']];
-		} else {
-			
-			if ($this->Session->check('Escolha.projeto_id')) { 
-				$this->set('escolhido_projeto_id', $this->Session->read('Escolha.projeto_id'));
-				$this->escolhido_projeto_id = $this->Session->read('Escolha.projeto_id');
-			} else {
-				$this->set('escolhido_projeto_id', 0);
-				$this->escolhido_projeto_id = 0;
-			}
-		
-		}
-		
-		if($this->Session->check('BelongsForms')){
-			$this->set('belongsForms',$this->Session->read('BelongsForms'));
-		}
-
 		// Carregar Layout bootstrap
-		$this->layout = 'Bootstrap.bootstrap';
+		$this->layout = 'Bootstrap.bootstrap-admin';
 
 		$menus = array(
 			array(
 			'Menu' => array(
-				'title' => 'Menu Superior'
+				'title' => 'Menu Admin'
 			),
 			'Links' => array(
 				array(
@@ -123,44 +82,18 @@ class CaritasAppController extends AppController {
 					array(
 						'Link' => array(
 							'id' => 1,
-							'text' => 'Chamada',
-							'plugin' => 'caritas',
-							'controller' => 'chamadas',
+							'text' => 'Atendente',
+							'plugin' => 'admin',
+							'controller' => 'atendentes',
 							'action' => 'index'
 						)
 					),
 					array(
 						'Link' => array(
 							'id' => 1,
-							'text' => 'Contato',
-							'plugin' => 'caritas',
-							'controller' => 'contatos',
-							'action' => 'index'
-						)
-					)
-				)
-				),
-				array(
-				'Link' => array(
-					'id' => 1,
-					'text' => 'Tabelas'
-				),
-				'children' => array(
-					array(
-						'Link' => array(
-							'id' => 1,
-							'text' => 'Assuntos',
-							'plugin' => 'caritas',
-							'controller' => 'assuntos',
-							'action' => 'index'
-						)
-					),
-					array(
-						'Link' => array(
-							'id' => 1,
-							'text' => 'Projetos',
-							'plugin' => 'caritas',
-							'controller' => 'projetos',
+							'text' => 'Níveis de Acesso',
+							'plugin' => 'admin',
+							'controller' => 'niveis_acessos',
 							'action' => 'index'
 						)
 					)
