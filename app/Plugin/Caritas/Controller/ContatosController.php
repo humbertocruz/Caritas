@@ -1,5 +1,7 @@
 <?php
 class ContatosController extends CaritasAppController {
+
+	public $uses = array('Caritas.Contato');
 	
 	public function index() {
 		

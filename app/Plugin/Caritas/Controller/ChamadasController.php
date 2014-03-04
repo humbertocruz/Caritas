@@ -106,6 +106,8 @@ class ChamadasController extends CaritasAppController {
 			} else {
 				unset($data['Chamada']['instituicao_id']);
 			}
+			// configura projeto
+			$data['Chamada']['projeto_id'] = $this->escolhido_projeto_id;
 			
 			if ($data_ini = date_create_from_format('d/m/Y',$data['Chamada']['data_inicio'])) {
 				$d = 0;
