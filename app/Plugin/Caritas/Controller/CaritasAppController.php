@@ -45,13 +45,13 @@ class CaritasAppController extends AppController {
 			'loginAction' => array(
 				'controller' => 'atendentes',
 				'action' => 'login',
-				'plugin' => 'caritas'
+				'plugin' => 'admin'
 			),
 			'authError' => 'Did you really think you are allowed to see that?',
 			'authenticate' => array(
 				'Form' => array(
 					'userModel' => 'Atendente',
-					'fields' => array('username' => 'email','password'=>'senha')
+					'fields' => array('username' => 'login','password'=>'senha')
 				)
 			)
 		)

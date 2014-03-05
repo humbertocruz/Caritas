@@ -612,19 +612,41 @@ class ChamadasController extends CaritasAppController {
 		$this->layout = false;
 		if ($inst_forn == 1) {
 			$ContatoCargo = $this->Chamada->Contato->ContatosInstituicao->read(null, $id);
+			$ContatoCargo['Inst_Forn'] = 1;
 		} else {
 			$ContatoCargo = $this->Chamada->Contato->ContatosFornecedor->read(null, $id);
+			$ContatoCargo['Inst_Forn'] = 2;
 		}
 		$this->set('ContatoCargo', $ContatoCargo);
 	}
 	
 	public function edit_cargo_contato($id = 0, $inst_forn = 1) {
-		$data = $this->request->data;
+		$data_temp = $this->request->data;
 		if ($inst_forn == 1) {
-			if ($id == 0) unset($data['ContatosInstituicao']['id']);
+			$data = array(
+				'ContatosInstituicao' => array(
+					'contato_id' => $data_temp['Contato']['id'],
+					'instituiacao_id' => $data_temp['ContatosInst_Forn']['id'],
+					'cargo_id' => $data_temp['ContatosInstForn']['cargo_id'],
+					'data_inicio' => $data_temp['ContatosInstForn']['data_inicio'],
+					'data_fim' => $data_temp['ContatosInstForn']['data_fim'],
+					'situacao_contato_id' => $data_temp['ContatosInstForn']['situacao_contato_id']
+				)
+			);
+			if ($id != 0) $data['ContatosInstituicao']['id'] = $id;
 			$this->Chamada->Contato->ContatosInstituicao->save($data);
 		} else {
-			if ($id == 0) unset($data['ContatosFornecedor']['id']);
+			$data = array(
+				'ContatosFornecedor' => array(
+					'contato_id' => $data_temp['Contato']['id'],
+					'instituiacao_id' => $data_temp['ContatosInst_Forn']['id'],
+					'cargo_id' => $data_temp['ContatosInstForn']['cargo_id'],
+					'data_inicio' => $data_temp['ContatosInstForn']['data_inicio'],
+					'data_fim' => $data_temp['ContatosInstForn']['data_fim'],
+					'situacao_contato_id' => $data_temp['ContatosInstForn']['situacao_contato_id']
+				)
+			);
+			if ($id != 0) $data['ContatosFornecedor']['id'] = $id;
 			$this->Chamada->Contato->ContatosFornecedor->save($data);
 		}
 		$this->render(false);

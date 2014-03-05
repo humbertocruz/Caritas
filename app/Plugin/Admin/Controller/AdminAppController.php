@@ -43,13 +43,13 @@ class AdminAppController extends AppController {
 			'loginAction' => array(
 				'controller' => 'atendentes',
 				'action' => 'login',
-				'plugin' => 'caritas'
+				'plugin' => 'admin'
 			),
 			'authError' => 'Did you really think you are allowed to see that?',
 			'authenticate' => array(
 				'Form' => array(
-					'userModel' => 'Atendente',
-					'fields' => array('username' => 'email','password'=>'senha')
+					'userModel' => 'Caritas.Atendente',
+					'fields' => array('username' => 'login','password'=>'senha')
 				)
 			)
 		)
@@ -69,39 +69,65 @@ class AdminAppController extends AppController {
 
 		$menus = array(
 			array(
-			'Menu' => array(
-				'title' => 'Menu Admin'
-			),
-			'Links' => array(
-				array(
-				'Link' => array(
-					'id' => 1,
-					'text' => 'Módulos'
+				'Menu' => array(
+					'title' => 'Menu Admin'
 				),
-				'children' => array(
+				'Links' => array(
 					array(
 						'Link' => array(
 							'id' => 1,
-							'text' => 'Atendente',
-							'plugin' => 'admin',
-							'controller' => 'atendentes',
-							'action' => 'index'
+							'text' => 'Usuários'
+						),
+						'children' => array(
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Atendente',
+									'plugin' => 'admin',
+									'controller' => 'atendentes',
+									'action' => 'index'
+								)
+							),
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Níveis de Acesso',
+									'plugin' => 'admin',
+									'controller' => 'niveis_acessos',
+									'action' => 'index'
+								)
+							)
 						)
 					),
 					array(
 						'Link' => array(
-							'id' => 1,
-							'text' => 'Níveis de Acesso',
-							'plugin' => 'admin',
-							'controller' => 'niveis_acessos',
-							'action' => 'index'
+						'id' => 1,
+						'text' => 'Sistema'
+					),
+					'children' => array(
+						array(
+							'Link' => array(
+								'id' => 1,
+								'text' => 'Menus',
+								'plugin' => 'admin',
+								'controller' => 'menus',
+								'action' => 'index'
+							)
+						),
+						array(
+							'Link' => array(
+								'id' => 1,
+								'text' => 'Permissões',
+								'plugin' => 'admin',
+								'controller' => 'permissoes',
+								'action' => 'index'
+							)
 						)
 					)
 				)
-				)
 			)
-			)
-		);
+		)
+	);
 
 		$this->set('menus', $menus);
 		$this->set('usuario', $this->Auth->user());
