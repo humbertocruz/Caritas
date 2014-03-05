@@ -647,7 +647,8 @@ class ChamadasController extends CaritasAppController {
 				)
 			);
 			if ($id != 0) $data['ContatosFornecedor']['id'] = $id;
-			$this->Chamada->Contato->ContatosFornecedor->save($data);
+			pr($data);
+			//$this->Chamada->Contato->ContatosFornecedor->save($data);
 		}
 		$this->render(false);
 	}

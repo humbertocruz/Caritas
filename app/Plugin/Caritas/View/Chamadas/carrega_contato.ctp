@@ -188,6 +188,7 @@
 			</div>
 			<div class="modal-body">
 				<form id="EditaFormCargo">
+					<input type="hidden" name="data[ContatosInst_Forn][cargo_inst_forn_id]" id="EditaChamadaContatosCargoInstFornId">
 					<input type="hidden" name="data[ContatosInst_Forn][id]" id="EditaChamadaContatosInstFornId">
 					<input type="hidden" name="data[Contato][id]" id="ChamadaContatosInstFornContatoId">
 					<div class="form-group">
@@ -277,6 +278,8 @@
 					}
 				});
 				
+			} else {
+				$('#EditaFormFone').get(0).reset();
 			}
 			$('#ChamadaContatosFoneContatoId').val($('#Chamadacontato_id').val());
 			$('#edit-fone').modal('show');
@@ -324,6 +327,8 @@
 					}
 				});
 				
+			} else {
+				$('#EditaFormEmail').get(0).reset();
 			}
 			$('#ChamadaContatosEmailContatoId').val($('#Chamadacontato_id').val());
 			$('#edit-email').modal('show');
@@ -361,7 +366,6 @@
 			$('#edit-cargo-data').text($(this).data('desc'));
 			if ($(this).data('id')) {
 				cargo_inst_forn_id = $(this).data('id');
-				$('#EditaChamadaContatosCargoInstFornId').val(cargo_inst_forn_id);
 				$('#ChamadaContatosInstFornContatoId').val($('#Chamadacontato_id').val());
 				$.ajax({
 					'url':'/caritas/chamadas/ler_cargo_contato/'+cargo_inst_forn_id+'/'+$('#Chamadainst_forn').val(),
@@ -369,12 +373,14 @@
 					'success': function(data) {
 						if (data['Inst_Forn'] == 1 ) {
 							$('#EditaChamadaContatosInstFornId').val($('#Chamadainstituiacao_id').val());
+							$('#EditaChamadaContatosCargoInstFornId').val(data.ContatosInstituicao.id);
 							$('#ChamadaContatosInstFornCargoId').val(data.ContatosInstituicao.cargo_id);
 							$('#ChamadaContatosInstFornDataInicio').val(data.ContatosInstituicao.data_inicio);
 							$('#ChamadaContatosInstFornDataFim').val(data.ContatosInstituicao.data_fim);
 							$('#ChamadaContatosInstFornSituacaoContatoId').val(data.ContatosInstituicao.situacao_contato_id);
 						} else {
 							$('#EditaChamadaContatosInstFornId').val($('#Chamadafornecedor_id').val());
+							$('#EditaChamadaContatosCargoInstFornId').val(data.ContatosFornecedor.id);
 							$('#ChamadaContatosInstFornCargoId').val(data.ContatosFornecedor.cargo_id);
 							$('#ChamadaContatosInstFornDataInicio').val(data.ContatosFornecedor.data_inicio);
 							$('#ChamadaContatosInstFornDataFim').val(data.ContatosFornecedor.data_fim);
@@ -384,13 +390,14 @@
 				});	
 			} else {
 				$('#ChamadaContatosInstituicaoContatoId').val($('#Chamadacontato_id').val());
+				$('#EditaFormCargo').get(0).reset();
 			}
 			$('#ChamadaContatosCargoContatoId').val($('#Chamadacontato_id').val());
 			$('#edit-cargo').modal('show');
 		});
 		$('#edit-cargo .btn-primary').click(function(){
 			$.ajax({
-				'url': '/caritas/chamadas/edit_cargo_contato/'+$('#EditaChamadaContatosInstFornId').val()+'/'+$('#Chamadainst_forn').val(),
+				'url': '/caritas/chamadas/edit_cargo_contato/'+$('#EditaChamadaContatosCargoInstFornId').val()+'/'+$('#Chamadainst_forn').val(),
 				'type': 'post',
 				'data': $('#EditaFormCargo').serialize(),
 				'success': function(data) {
