@@ -526,8 +526,11 @@ class ChamadasController extends CaritasAppController {
 			'ContatosEmail.TiposEmail',
 			'ContatosInstituicao',
 			'ContatosInstituicao.Cargo',
+			'ContatosInstituicao.SituacoesContato',
 			'ContatosFornecedor',
-			'ContatosFornecedor.Cargo'
+			'ContatosFornecedor.Cargo',
+			'ContatosFornecedor.SituacoesContato'
+
 		);
 		if ($inst_forn == 1) {
 			$conditions = array(
@@ -621,12 +624,14 @@ class ChamadasController extends CaritasAppController {
 	}
 	
 	public function edit_cargo_contato($id = 0, $inst_forn = 1) {
+		$this->layout = false;
 		$data_temp = $this->request->data;
+		//pr($data_temp);
 		if ($inst_forn == 1) {
 			$data = array(
 				'ContatosInstituicao' => array(
-					'contato_id' => $data_temp['Contato']['id'],
-					'instituiacao_id' => $data_temp['ContatosInst_Forn']['id'],
+					'contato_id' => $data_temp['ContatoInst_Forn']['contato_id'],
+					'instituicao_id' => $data_temp['ContatosInst_Forn']['id'],
 					'cargo_id' => $data_temp['ContatosInstForn']['cargo_id'],
 					'data_inicio' => $data_temp['ContatosInstForn']['data_inicio'],
 					'data_fim' => $data_temp['ContatosInstForn']['data_fim'],
@@ -638,8 +643,8 @@ class ChamadasController extends CaritasAppController {
 		} else {
 			$data = array(
 				'ContatosFornecedor' => array(
-					'contato_id' => $data_temp['Contato']['id'],
-					'instituiacao_id' => $data_temp['ContatosInst_Forn']['id'],
+					'contato_id' => $data_temp['ContatoInst_Forn']['contato_id'],
+					'instituicao_id' => $data_temp['ContatosInst_Forn']['id'],
 					'cargo_id' => $data_temp['ContatosInstForn']['cargo_id'],
 					'data_inicio' => $data_temp['ContatosInstForn']['data_inicio'],
 					'data_fim' => $data_temp['ContatosInstForn']['data_fim'],
@@ -647,8 +652,33 @@ class ChamadasController extends CaritasAppController {
 				)
 			);
 			if ($id != 0) $data['ContatosFornecedor']['id'] = $id;
-			pr($data);
-			//$this->Chamada->Contato->ContatosFornecedor->save($data);
+			$this->Chamada->Contato->ContatosFornecedor->save($data);
+		}
+		$this->render(false);
+	}
+	
+	public function novo_contato() {
+		$this->layout = false;
+		$data_temp = $this->request->data;
+		$contato = $data_temp['Contato'];
+		// Gravar Contato
+		$this->Chamada->Contato->create();
+		$this->Chamada->Contato->save($contato);
+		$contato_id = $this->Chamada->Contato->id;
+		// Gravar Cargo do Contato
+		$data = array(
+			'cargo_id' => $data_temp['ContatosInstForn']['cargo_id'],
+			'data_inicio' => $data_temp['ContatosInstForn']['data_inicio'],
+			'data_fim' => $data_temp['ContatosInstForn']['data_fim'],
+			'situacao_contato_id' => $data_temp['ContatosInstForn']['situacao_contato_id'],
+			'contato_id' => $contato_id
+		);
+		if ($data_temp['ContatosInstForn']['inst_forn'] == 1) {
+			$data['instituicao_id'] = $data_temp['ContatosInstForn']['inst_forn_id'];
+			$this->Chamada->Contato->ContatosInstituicao->save($data);
+		} else {
+			$data['fornecedor_id'] = $data_temp['ContatosInstForn']['inst_forn_id'];
+			$this->Chamada->Contato->ContatosFornecedor->save($data);
 		}
 		$this->render(false);
 	}

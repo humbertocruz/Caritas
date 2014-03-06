@@ -126,7 +126,7 @@ $(document).ready(function(){
 			'url':'/caritas/chamadas/carrega_contato/'+this.value+'/'+$('#Chamadainst_forn').val()+'/'+inst_forn_value,
 			'success':function(data) {
 				$('#contato-box').html(data).popover('destroy');
-				$(".mask-fone").inputmask("(99) 9999[9]-9999");
+				//$(".mask-fone").inputmask("(99) 9999[9]-9999");
 			}
 		});
 		$('#contato-novo').removeClass('disabled');

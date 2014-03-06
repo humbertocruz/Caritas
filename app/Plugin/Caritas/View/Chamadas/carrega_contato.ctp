@@ -5,7 +5,7 @@
 				<a data-toggle="collapse" data-parent="#contato-data" href="#contato-telefones">Telefones</a>
 			</h4>
 		</div>
-		<div id="contato-telefones" class="panel-collapse collapse in">
+		<div id="contato-telefones" class="panel-collapse collapse">
 			<div class="panel-body">
 				<?php foreach($contato['ContatosFone'] as $fones) { ?>
 				<span data-desc="<?php echo $fones['fone']; ?> - <?php echo $fones['TiposFone']['nome'];?>" data-id="<?php echo $fones['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-trash fone"></span>&nbsp;
@@ -46,17 +46,17 @@
 		<div id="contato-cargos" class="panel-collapse collapse">
 			<div class="panel-body">
 				<?php if ($inst_forn == 1) { ?>
-				<?php foreach($contato['ContatosInstituicao'] as $instituicao) { ?>
-				<span data-desc="<?php echo $instituicao['Cargo']['nome'].'- '.$this->AuthBs->brdate($instituicao['data_inicio']).' - '.$instituicao['data_fim']; ?>" data-id="<?php echo $instituicao['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-trash cargo"></span>&nbsp;
+				<?php foreach($contato['ContatosInstituicao'] as $instituicao) {  ?>
+				<span data-desc="<?php echo $instituicao['Cargo']['nome'].'- '.$this->AuthBs->brdate($instituicao['data_inicio']).' - '.$this->AuthBs->brdate($instituicao['data_fim']); ?>" data-id="<?php echo $instituicao['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-trash cargo"></span>&nbsp;
 				<span data-id="<?php echo $instituicao['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-pencil cargo"></span>&nbsp;
-				<?php echo $instituicao['Cargo']['nome'].' - '.$this->AuthBs->brdate($instituicao['data_inicio']).' - '.$instituicao['data_fim']; ?><br>
+				<?php echo $instituicao['Cargo']['nome'].' - '.$this->AuthBs->brdate($instituicao['data_inicio']).' - '.$this->AuthBs->brdate($instituicao['data_fim']).' - '.$instituicao['SituacoesContato']['nome']; ?><br>
 				<?php } ?>
 				<?php } ?>
 				<?php if ($inst_forn == 2) { ?>
 				<?php foreach($contato['ContatosFornecedor'] as $fornecedor) { ?>
-				<span data-desc="<?php echo $fornecedor['Cargo']['nome'].'- '.$this->AuthBs->brdate($fornecedor['data_inicio']).' - '.$fornecedor['data_fim']; ?>" data-id="<?php echo $fornecedor['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-trash cargo"></span>&nbsp;
+				<span data-desc="<?php echo $fornecedor['Cargo']['nome'].'- '.$this->AuthBs->brdate($fornecedor['data_inicio']).' - '.$this->AuthBs->brdate($fornecedor['data_fim']); ?>" data-id="<?php echo $fornecedor['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-trash cargo"></span>&nbsp;
 				<span data-id="<?php echo $fornecedor['id'];?>" style="cursor:pointer;" class="glyphicon glyphicon-pencil cargo"></span>&nbsp;
-				<?php echo $fornecedor['Cargo']['nome'].' - '.$this->AuthBs->brdate($fornecedor['data_inicio']).' - '.$fornecedor['data_fim']; ?><br>
+				<?php echo $fornecedor['Cargo']['nome'].' - '.$this->AuthBs->brdate($fornecedor['data_inicio']).' - '.$this->AuthBs->brdate($fornecedor['data_fim']).' - '.$fornecedor['SituacoesContato']['nome']; ?><br>
 				<?php } ?>
 				<?php } ?>
 			</div>
@@ -188,9 +188,9 @@
 			</div>
 			<div class="modal-body">
 				<form id="EditaFormCargo">
-					<input type="hidden" name="data[ContatosInst_Forn][cargo_inst_forn_id]" id="EditaChamadaContatosCargoInstFornId">
-					<input type="hidden" name="data[ContatosInst_Forn][id]" id="EditaChamadaContatosInstFornId">
-					<input type="hidden" name="data[Contato][id]" id="ChamadaContatosInstFornContatoId">
+					<input type="hidden" name="data[ContatosInst_Forn][id]" id="Cargo_InstForn_Id">
+					<input type="hidden" name="data[ContatosInst_Forn][cargo_inst_forn_id]" id="Cargo_CargoInstForn_Id" value="0">
+					<input type="hidden" name="data[ContatoInst_Forn][contato_id]" id="Cargo_Contato_Id">
 					<div class="form-group">
 						<label for="ChamadaContatosInstFornCargoId">Cargo</label>
 						<select class="form-control" id="ChamadaContatosInstFornCargoId" name="data[ContatosInstForn][cargo_id]">
@@ -232,10 +232,10 @@
 				<h4 class="modal-title">Excluir Cargo</h4>
 			</div>
 			<div class="modal-body">
-				<span id="del-cargo-instituicao-data"></span>
+				<span id="del-cargo-data"></span>
 				<br><br>Tem Certeza ?<br>
-				<form id="ExcluiFormCargoInstForn">
-					<input type="hidden" name="data[ContatosInstForn][id]" id="ExcluiChamadaContatosInstFornId">
+				<form id="ExcluiFormCargo">
+					<input type="hidden" name="data[CargoInstForn][id]" id="ExcluiChamadaContatosInstFornId">
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -248,6 +248,17 @@
 
 <script>
 	$(document).ready(function() {
+	
+		// Controle do Collpase
+		$('#contato-data').on('show.bs.collapse', function (var1, var2, var3) {
+			$(document).data('last-data-type', var1.target.id);
+		});
+		if ($(document).data('last-data-type')) {
+			type = $(document).data('last-data-type');
+			$('#'+type).collapse('show');
+		} else {
+			$('#contato-telefones').collapse('show');
+		}
 		
 		// Telefone
 		$('.glyphicon-trash.fone').click(function() {
@@ -348,14 +359,14 @@
 		// Cargo
 		$('.glyphicon-trash.cargo').click(function() {
 			$('#ExcluiChamadaContatosInstFornId').val($(this).data('id'));
-			$('#del-cargo-InstForn-data').text($(this).data('desc'));
-			$('#del-cargo-InstForn').modal('show');
+			$('#del-cargo-data').text($(this).data('desc'));
+			$('#del-cargo').modal('show');
 		});
-		$('#del-cargo-instituicao .btn-danger').click(function(){
+		$('#del-cargo .btn-danger').click(function(){
 			$.ajax({
-				'url': '/caritas/chamadas/exclui_cargo_contato/'+$('#ExcluiChamadaContatosInstFornId').val()+'/'+$('#ChamadaInstituiacaoId').val(),
+				'url': '/caritas/chamadas/exclui_cargo_contato/'+$('#ExcluiChamadaContatosInstFornId').val()+'/'+$('#Chamadainst_forn').val(),
 				'success': function(data) {
-					$('#del-cargo-InstForn').modal('hide');
+					$('#del-cargo').modal('hide');
 					$('#Chamadacontato_id').change();
 				}
 			});
@@ -366,21 +377,21 @@
 			$('#edit-cargo-data').text($(this).data('desc'));
 			if ($(this).data('id')) {
 				cargo_inst_forn_id = $(this).data('id');
-				$('#ChamadaContatosInstFornContatoId').val($('#Chamadacontato_id').val());
+				$('#Cargo_Contato_Id').val($('#Chamadacontato_id').val());
 				$.ajax({
 					'url':'/caritas/chamadas/ler_cargo_contato/'+cargo_inst_forn_id+'/'+$('#Chamadainst_forn').val(),
 					'dataType':'json',
 					'success': function(data) {
 						if (data['Inst_Forn'] == 1 ) {
-							$('#EditaChamadaContatosInstFornId').val($('#Chamadainstituiacao_id').val());
-							$('#EditaChamadaContatosCargoInstFornId').val(data.ContatosInstituicao.id);
+							$('#Cargo_InstForn_Id').val($('#Chamadainstituicao_id').val());
+							$('#Cargo_CargoInstForn_Id').val(data.ContatosInstituicao.id);
 							$('#ChamadaContatosInstFornCargoId').val(data.ContatosInstituicao.cargo_id);
 							$('#ChamadaContatosInstFornDataInicio').val(data.ContatosInstituicao.data_inicio);
 							$('#ChamadaContatosInstFornDataFim').val(data.ContatosInstituicao.data_fim);
 							$('#ChamadaContatosInstFornSituacaoContatoId').val(data.ContatosInstituicao.situacao_contato_id);
 						} else {
-							$('#EditaChamadaContatosInstFornId').val($('#Chamadafornecedor_id').val());
-							$('#EditaChamadaContatosCargoInstFornId').val(data.ContatosFornecedor.id);
+							$('#Cargo_InstForn_Id').val($('#Chamadafornecedor_id').val());
+							$('#Cargo_CargoInstForn_Id').val(data.ContatosFornecedor.id);
 							$('#ChamadaContatosInstFornCargoId').val(data.ContatosFornecedor.cargo_id);
 							$('#ChamadaContatosInstFornDataInicio').val(data.ContatosFornecedor.data_inicio);
 							$('#ChamadaContatosInstFornDataFim').val(data.ContatosFornecedor.data_fim);
@@ -389,7 +400,12 @@
 					}
 				});	
 			} else {
-				$('#ChamadaContatosInstituicaoContatoId').val($('#Chamadacontato_id').val());
+				$('#Cargo_Contato_Id').val($('#Chamadacontato_id').val());
+				if ($('#Chamadainst_forn').val() == 1 ) {
+					$('#Cargo_InstForn_Id').val($('#Chamadainstituicao_id').val());
+				} else {
+					$('#Cargo_InstForn_Id').val($('#Chamadafornecedor_id').val());
+				}
 				$('#EditaFormCargo').get(0).reset();
 			}
 			$('#ChamadaContatosCargoContatoId').val($('#Chamadacontato_id').val());
@@ -397,7 +413,7 @@
 		});
 		$('#edit-cargo .btn-primary').click(function(){
 			$.ajax({
-				'url': '/caritas/chamadas/edit_cargo_contato/'+$('#EditaChamadaContatosCargoInstFornId').val()+'/'+$('#Chamadainst_forn').val(),
+				'url': '/caritas/chamadas/edit_cargo_contato/'+$('#Cargo_CargoInstForn_Id').val()+'/'+$('#Chamadainst_forn').val(),
 				'type': 'post',
 				'data': $('#EditaFormCargo').serialize(),
 				'success': function(data) {

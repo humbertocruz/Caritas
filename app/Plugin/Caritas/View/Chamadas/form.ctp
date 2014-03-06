@@ -123,47 +123,47 @@
 			</div>
 			<div class="modal-body">
 				<form id="NovoFormContato">
-					<input type="hidden" name="data[ContatosInstituicao][instituicao_id]" id="NovoChamadaContatosInstituiacaoInstituicaoId">
-					<input type="hidden" name="data[ContatosFornecedor][fornecedor_id]" id="NovoChamadaContatosFornecedorFornecedorId">
+					<input type="hidden" name="data[ContatosInstForn][inst_forn]" id="NovoChamadaContatosInstForn">
+					<input type="hidden" name="data[ContatosInstForn][inst_forn_id]" id="NovoChamadaContatosInstFornId">
 					<div class="form-group">
 						<label for="ChamadaContatosNome">Nome</label>
-						<input type="text" class="form-control" name="data[Contatos][nome]" id="ChamadaContatosNome">
+						<input type="text" class="form-control" name="data[Contato][nome]" id="ChamadaContatosNome">
 					</div>
 					<div class="form-group">
 						<label for="ChamadaContatosDataNascimento">Nascimento</label>
-						<input type="date" class="form-control mask-date" name="data[Contatos][data_nascimento]" id="ChamadaContatosDataNascimento">
+						<input type="date" class="form-control mask-date" name="data[Contato][data_nascimento]" id="ChamadaContatosDataNascimento">
 					</div>
 					<div class="form-group">
 						<label for="ChamadaContatosCpf">CPF</label>
-						<input type="text" class="form-control" name="data[Contatos][cpf]" id="ChamadaContatosCpf">
+						<input type="text" class="form-control" name="data[Contato][cpf]" id="ChamadaContatosCpf">
 					</div>
 					<div class="form-group">
 						<label for="ChamadaContatosSexoId">Sexo</label>
-						<select class="form-control" id="ChamadaContatosSexoId" name="data[Contatos[sexo_id]">
+						<select class="form-control" id="ChamadaContatosSexoId" name="data[Contato][sexo_id]">
 							<?php foreach($Sexos as $key => $value) { ?>
 							<option value="<?php echo $key;?>"><?php echo $value;?></option>
 							<?php } ?>
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="ChamadaContatosInstituiacaoCargoId">Cargo</label>
-						<select class="form-control" id="ChamadaContatosInstituiacaoCargoId" name="data[ContatosInstituicao][cargo_id]">
+						<label for="ChamadaContatosInstFornCargoId">Cargo</label>
+						<select class="form-control" id="ChamadaContatosInstFornCargoId" name="data[ContatosInstForn][cargo_id]">
 							<?php foreach($Cargos as $key => $value) { ?>
 							<option value="<?php echo $key;?>"><?php echo $value;?></option>
 							<?php } ?>
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="ChamadaContatosInstituiacaoDataInicio">Data Início</label>
-						<input type="date" class="form-control mask-date" name="data[ContatosInstituiacao][data_inicio]" id="ChamadaContatosInstituiacaoDataInicio">
+						<label for="ChamadaContatosInstFornDataInicio">Data Início</label>
+						<input type="date" class="form-control mask-date" name="data[ContatosInstForn][data_inicio]" id="ChamadaContatosInstFornDataInicio">
 					</div>
 					<div class="form-group">
-						<label for="ChamadaContatosInstituiacaoDataFim">Data Fim</label>
-						<input type="date" class="form-control mask-date" name="data[ContatosInstituiacao][data_fim]" id="ChamadaContatosInstituiacaoDataFim">
+						<label for="ChamadaContatosInstituicaoDataFim">Data Fim</label>
+						<input type="date" class="form-control mask-date" name="data[ContatosInstForn][data_fim]" id="ChamadaContatosInstFornDataFim">
 					</div>
 					<div class="form-group">
 						<label for="ChamadaContatosInstituiacaoSituacaoContatoId">Situação</label>
-						<select class="form-control" id="ChamadaContatosInstituiacaoSituacaoContatoId" name="data[ContatosInstituicao][situacao_contato_id]">
+						<select class="form-control" id="ChamadaContatosInstFornSituacaoContatoId" name="data[ContatosInstForn][situacao_contato_id]">
 							<?php foreach($SituacoesContato as $key => $value) { ?>
 							<option value="<?php echo $key;?>"><?php echo $value;?></option>
 							<?php } ?>
@@ -187,12 +187,32 @@ $(document).ready(function(){
 	
 	// Contato
 		$('#contato-novo').click(function(){
+			$('#NovoFormContato').get(0).reset();
 			if ($('#Chamadainst_forn').val() == 1) {
-				$('#NovoChamadaContatosInstituiacaoInstituicaoId').val($('#Chamadainstituicao_id').val());
+				$('#NovoChamadaContatosInstForn').val(1);
+				$('#NovoChamadaContatosInstFornId').val($('#Chamadainstituicao_id').val());
 			} else {
-				$('#NovoChamadaContatosFornecedorFornecedorId').val($('#Chamadafornecedor_id').val());
+				$('#NovoChamadaContatosInstForn').val(2);
+				$('#NovoChamadaContatosInstFornId').val($('#Chamadafornecedor_id').val());
 			}
 			$('#modal-novo-contato').modal('show');
+		});
+		
+		$('#modal-novo-contato .modal-footer .btn-primary').click(function(){
+			$.ajax({
+				'url': '/caritas/chamadas/novo_contato/',
+				'type': 'post',
+				'data': $('#NovoFormContato').serialize(),
+				'success': function(data) {
+					if ($('#Chamadainst_forn').val() == 1) {
+						$('#Chamadainstituicao_id').change();
+					} else {
+						$('#Chamadafornecedor_id').change();
+					}
+					$('#modal-novo-contato').modal('hide');
+				}
+			});
+
 		});
 	
 	
