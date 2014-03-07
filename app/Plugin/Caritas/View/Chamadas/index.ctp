@@ -43,6 +43,12 @@ $filters = array(
 		'model'=>'Chamada',
 		'field'=>'status_id',
 		'options' => $filters['status']
+	),
+	array(
+		'label'=>'Período',
+		'type'=>'calendar',
+		'model'=>'Chamada',
+		'field'=>'data_inicio'
 	)	
 );
 echo $this->Caritas->filters($filters, $filters_chamada);

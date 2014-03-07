@@ -28,7 +28,7 @@ class ChamadasController extends CaritasAppController {
 				unset($this->request->data['filter']);
 				foreach($this->request->data as $key=>$value) {
 					//pr($key); pr($value);
-					if ($value == '0') {
+					if ($value == '0' or $value == '') {
 						unset ($this->request->data[$key]);
 					}
 				}
@@ -81,6 +81,17 @@ class ChamadasController extends CaritasAppController {
 		);
 		//$this->Session->delete('Filtros.Chamadas');
 		$filtros = $this->Session->read('Filtros.Chamadas');
+		if (isset( $filtros['data_inicio_ini'])) {
+			$data_inicio_ini = $filtros['data_inicio_ini'];
+			unset($filtros['data_inicio_ini']);
+			$filtros['data_inicio >='] = $data_inicio_ini;
+		}
+		if (isset( $filtros['data_inicio_fim'])) {
+			$data_inicio_fim = $filtros['data_inicio_fim'];
+			unset($filtros['data_inicio_fim']);
+			$filtros['data_inicio <='] = $data_inicio_fim;
+		}
+			
 		if (!is_array($filtros)) $filtros = array();
 		// Filtro Constante chamada pai
 		$filtros = array('Chamada.chamada_id'=>null)+$filtros;
