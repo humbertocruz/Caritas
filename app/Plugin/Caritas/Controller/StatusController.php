@@ -6,5 +6,13 @@ class StatusController extends CaritasAppController {
 		$this->set('title_for_layout','Status');
 
 	}
+	
+	public function perfil() {
+		
+	}
+	
+	public function emaberto() {
+		
+	}
 
 }

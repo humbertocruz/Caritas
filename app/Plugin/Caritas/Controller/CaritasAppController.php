@@ -75,9 +75,20 @@ class CaritasAppController extends AppController {
 		}
 		
 		$user = $this->Auth->user();
-		$projetos_atendente = $this->Projeto->AtendentesProjeto->find('list', array('fields'=>array('atendente_id','projeto_id'),'conditions'=>array('atendente_id'=>$user['id'])));
+		$projetos_atendente = $this->Projeto->AtendentesProjeto->find(
+			'all', 
+			array(
+				'fields' => array(
+					'Projeto.id',
+					'Projeto.nome'
+				),
+				'conditions' => array(
+					'AtendentesProjeto.atendente_id' => $user['id']
+				)
+			)
+		);
 
-		$this->set('escolha_projetos', $this->Projeto->find('list', array('fields'=>array('id','nome'),'conditions'=>array('id'=>$projetos_atendente))));
+		$this->set('projetos_atendente', $projetos_atendente);
 		
 		$conditions = array(
 			'Chamada.atendente_id' => $user['id'],

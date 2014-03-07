@@ -21,7 +21,7 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="/">Cáritas</a>
+		<a class="navbar-brand" href="/">Sistema Cáritas</a>
 	</div>
 
 	<!-- Collect the nav links, forms, and other content for toggling -->
@@ -52,9 +52,9 @@
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $usuario['nome'];?> <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="/logout">Sair</a></li>
-					<li><?php echo $this->Html->link('Alterar Dados', array('plugin'=>'caritas', 'controller'=>'atendentes', 'action'=>'edit')); ?></li>
+					<li><?php echo $this->Html->link('Alterar Dados', array('plugin'=>'caritas', 'controller'=>'status', 'action'=>'perfil')); ?></li>
 					<li class="divider"></li>
-					<li><?php echo $this->Html->link('Chamadas em Aberto <span class="badge badge-error">'.$emaberto.'</span>', array('controller'=>'atendentes','action'=>'emaberto'), array('escape'=>FALSE));?></li>
+					<li><?php echo $this->Html->link('Chamadas em Aberto <span class="badge badge-error">'.$emaberto.'</span>', array('controller'=>'status','action'=>'emaberto'), array('escape'=>FALSE));?></li>
 					<li><a href="#">Nível: <?php echo $usuario['NiveisAcesso']['nome'];?></a></li>
 					<?php if ($usuario['NiveisAcesso']['nome'] == 'Administrador') { ?>
 					<li class="divider"></li>
@@ -64,13 +64,13 @@
 			</li>
 		</ul>
 		<form method="post" class="navbar-form navbar-right" role="search">
-		<?php if (count($escolha_projetos) > 1) { ?>
+		<?php if (count($projetos_atendente) > 1) { ?>
 			<select class="form-control" name="data[Escolha][Projeto][id]" id="EscolhaProjetoId">
 				<option value="0">Escolha o Projeto</option>
-				<?php foreach($escolha_projetos as $key=>$value) { 
-					$escolhido = ($key == $escolhido_projeto_id)?('selected="selected"'):('');
+				<?php foreach($projetos_atendente as $projeto) { 
+					$escolhido = ($projeto['Projeto']['id'] == $escolhido_projeto_id)?('selected="selected"'):('');
 				?>
-				<option <?php echo $escolhido;?> value="<?php echo $key; ?>"><?php echo $value; ?></option>
+				<option <?php echo $escolhido;?> value="<?php echo $projeto['Projeto']['id']; ?>"><?php echo $projeto['Projeto']['nome']; ?></option>
 				<?php } ?>
 			</select>
 		<?php } ?>
