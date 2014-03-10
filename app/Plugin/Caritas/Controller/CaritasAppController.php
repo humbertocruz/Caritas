@@ -214,6 +214,24 @@ class CaritasAppController extends AppController {
 					array(
 						'Link' => array(
 							'id' => 1,
+							'text' => 'Prioridades',
+							'plugin' => 'caritas',
+							'controller' => 'prioridades',
+							'action' => 'index'
+						)
+					),
+					array(
+						'Link' => array(
+							'id' => 1,
+							'text' => 'Procedimentos',
+							'plugin' => 'caritas',
+							'controller' => 'procedimentos',
+							'action' => 'index'
+						)
+					),
+					array(
+						'Link' => array(
+							'id' => 1,
 							'text' => 'Projetos',
 							'plugin' => 'caritas',
 							'controller' => 'projetos',

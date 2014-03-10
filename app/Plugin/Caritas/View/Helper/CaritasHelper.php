@@ -39,17 +39,19 @@ class CaritasHelper extends AppHelper {
 	
 	public function filters($fields = array(), $data = array()) { ob_start(); ?>
 		<div class="panel panel-default">
+			<form method="post" role="form">
 			<div class="panel-body">
-				<form method="post" role="form">
-					<input type="hidden" name="filter" value="1">
-					<?php foreach($fields as $field) { 
-						$data_field = (isset($data[$field['model'].'.'.$field['field']]))?($data[$field['model'].'.'.$field['field']]):('0');
-					?>
-					<?php echo $this->filter_type($field, $data_field); ?>
-					<?php } ?>
-					<input type="submit" class="btn btn-default" value="Filtrar">
-				</form>
+				<input type="hidden" name="filter" value="1">
+				<?php foreach($fields as $field) { 
+					$data_field = (isset($data[$field['model'].'.'.$field['field']]))?($data[$field['model'].'.'.$field['field']]):('0');
+				?>
+				<?php echo $this->filter_type($field, $data_field); ?>
+				<?php } ?>
 			</div>
+			<div class="panel-footer">
+				<input type="submit" class="btn btn-default" value="Filtrar">
+			</div>
+			</form>
 		</div>
 		<?php return ob_get_clean();
 	}
