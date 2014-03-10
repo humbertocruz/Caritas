@@ -19,7 +19,7 @@ class AtividadesController extends CaritasAppController {
 			$this->Atividade->create();
 			if ($this->Atividade->save($data)) {
 				$this->Session->setFlash('Atividade salvo com sucesso!');
-				$this->redirectF(array('action'=>'index'));
+				$this->redirect(array('action'=>'index'));
 			} else {
 				$this->Session->setFlash('Houve um erro ao salvar Atividade');
 			}

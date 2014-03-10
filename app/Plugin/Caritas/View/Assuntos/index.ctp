@@ -1,7 +1,7 @@
 <?php echo $this->Bootstrap->pageHeader('Assuntos'); ?>
 
 <?php echo $this->Element('Bootstrap.table/table-create',array(
-	'title'=>'Chamadas',
+	'title'=>'Assuntos',
 	'state'=>'info',
 	'fields' => array(
 		'Nome'
