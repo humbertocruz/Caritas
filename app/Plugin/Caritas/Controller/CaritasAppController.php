@@ -121,129 +121,145 @@ class CaritasAppController extends AppController {
 
 		$menus = array(
 			array(
-			'Menu' => array(
-				'title' => 'Menu Superior'
-			),
-			'Links' => array(
-				array(
-				'Link' => array(
-					'id' => 1,
-					'text' => 'Módulos'
+				'Menu' => array(
+					'title' => 'Menu Superior'
 				),
-				'children' => array(
+				'Links' => array(
 					array(
 						'Link' => array(
 							'id' => 1,
-							'text' => 'Chamada',
-							'plugin' => 'caritas',
-							'controller' => 'chamadas',
-							'action' => 'index'
+							'text' => 'Módulos'
+						),
+						'children' => array(
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Chamada',
+									'plugin' => 'caritas',
+									'controller' => 'chamadas',
+									'action' => 'index'
+								)
+							),
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Contato',
+									'plugin' => 'caritas',
+									'controller' => 'contatos',
+									'action' => 'index'
+								)
+							)
 						)
 					),
 					array(
 						'Link' => array(
 							'id' => 1,
-							'text' => 'Contato',
-							'plugin' => 'caritas',
-							'controller' => 'contatos',
-							'action' => 'index'
+							'text' => 'Tabelas'
+						),
+						'children' => array(
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Assuntos',
+									'plugin' => 'caritas',
+									'controller' => 'assuntos',
+									'action' => 'index'
+								)
+							),
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Atividades',
+									'plugin' => 'caritas',
+									'controller' => 'atividades',
+									'action' => 'index'
+								)
+							),
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Cargos',
+									'plugin' => 'caritas',
+									'controller' => 'cargos',
+									'action' => 'index'
+								)
+							),
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Estados',
+									'plugin' => 'caritas',
+									'controller' => 'estados',
+									'action' => 'index'
+								)
+							),
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Etapas',
+									'plugin' => 'caritas',
+									'controller' => 'etapas',
+									'action' => 'index'
+								)
+							),
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Órgãos',
+									'plugin' => 'caritas',
+									'controller' => 'orgaos',
+									'action' => 'index'
+								)
+							),
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Prioridades',
+									'plugin' => 'caritas',
+									'controller' => 'prioridades',
+									'action' => 'index'
+								)
+							),
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Procedimentos',
+									'plugin' => 'caritas',
+									'controller' => 'procedimentos',
+									'action' => 'index'
+								)
+							),
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Projetos',
+									'plugin' => 'caritas',
+									'controller' => 'projetos',
+									'action' => 'index'
+								)
+							)
+						)
+					),
+					array(
+						'Link' => array(
+							'id' => 3,
+							'text' => 'Tipos'
+						),
+						'children' => array(
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'de Emails',
+									'plugin' => 'caritas',
+									'controller' => 'tipos_emails',
+									'action' => 'index'
+								)
+							)
 						)
 					)
 				)
-				),
-				array(
-				'Link' => array(
-					'id' => 1,
-					'text' => 'Tabelas'
-				),
-				'children' => array(
-					array(
-						'Link' => array(
-							'id' => 1,
-							'text' => 'Assuntos',
-							'plugin' => 'caritas',
-							'controller' => 'assuntos',
-							'action' => 'index'
-						)
-					),
-					array(
-						'Link' => array(
-							'id' => 1,
-							'text' => 'Atividades',
-							'plugin' => 'caritas',
-							'controller' => 'atividades',
-							'action' => 'index'
-						)
-					),
-					array(
-						'Link' => array(
-							'id' => 1,
-							'text' => 'Cargos',
-							'plugin' => 'caritas',
-							'controller' => 'cargos',
-							'action' => 'index'
-						)
-					),
-					array(
-						'Link' => array(
-							'id' => 1,
-							'text' => 'Estados',
-							'plugin' => 'caritas',
-							'controller' => 'estados',
-							'action' => 'index'
-						)
-					),
-					array(
-						'Link' => array(
-							'id' => 1,
-							'text' => 'Etapas',
-							'plugin' => 'caritas',
-							'controller' => 'etapas',
-							'action' => 'index'
-						)
-					),
-					array(
-						'Link' => array(
-							'id' => 1,
-							'text' => 'Órgãos',
-							'plugin' => 'caritas',
-							'controller' => 'orgaos',
-							'action' => 'index'
-						)
-					),
-					array(
-						'Link' => array(
-							'id' => 1,
-							'text' => 'Prioridades',
-							'plugin' => 'caritas',
-							'controller' => 'prioridades',
-							'action' => 'index'
-						)
-					),
-					array(
-						'Link' => array(
-							'id' => 1,
-							'text' => 'Procedimentos',
-							'plugin' => 'caritas',
-							'controller' => 'procedimentos',
-							'action' => 'index'
-						)
-					),
-					array(
-						'Link' => array(
-							'id' => 1,
-							'text' => 'Projetos',
-							'plugin' => 'caritas',
-							'controller' => 'projetos',
-							'action' => 'index'
-						)
-					)
-				)
-				)
-			)
 			)
 		);
-
 		$this->set('menus', $menus);
 		$this->set('usuario', $this->Auth->user());
 	}
