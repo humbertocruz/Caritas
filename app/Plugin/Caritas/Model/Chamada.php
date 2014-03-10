@@ -16,6 +16,10 @@ class Chamada extends CaritasAppModel {
 			'className' => 'Caritas.Chamada',
 			'foreignKey' => 'chamada_id'
 		),
+		'ChamadasProcedimento' => array(
+			'className' => 'Caritas.ChamadasProcedimento',
+			'foreignKey' => 'chamada_id'
+		)
 	);
 
 	public $belongsTo = array(

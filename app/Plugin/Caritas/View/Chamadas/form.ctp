@@ -2,7 +2,7 @@
 
 <?php echo $this->Bootstrap->pageHeader('Chamadas'); ?>
 
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs" id="chamadas-tabs">
   <li class="active"><a href="#tab-chamadas" data-toggle="tab">Chamadas</a></li>
   <?php if ($action_name == 'edit') { ?>
   <li><a href="#tab-procedimentos" data-toggle="tab">Procedimentos</a></li>
@@ -107,7 +107,7 @@
 	</div>
 </div>
   <div class="tab-pane" id="tab-procedimentos">
-	  Procedimentos
+	  <?php echo $this->Element('Chamadas/procedimentos'); ?>
   </div>
   <div class="tab-pane" id="tab-filhas">
 	  <?php echo $this->Element('Chamadas/filhas'); ?>

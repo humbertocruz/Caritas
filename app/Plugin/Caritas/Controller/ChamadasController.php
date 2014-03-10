@@ -248,6 +248,27 @@ class ChamadasController extends CaritasAppController {
 		$this->render('form');
 	}
 	
+	public function addProcedimento($chamada_id = 0) {
+		
+		if ($this->request->isPost()) {
+			$data = $this->data;
+			$user = $this->Auth->user();
+			$data['ChamadasProcedimento']['atendente_id'] = $user['id'];
+			$data['ChamadasProcedimento']['chamada_id'] = $chamada_id;
+			
+			$this->Chamada->ChamadasProcedimento->create();
+			$this->Chamada->ChamadasProcedimento->save($data);
+			
+			$this->Session->setFlash('Procedimento da Chamada editado com sucesso!');
+			$this->redirect(array('action'=>'edit',$chamada_id));
+		}
+		$procedimentos = $this->Chamada->ChamadasProcedimento->Procedimento->find('list', array('fields'=>array('id','nome')));
+		$this->set('procedimentos',$procedimentos);
+		$this->set('chamada_id', $chamada_id);
+		
+		$this->render('form_procedimento');
+	}
+	
 	public function edit($id = null) {
 	
 		$this->set('action_name', $this->action);
@@ -412,16 +433,56 @@ class ChamadasController extends CaritasAppController {
 		$chamadasFilhas = $this->Paginate('Chamada',$filtros);
 		$this->set('ChamadasFilhas',$chamadasFilhas);
 		
+		// Procedimentos
+		// Carrega dados do BD
+		$this->Chamada->ChamadasProcedimento->Behaviors->attach('Containable');
+		$this->Chamada->ChamadasProcedimento->contain(
+			'Procedimento'
+		);
+		
+		$procedimentos = $this->Chamada->ChamadasProcedimento->find('all');
+		$this->set('procedimentos',$procedimentos);
+		
 		$this->render('form');
 		
 	}
 	
-	public function del($id = null) {
+	public function editProcedimento($id = 0) {
+		if ($this->request->isPost()) {
+			$data = $this->data;
+			$data['ChamadasProcedimento']['id'] = $id;
+			$this->Chamada->ChamadasProcedimento->save($data);
+			$ChamadaProcedimento = $this->Chamada->ChamadasProcedimento->read(null, $id);
+			$this->Session->setFlash('Procedimento da Chamada editado com sucesso!');
+			$this->redirect(array('action'=>'edit',$ChamadaProcedimento['ChamadasProcedimento']['chamada_id']));
+		}
+		$ChamadaProcedimento = $this->Chamada->ChamadasProcedimento->read(null, $id);
+		$this->data = $ChamadaProcedimento;
+		
+		$procedimentos = $this->Chamada->ChamadasProcedimento->Procedimento->find('list', array('fields'=>array('id','nome')));
+		$this->set('procedimentos',$procedimentos);
+		
+		$this->render('form_procedimento');
+	}
 	
+	public function del($id = null) {
+		if ($this->request->isPost()) {
+		
 		$this->Chamada->delete($id);
 		$this->Session->setFlash('Chamada Excluída com sucesso!');
 		$this->redirect(array('action'=>'index'));
 		
+		}
+		
+	}
+	
+	public function delProcedimento($id = null) {
+		if ($this->request->isPost()) {
+			$ChamadaProcedimento = $this->Chamada->ChamadasProcedimento->read(null, $id);
+			$this->Chamada->ChamadasProcedimento->delete($id);
+			$this->Session->setFlash('Procedimento da Chamada Excluído com sucesso!');
+			$this->redirect(array('action'=>'edit', $ChamadaProcedimento['ChamadasProcedimento']['chamada_id']));
+		}
 	}
 	
 	public function finalizar($id = null) {

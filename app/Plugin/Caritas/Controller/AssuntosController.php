@@ -14,26 +14,57 @@ class AssuntosController extends CaritasAppController {
 	}
 
 	public function add() {
+		if($this->request->isPost()) {
+				$data = $this->request->data;
+				$this->Assunto->create();
+				if ($this->Assunto->save($data)) {
+					$this->Session->setFlash('Assunto salvo com sucesso!');
+					$this->redirectF(array('action'=>'index'));
+				} else {
+					$this->Session->setFlash('Houve um erro ao salvar Assunto');
+				}
+			}
+		}
+
 		// Configura Titulo da Pagina
-		$this->set('title_for_layout','Chamadas - Adicionar');
-
-		$TiposChamada = $this->Chamada->TiposChamada->find('list', array('fields'=>array('id','nome')));
-		$this->set('TiposChamada',$TiposChamada);
-
-		$Assuntos = $this->Chamada->Assunto->find('list', array('fields'=>array('id','nome')));
-		$this->set('Assuntos',$Assuntos);
-
-		$Estados = $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
-		$this->set('Estados', $Estados);
-		
-		$this->set('Cidades', array());
-		$this->set('Instituicoes',array());
-		$this->set('Fornecedores',array());
-		$this->set('Pedidos',array());
-		$this->set('Contatos',array());
-		
+		$this->set('title_for_layout','Assuntos - Adicionar');
 
 		$this->render('form');
+	}
+	
+	public function edit($id = null) {
+		if($this->request->isPost()) {
+			if ($id != null) {
+				$data = $this->request->data;
+				$data['Assunto']['id'] = $id;
+				if ($this->Assunto->save($data)) {
+					$this->Session->setFlash('Assunto salvo com sucesso!');
+					$this->redirectF(array('action'=>'index'));
+				} else {
+					$this->Session->setFlash('Houve um erro ao salvar Assunto!');
+				}
+			}
+		}
+		// Configura Titulo da Pagina
+		$this->set('title_for_layout','Assuntos - Editar');
+		
+		$Assunto = $this->Assunto->read(null, $id);
+		$this->request->data($assunto);
+
+		$this->render('form');
+	}
+	
+	public function del($id = null) {
+		if($this->request->isPost()) {
+			if ($id != null) {
+				if ($this->Assunto->delete($id)) {
+					$this->Session->setFlash('Assunto excluído com sucesso!');
+					$this->redirect(array('action'=>'index'));
+				} else {
+					$this->Session->setFlash('Houve um erro ao excluir Assunto!');
+				}
+			}
+		}
 	}
 
 }

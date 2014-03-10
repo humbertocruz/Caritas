@@ -9,7 +9,7 @@
 )); ?>
 <?php foreach ($Assuntos as $Assunto) { ?>
 <tr>
-	<td>&nbsp;</td>
+	<td class="col-md-2"><?php echo $this->Bootstrap->basicActions($Assunto['Assunto']['id']);?></td>
 	<td><?php echo $Assunto['Assunto']['nome']; ?></td>
 </tr>
 <?php } ?>
