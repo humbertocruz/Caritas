@@ -1,6 +1,5 @@
 <?php
-
-echo $this->Form->create('Assunto', array('type'=>'post'));
+echo $this->Form->create('Cargo', array('type'=>'post'));
 
 echo $this->Bootstrap->input('nome', array('label'=>'Nome'));
 

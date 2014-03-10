@@ -15,14 +15,13 @@ class AssuntosController extends CaritasAppController {
 
 	public function add() {
 		if($this->request->isPost()) {
-				$data = $this->request->data;
-				$this->Assunto->create();
-				if ($this->Assunto->save($data)) {
-					$this->Session->setFlash('Assunto salvo com sucesso!');
-					$this->redirectF(array('action'=>'index'));
-				} else {
-					$this->Session->setFlash('Houve um erro ao salvar Assunto');
-				}
+			$data = $this->request->data;
+			$this->Assunto->create();
+			if ($this->Assunto->save($data)) {
+				$this->Session->setFlash('Assunto salvo com sucesso!');
+				$this->redirect(array('action'=>'index'));
+			} else {
+				$this->Session->setFlash('Houve um erro ao salvar Assunto');
 			}
 		}
 
@@ -39,7 +38,7 @@ class AssuntosController extends CaritasAppController {
 				$data['Assunto']['id'] = $id;
 				if ($this->Assunto->save($data)) {
 					$this->Session->setFlash('Assunto salvo com sucesso!');
-					$this->redirectF(array('action'=>'index'));
+					$this->redirect(array('action'=>'index'));
 				} else {
 					$this->Session->setFlash('Houve um erro ao salvar Assunto!');
 				}
@@ -49,7 +48,7 @@ class AssuntosController extends CaritasAppController {
 		$this->set('title_for_layout','Assuntos - Editar');
 		
 		$Assunto = $this->Assunto->read(null, $id);
-		$this->request->data($assunto);
+		$this->request->data = $Assunto;
 
 		$this->render('form');
 	}

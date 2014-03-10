@@ -14,5 +14,3 @@
 </tr>
 <?php } ?>
 <?php echo $this->Element('Bootstrap.table/table-end'); ?>
-
-<?php echo $this->Bootstrap->btnLink('Adicionar', array('action'=>'add'), 'primary'); ?>

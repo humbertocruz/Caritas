@@ -51,7 +51,7 @@ class CaritasAppController extends AppController {
 			'authenticate' => array(
 				'Form' => array(
 					'userModel' => 'Atendente',
-					'fields' => array('username' => 'login','password'=>'senha')
+					'fields' => array('username' => 'email','password'=>'senha')
 				)
 			)
 		)
@@ -163,6 +163,24 @@ class CaritasAppController extends AppController {
 							'text' => 'Assuntos',
 							'plugin' => 'caritas',
 							'controller' => 'assuntos',
+							'action' => 'index'
+						)
+					),
+					array(
+						'Link' => array(
+							'id' => 1,
+							'text' => 'Atividades',
+							'plugin' => 'caritas',
+							'controller' => 'atividades',
+							'action' => 'index'
+						)
+					),
+					array(
+						'Link' => array(
+							'id' => 1,
+							'text' => 'Cargos',
+							'plugin' => 'caritas',
+							'controller' => 'cargos',
 							'action' => 'index'
 						)
 					),

@@ -49,7 +49,7 @@ class AdminAppController extends AppController {
 			'authenticate' => array(
 				'Form' => array(
 					'userModel' => 'Caritas.Atendente',
-					'fields' => array('username' => 'login','password'=>'senha')
+					'fields' => array('username' => 'email','password'=>'senha')
 				)
 			)
 		)

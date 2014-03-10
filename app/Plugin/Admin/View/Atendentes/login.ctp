@@ -5,7 +5,7 @@
 		<div class="alert alert-info">
 			<?php
 				echo $this->Form->create('Atendente');
-				echo $this->Bootstrap->input('login',array('label'=>'Usuário'));
+				echo $this->Bootstrap->input('email',array('label'=>'Email'));
 				echo $this->Bootstrap->input('senha',array('label'=>'Senha','type'=>'password','value'=>''));
 				?>
 				<input type="submit" value="Login" class="btn btn-primary">
