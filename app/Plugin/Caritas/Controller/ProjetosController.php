@@ -5,35 +5,65 @@ class ProjetosController extends CaritasAppController {
 
 	public function index() {
 		// Configura Titulo da Pagina
-		$this->set('title_for_layout','Projetos - Lista');
+		$this->set('title_for_layout','Projeto - Lista');
 
 		// Carrega dados do BD
-		$projetos = $this->Projeto->find('all');
-		$this->set('Projetos',$projetos);
+		$Projetos = $this->Projeto->find('all');
+		$this->set('Projetos',$Projetos);
 
 	}
 
 	public function add() {
+		if($this->request->isPost()) {
+			$data = $this->request->data;
+			$this->Projeto->create();
+			if ($this->Projeto->save($data)) {
+				$this->Session->setFlash('Projeto salvo com sucesso!');
+				$this->redirect(array('action'=>'index'));
+			} else {
+				$this->Session->setFlash('Houve um erro ao salvar Projeto');
+			}
+		}
+
 		// Configura Titulo da Pagina
-		$this->set('title_for_layout','Chamadas - Adicionar');
-
-		$TiposChamada = $this->Chamada->TiposChamada->find('list', array('fields'=>array('id','nome')));
-		$this->set('TiposChamada',$TiposChamada);
-
-		$Assuntos = $this->Chamada->Assunto->find('list', array('fields'=>array('id','nome')));
-		$this->set('Assuntos',$Assuntos);
-
-		$Estados = $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
-		$this->set('Estados', $Estados);
-		
-		$this->set('Cidades', array());
-		$this->set('Instituicoes',array());
-		$this->set('Fornecedores',array());
-		$this->set('Pedidos',array());
-		$this->set('Contatos',array());
-		
+		$this->set('title_for_layout','Projetos - Adicionar');
 
 		$this->render('form');
+	}
+	
+	public function edit($id = null) {
+		if($this->request->isPost()) {
+			if ($id != null) {
+				$data = $this->request->data;
+				$data['Projeto']['id'] = $id;
+				if ($this->Projeto->save($data)) {
+					$this->Session->setFlash('Projeto salvo com sucesso!');
+					$this->redirect(array('action'=>'index'));
+				} else {
+					$this->Session->setFlash('Houve um erro ao salvar Projeto!');
+				}
+			}
+		}
+		// Configura Titulo da Pagina
+		$this->set('title_for_layout','Projetos - Editar');
+		
+		$Projeto = $this->Projeto->read(null, $id);
+		$this->request->data = $Projeto;
+
+		$this->render('form');
+	}
+	
+	public function del($id = null) {
+		if($this->request->isPost()) {
+			if ($id != null) {
+				if ($this->Projeto->delete($id)) {
+					$this->Session->setFlash('Projeto excluído com sucesso!');
+					$this->redirect(array('action'=>'index'));
+				} else {
+					$this->Session->setFlash('Houve um erro ao excluir Projeto!');
+				}
+			}
+		}
 	}
 
 }
