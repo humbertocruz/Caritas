@@ -20,10 +20,14 @@ class CidadesController extends CaritasAppController {
 			if (isset($this->request->data['filter'])) {
 				unset($this->request->data['filter']);
 				foreach($this->request->data as $key=>$value) {
-					if ($value == '0' or $value == '') {
+					if ($value == '0' or $value == '' or $value == null) {
 						unset ($this->request->data[$key]);
 					}
+					if (strstr(' like', $key)) {
+						$this->request->data[$key] = '%'+$value+'%';
+					}
 				}
+				//pr($this->request->data);
 				$this->Session->write('Filtros.Cidades', $this->request->data );
 			}
 		}
@@ -52,8 +56,9 @@ class CidadesController extends CaritasAppController {
 				'Cidade.estado_id' => 'XX'
 			);
 		}
-			$cidades = $this->Paginate('Cidade',$filtros);
-			$this->set('Cidades',$cidades);
+		
+		$cidades = $this->Paginate('Cidade',$filtros);
+		$this->set('Cidades',$cidades);
 
 	}
 
@@ -71,6 +76,9 @@ class CidadesController extends CaritasAppController {
 
 		// Configura Titulo da Pagina
 		$this->set('title_for_layout','Cidades - Adicionar');
+		
+		$Estados = $this->Cidade->Estado->find('list',array('fields'=>array('id','nome')));
+		$this->set('Estados',$Estados);
 
 		$this->render('form');
 	}

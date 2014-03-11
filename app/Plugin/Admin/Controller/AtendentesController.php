@@ -98,6 +98,8 @@ class AtendentesController extends AdminAppController {
 	}
 	
 	public function login() {
+		
+		$this->set('title_for_layout','Sistema Cáritas');
 	
 		if ($this->request->isPost()) {
 			

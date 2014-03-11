@@ -30,13 +30,14 @@ class CaritasHelper extends AppHelper {
 			break;
 			case 'text':
 				ob_start(); ?>
-				<input type="text" class="form-control input-sm">
+				<input type="text" class="form-control input-sm" name="data[<?php echo $field['model'].'.'.$field['field'].']';?>">
 				<?php return ob_get_clean();
 				break;
 		}
 	}
 	
-	public function filters($fields = array(), $data = array()) { ob_start(); ?>
+	public function filters($fields = array(), $data = array()) {
+		ob_start(); ?>
 		<div class="panel panel-default">
 			<form method="post" role="form">
 			<div class="panel-body">
@@ -46,9 +47,11 @@ class CaritasHelper extends AppHelper {
 				?>
 				<?php echo $this->filter_type($field, $data_field); ?>
 				<?php } ?>
+				
 			</div>
 			<div class="panel-footer">
-				<input type="submit" class="btn btn-default" value="Filtrar">
+				<input type="submit" class="btn btn-sm btn-success" value="Filtrar">
+				<input type="button" class="btn btn-sm pull-right btn-danger" value="Zerar">
 			</div>
 			</form>
 		</div>

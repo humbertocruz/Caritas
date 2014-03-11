@@ -3,6 +3,12 @@ $(document).ready(function(){
 	form_auto = $('.form-autosubmit');
 	form_auto.submit();
 	
+	$('.btn-popover').popover({
+		'html':true,
+		'content': $('.filter-panel').html(),
+		'title':'Filtros'
+	});
+	
 	
 	// Configura Escolha do Projeto
 	$('#EscolhaProjetoId').change(function(){

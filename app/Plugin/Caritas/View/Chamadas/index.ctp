@@ -46,18 +46,20 @@ $filters = array(
 	),
 	array(
 		'label'=>'Período',
-		'type'=>'calendar',
+		'type'=>'text',
 		'model'=>'Chamada',
 		'field'=>'data_inicio'
 	)	
 );
 
+$filters_panel = $this->Caritas->filters($filters, $filters_chamada);
+
 echo $this->Element('Bootstrap.table/table-create',array(
 	'title'=>'Chamadas',
-	'state'=>'info'
+	'state'=>'info',
+	'filter_panel' => $filters_panel
 	)
 ); 
-echo $this->Caritas->filters($filters, $filters_chamada);
 
 if ($escolhido_projeto_id == 0) { ?>
 <tr>
