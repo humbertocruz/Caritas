@@ -5,11 +5,13 @@ $(document).ready(function(){
 	
 	$('.btn-popover').popover({
 		'html':true,
+		'placement':'left',
 		'content': $('.filter-panel').html(),
 		'title':'Filtros'
+	}).tooltip({
+		'placement':'top',
 	});
-	
-	
+		
 	// Configura Escolha do Projeto
 	$('#EscolhaProjetoId').change(function(){
 		$(this).parent().submit();
