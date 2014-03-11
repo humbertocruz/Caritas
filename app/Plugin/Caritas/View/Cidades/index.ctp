@@ -34,7 +34,13 @@ if ($escolhido_projeto_id == 0) { ?>
 <tr>
 	<td colspan="8">Nenhuma Cidade encontrada!</td>
 </tr>
-<?php } else {
+<?php } else { ?>
+<tr class="panel">
+	<th class="col-md-1">&nbsp;</th>
+	<th class="col-md-9"><?php echo $this->Bootstrap->sorter('Cidade.nome','Nome'); ?></th>
+	<th class="col-md-2"><?php echo $this->Bootstrap->sorter('Cidade.estado_id','UF'); ?></th>
+</tr>
+<?php
 foreach ($Cidades as $Cidade) { ?>
 <tr>
 	<td class="col-md-2"><?php echo $this->Bootstrap->basicActions($Cidade['Cidade']['id']);?></td>
