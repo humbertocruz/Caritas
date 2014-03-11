@@ -51,13 +51,14 @@ $filters = array(
 		'field'=>'data_inicio'
 	)	
 );
-echo $this->Caritas->filters($filters, $filters_chamada);
 
 echo $this->Element('Bootstrap.table/table-create',array(
 	'title'=>'Chamadas',
 	'state'=>'info'
 	)
 ); 
+echo $this->Caritas->filters($filters, $filters_chamada);
+
 if ($escolhido_projeto_id == 0) { ?>
 <tr>
 	<td colspan="8">Escolha o Projeto no menu superior!</td>

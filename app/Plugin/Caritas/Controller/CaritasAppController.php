@@ -134,9 +134,18 @@ class CaritasAppController extends AppController {
 							array(
 								'Link' => array(
 									'id' => 1,
-									'text' => 'Chamada',
+									'text' => 'Chamadas',
 									'plugin' => 'caritas',
 									'controller' => 'chamadas',
+									'action' => 'index'
+								)
+							),
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Cidades',
+									'plugin' => 'caritas',
+									'controller' => 'cidades',
 									'action' => 'index'
 								)
 							),
@@ -163,6 +172,15 @@ class CaritasAppController extends AppController {
 									'text' => 'Assuntos',
 									'plugin' => 'caritas',
 									'controller' => 'assuntos',
+									'action' => 'index'
+								)
+							),
+							array(
+								'Link' => array(
+									'id' => 1,
+									'text' => 'Atas de Preços',
+									'plugin' => 'caritas',
+									'controller' => 'atas_precos',
 									'action' => 'index'
 								)
 							),
