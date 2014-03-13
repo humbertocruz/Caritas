@@ -90,10 +90,11 @@ class ChamadasController extends CaritasAppController {
 			if (isset($this->request->data['filter'])) {
 				unset($this->request->data['filter']);
 				foreach($this->request->data as $key=>$value) {
+					$keys = split('\.',$key);
 					if ($value == '0' or $value == '') {
 						unset ($this->request->data[$key]);
 					} else {
-						$filters_chamada[$key]['value'] = $value;
+						$filters_chamada[$keys[1]]['value'] = $value;
 					}
 				}
 				$this->Session->write('Filtros.Chamadas', $filters_chamadas );
