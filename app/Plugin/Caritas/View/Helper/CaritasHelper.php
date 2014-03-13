@@ -8,6 +8,7 @@ class CaritasHelper extends AppHelper {
 			case 'select':
 				ob_start(); ?>
 				<div class="form-group" title="<?php echo $field['label'];?>">
+					<label><?php echo $field['label'];?></label>
 					<select class="form-control input-sm" name="data[<?php echo $field['model'].'.'.$field['field'].']';?>">
 						<?php foreach($field['options'] as $key => $value) { 
 							$selected = ($key == $field_value)?('selected="selected"'):('');
@@ -18,27 +19,20 @@ class CaritasHelper extends AppHelper {
 				</div>
 				<?php return ob_get_clean();
 				break;
-			case 'calendar':
-				ob_start(); ?>
-					<div class="form-group" title="<?php echo $field['label'];?>">
-						<div class="row">
-							<div class="col-xs-6"><input type="date" name="data_inicio_ini" class="form-control input-sm"></div>
-							<div class="col-xs-6"><input type="date" name="data_inicio_fim" class="form-control input-sm"></div>
-						</div>
-					</div>
-				<?php return ob_get_clean();
-			break;
 			case 'text':
 				ob_start(); ?>
-				<input type="text" class="form-control input-sm" name="data[<?php echo $field['model'].'.'.$field['field'].']';?>">
+				<div class="form-group" title="<?php echo $field['label'];?>">
+					<label><?php echo $field['label'];?></label>
+					<input type="text" class="form-control input-sm" name="data[<?php echo $field['model'].'.'.$field['field'].']';?>">
+				</div>
 				<?php return ob_get_clean();
 				break;
 		}
 	}
 	
-	public function filters($fields = array(), $data = array()) {
+	public function filters($fields = array()) {
 		ob_start(); ?>
-		<div class="panel panel-default">
+		<div class="">
 			<form method="post" role="form">
 			<div class="panel-body">
 				<input type="hidden" name="filter" value="1">

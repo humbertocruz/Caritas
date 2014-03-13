@@ -18,30 +18,55 @@ class ChamadasController extends CaritasAppController {
 		}
 		parent::beforeFilter();
 	}
-	private function filters() {
+	private function sess_filters() {
 		// Filtros
-		
-		// Configura sessao
-		if ($this->request->isPost()) {
-			if (isset($this->request->data['filter'])) {
-			//pr($this->request->data);
-				unset($this->request->data['filter']);
-				foreach($this->request->data as $key=>$value) {
-					//pr($key); pr($value);
-					if ($value == '0' or $value == '') {
-						unset ($this->request->data[$key]);
-					}
-				}
-				$this->Session->write('Filtros.Chamadas', $this->request->data );
-			}
-		}
-		// Carrega sessao
-		$filtros = $this->Session->read('Filtros.Chamadas');
-		$this->set('filters_chamada', $filtros);
-		
+		$filters_chamadas = array(
+			'estado_id'=>array(
+				'label'=>'UF',
+				'type'=>'select',
+				'model'=>'Chamada',
+				'field'=>'estado_id',
+				'value' => null
+			),
+			'cidade_id'=>array(	
+				'label'=>'Cidade',
+				'type'=>'select',
+				'model'=>'Chamada',
+				'field'=>'cidade_id',
+				'value' => null
+			),
+			'assunto_id'=>array(
+				'label'=>'Assunto',
+				'type'=>'select',
+				'model'=>'Chamada',
+				'field'=>'assunto_id',
+				'value' => null
+			),
+			'status_id'=>array(
+				'label'=>'Status',
+				'type'=>'select',
+				'model'=>'Chamada',
+				'field'=>'status_id',
+				'value' => null
+			),
+			'data_inicio_ini'=>array(
+				'label'=>'Período - Início',
+				'type'=>'text',
+				'model'=>'Chamada',
+				'field'=>'data_inicio',
+				'value' => null
+			),
+			'data_inicio_fim'=>array(
+				'label'=>'Período - Fim',
+				'type'=>'text',
+				'model'=>'Chamada',
+				'field'=>'data_inicio',
+				'value' => null
+			)
+		);
 		// Carrega listas para filtro
 		$estados = array('0'=>'Todos') + $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
-		//pr($filtros);
+		
 		if (isset($filtros['Chamada.estado_id'])) {
 			$conditions = array(
 				'Cidade.estado_id' => $filtros['Chamada.estado_id']
@@ -54,13 +79,35 @@ class ChamadasController extends CaritasAppController {
 		$assuntos = array('0'=>'Todos') + $this->Chamada->Assunto->find('list', array('fields'=>array('id','nome')));
 		$finalizada = array('0'=>'Todas','1'=>'Não Finalizadas','2'=>'Finalizadas');
 		$status = array('0'=>'Todos') + $this->Chamada->Status->find('list', array('fields'=>array('id','nome')));
-		$this->set('filters', array('estados'=>$estados,'assuntos'=>$assuntos,'finalizada'=>$finalizada,'status'=>$status,'municipios'=>$municipios));
+		
+		$filters_chamadas['estado_id']['options'] = $estados;
+		$filters_chamadas['cidade_id']['options'] = $Cidades;
+		$filters_chamadas['assunto_id']['options'] = $assuntos;
+		$filters_chamadas['status_id']['options'] = $status;
+		
+		// Configura sessao
+		if ($this->request->isPost()) {
+			if (isset($this->request->data['filter'])) {
+				unset($this->request->data['filter']);
+				foreach($this->request->data as $key=>$value) {
+					if ($value == '0' or $value == '') {
+						unset ($this->request->data[$key]);
+					} else {
+						$filters_chamada[$key]['value'] = $value;
+					}
+				}
+				$this->Session->write('Filtros.Chamadas', $filters_chamadas );
+			}
+		}
+		
+		// Carrega sessao
+		$filtros = $this->Session->read('Filtros.Chamadas');
+		$this->set('filters_chamadas', $filtros);
+
+		$this->set('filters_chamadas', $filters_chamadas);
 		
 	}
 	public function index() {
-		// Configura Filtros
-		$this->filters();
-		
 		// Configura Titulo da Pagina
 		$this->set('title_for_layout','Chamadas - Lista');
 
@@ -80,16 +127,10 @@ class ChamadasController extends CaritasAppController {
 			'Filhas'
 		);
 		//$this->Session->delete('Filtros.Chamadas');
-		$filtros = $this->Session->read('Filtros.Chamadas');
-		if (isset( $filtros['data_inicio_ini'])) {
-			$data_inicio_ini = $filtros['data_inicio_ini'];
-			unset($filtros['data_inicio_ini']);
-			$filtros['data_inicio >='] = $data_inicio_ini;
-		}
-		if (isset( $filtros['data_inicio_fim'])) {
-			$data_inicio_fim = $filtros['data_inicio_fim'];
-			unset($filtros['data_inicio_fim']);
-			$filtros['data_inicio <='] = $data_inicio_fim;
+		$sess_filtros = ($this->Session->check('Filtros.Chamadas'))?($this->Session->read('Filtros.Chamadas')):(array());
+		$filtros = array();
+		foreach($sess_filtros as $key=>$value) {
+			$filtros[$value['field']] = $value['value'];
 		}
 			
 		if (!is_array($filtros)) $filtros = array();
@@ -99,10 +140,11 @@ class ChamadasController extends CaritasAppController {
 		// Filtro Constante Projeto
 		$filtros = array('Chamada.projeto_id'=>$this->escolhido_projeto_id)+$filtros;
 		
-		//pr($filtros);
-		
 		$chamadas = $this->Paginate('Chamada',$filtros);
 		$this->set('Chamadas',$chamadas);
+		
+		$this->sess_filters();
+		
 
 	}
 
@@ -130,7 +172,7 @@ class ChamadasController extends CaritasAppController {
 			$this->Chamada->create();
 			if ($this->Chamada->save($data)) {
 			$this->Session->setFlash('Chamada salva com sucesso!');
-			//pr($data);
+			
 			$this->redirect(array('action'=>'index'));
 			} else {
 				$this->Session->setFlash('Houve um erro ao salvar!');	
@@ -698,7 +740,7 @@ class ChamadasController extends CaritasAppController {
 	public function edit_cargo_contato($id = 0, $inst_forn = 1) {
 		$this->layout = false;
 		$data_temp = $this->request->data;
-		//pr($data_temp);
+		
 		if ($inst_forn == 1) {
 			$data = array(
 				'ContatosInstituicao' => array(

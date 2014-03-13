@@ -8,51 +8,7 @@
 <?php
 echo $this->Bootstrap->pageHeader('Chamadas');
 
-$filters = array(
-	array(
-		'label'=>'UF',
-		'type'=>'select',
-		'model'=>'Chamada',
-		'field'=>'estado_id',
-		'options' => $filters['estados']
-	),
-	array(
-		'label'=>'Município',
-		'type'=>'select',
-		'model'=>'Chamada',
-		'field'=>'cidade_id',
-		'options' => $filters['municipios']
-	),
-	array(
-		'label'=>'Assunto',
-		'type'=>'select',
-		'model'=>'Chamada',
-		'field'=>'assunto_id',
-		'options' => $filters['assuntos']
-	),
-	array(
-		'label'=>'Finalizada',
-		'type'=>'select',
-		'model'=>'Chamada',
-		'field'=>'data_fim',
-		'options' => $filters['finalizada']
-	),
-	array(
-		'label'=>'Status',
-		'type'=>'select',
-		'model'=>'Chamada',
-		'field'=>'status_id',
-		'options' => $filters['status']
-	),
-	array(
-		'label'=>'Período',
-		'type'=>'text',
-		'model'=>'Chamada',
-		'field'=>'data_inicio'
-	)	
-);
-
-$filters_panel = $this->Caritas->filters($filters, $filters_chamada);
+$filters_panel = $this->Caritas->filters($filters_chamadas);
 
 echo $this->Element('Bootstrap.table/table-create',array(
 	'title'=>'Chamadas',
