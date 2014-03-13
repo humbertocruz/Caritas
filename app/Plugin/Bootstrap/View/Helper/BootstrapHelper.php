@@ -270,14 +270,26 @@ class BootstrapHelper extends AppHelper {
 	<?php return ob_get_clean();	
 	}
 	
-	public function contatoActions($id = 1) { ob_start(); ?>
+	public function contatoActions($id = 1, $del_hasMany) { 
+		$okToDel = true;
+		foreach($del_hasMany as $hM) {
+			if (count($hM) != 0) {
+				$okToDel = false;
+			}
+		}
+		ob_start();
+		?>
 		<div class="btn-group">
 			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 			Ações&nbsp;<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu" role="menu">
 				<li><?php echo $this->Html->Link('Editar', array('action'=>'edit', $id));?></li>
+				<?php if($okToDel) { ?>
 				<li><?php echo $this->Form->postLink('Excluir', array('action'=>'del', $id), null, 'Tem Certeza?');?></li>
+				<?php } else { ?>
+				<li><a href="#"><span class="label label-danger">Não é possível Excluir!</span></a></li>
+				<?php } ?>
 			</ul>
 		</div>
 	<?php return ob_get_clean();	

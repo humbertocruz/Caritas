@@ -15,7 +15,7 @@ echo $this->Element('Bootstrap.table/table-create',array(
 foreach ($Contatos as $Contato) { ?>
 <tr>
 	<td>
-		<?php echo $this->Bootstrap->contatoActions($Contato['Contato']['id']); ?>
+		<?php echo $this->Bootstrap->contatoActions($Contato['Contato']['id'], array('ContatosEmail'=>$Contato['ContatosEmail'])); ?>
 	</td>
 	<td><?php echo $Contato['Contato']['nome']; ?></td>
 </tr>

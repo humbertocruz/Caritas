@@ -2,7 +2,12 @@
 class ContatosController extends CaritasAppController {
 
 	public $uses = array('Caritas.Contato');
-	
+	public $paginate = array(
+		'limit' => 15,
+		'order' => array(
+			'Contato.nome' => 'asc'
+		)
+	);
 	public function index() {
 		
 		$Contatos = $this->Paginate('Contato');
@@ -38,8 +43,17 @@ class ContatosController extends CaritasAppController {
 		}
 	}
 	
-	public function del($contato_id = null) {
-		
+	public function del($id = null) {
+		if($this->request->isPost()) {
+			if ($id != null) {
+				if ($this->Contato->delete($id)) {
+					$this->Session->setFlash('Contato exclu’do com sucesso!');
+					$this->redirect(array('action'=>'index'));
+				} else {
+					$this->Session->setFlash('Houve um erro ao excluir Contato!');
+				}
+			}
+		}
 	}
 	
 }
