@@ -8,7 +8,7 @@
 <?php
 echo $this->Bootstrap->pageHeader('Chamadas');
 
-$filters_panel = $this->Caritas->filters($filters_chamadas);
+$filters_panel = $this->Caritas->filters($filters_chamadas, $this->request->data);
 
 echo $this->Element('Bootstrap.table/table-create',array(
 	'title'=>'Chamadas',

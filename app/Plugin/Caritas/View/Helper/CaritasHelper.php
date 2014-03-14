@@ -23,7 +23,7 @@ class CaritasHelper extends AppHelper {
 				ob_start(); ?>
 				<div class="form-group" title="<?php echo $field['label'];?>">
 					<label><?php echo $field['label'];?></label>
-					<input type="text" class="form-control input-sm" name="data[<?php echo $field['model'].'.'.$field['field'].']';?>">
+					<input value="<?php echo $field['value'];?>" type="text" class="form-control input-sm" name="data[<?php echo $field['model'].'.'.$field['field'].']';?>">
 				</div>
 				<?php return ob_get_clean();
 				break;
@@ -36,8 +36,9 @@ class CaritasHelper extends AppHelper {
 			<form method="post" role="form">
 			<div class="panel-body">
 				<input type="hidden" name="filter" value="1">
-				<?php foreach($fields as $field) { 
-					$data_field = (isset($data[$field['model'].'.'.$field['field']]))?($data[$field['model'].'.'.$field['field']]):('0');
+				<?php foreach($fields as $field) {
+					//$data_field = (isset($data[$field['model'].'.'.$field['field']]))?($data[$field['model'].'.'.$field['field']]):('0');
+					$data_field = ($field['value'])?($field['value']):('0');
 				?>
 				<?php echo $this->filter_type($field, $data_field); ?>
 				<?php } ?>

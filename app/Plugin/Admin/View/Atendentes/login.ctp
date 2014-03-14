@@ -4,9 +4,9 @@
 		
 		<div class="alert alert-info">
 			<?php
-				echo $this->Form->create('Atendente');
-				echo $this->Bootstrap->input('email',array('label'=>'Email'));
-				echo $this->Bootstrap->input('senha',array('label'=>'Senha','type'=>'password','value'=>''));
+				echo $this->Bootstrap->create('Atendente');
+				echo $this->Form->input('email',array('label'=>'Email','required'=>'required'));
+				echo $this->Form->input('senha',array('label'=>'Senha','type'=>'password','value'=>'','required'=>'required'));
 				?>
 				<input type="submit" value="Login" class="btn btn-primary">
 				<?php
