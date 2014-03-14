@@ -44,8 +44,14 @@ class CaritasHelper extends AppHelper {
 				
 			</div>
 			<div class="panel-footer">
-				<input type="submit" class="btn btn-sm btn-success" value="Filtrar">
-				<input type="button" class="btn btn-sm pull-right btn-danger" value="Zerar">
+				<div class="row">
+					<div class="col-md-6">
+						<input type="submit" class="btn btn-sm btn-success" value="Filtrar">
+					</div>
+					<div class="col-md-6">
+						<input type="button" class="btn btn-sm pull-right btn-danger" value="Zerar">
+					</div>
+				</div>
 			</div>
 			</form>
 		</div>

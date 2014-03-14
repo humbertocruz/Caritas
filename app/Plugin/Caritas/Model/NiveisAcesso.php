@@ -11,4 +11,13 @@ class NiveisAcesso extends CaritasAppModel {
 		)
 	);
 	
+	public $validate = array(
+		'nome' => array(
+			'minLength' => array(
+				'rule' => array('minLength', 5),
+				'message' => 'Este campo deve ter mais de 5 caracteres!'
+			)
+		)
+	);
+	
 }

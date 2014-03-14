@@ -16,15 +16,15 @@
   <div class="tab-pane active" id="tab-chamadas">
 <div class="row">
 	<div class="col-md-8">
-		<?php echo $this->Form->create('Chamada',array('type'=>'post')); ?>
-		<?php echo $this->Bootstrap->input('chamada_id', array('type'=>'hidden','label'=>false)); ?>
-		<?php echo $this->Bootstrap->input('pedido_id', array('type'=>'hidden','label'=>false)); ?>
-		<?php echo $this->Bootstrap->input('inst_forn', array('type'=>'hidden','label'=>false,'value'=>1)); ?>
+		<?php echo $this->Bootstrap->create('Chamada',array('type'=>'post')); ?>
+		<?php echo $this->Form->input('chamada_id', array('type'=>'hidden','label'=>false)); ?>
+		<?php echo $this->Form->input('pedido_id', array('type'=>'hidden','label'=>false)); ?>
+		<?php echo $this->Form->input('inst_forn', array('type'=>'hidden','label'=>false,'value'=>1)); ?>
 		<div class="panel panel-warning">
 			<div class="panel-heading">Instituição / Fornecedor</div>
 			<div class="panel-body">
-				<?php echo $this->Bootstrap->select('estado_id', array('options'=>$Estados,'label'=>'UF')); ?>
-				<?php echo $this->Bootstrap->belongs('cidade_id', array('options'=>$Cidades,'label'=>'Cidade','url'=>'/cidades')); ?>
+				<?php echo $this->Form->input('estado_id', array('options'=>$Estados,'label'=>'UF')); ?>
+				<?php echo $this->Form->input('cidade_id', array('options'=>$Cidades)); ?>
 				<?php
 					if (isset($this->request->data['Chamada']['instituicao_id'])) {
 						$inst_active = 'active';
@@ -44,10 +44,10 @@
 				<!-- Tab panes -->
 				<div class="tab-content">
 					<div class="tab-pane <?php echo $inst_active;?>" id="tipo_inst">
-						<?php echo $this->Bootstrap->belongs('instituicao_id', array('options'=>$Instituicoes,'label'=>'Instituição','url'=>'/instituicoes')); ?>
+						<?php echo $this->Form->input('instituicao_id', array('options'=>$Instituicoes,'label'=>'Instituição','url'=>'/instituicoes')); ?>
 					</div>
 					<div class="tab-pane <?php echo $forn_active;?>" id="tipo_forn">
-						<?php echo $this->Bootstrap->belongs('fornecedor_id', array('options'=>$Fornecedores,'label'=>'Fornecedor','url'=>'/fornecedores')); ?>
+						<?php echo $this->Form->input('fornecedor_id', array('options'=>$Fornecedores,'label'=>'Fornecedor','url'=>'/fornecedores')); ?>
 					</div>
 				</div>
 				
@@ -58,7 +58,7 @@
 		<div class="panel panel-success">
 			<div class="panel-heading">Contato</div>
 			<div class="panel-body">
-				<?php echo $this->Bootstrap->select('contato_id', array('options'=>$Contatos,'label'=>'Contato')); ?>
+				<?php echo $this->Form->input('contato_id', array('options'=>$Contatos,'label'=>'Contato')); ?>
 				<span class="btn btn-success disabled" id="contato-novo">Adicionar</span>
 				<hr>
 				<div id="contato-box" class="alert">
@@ -70,12 +70,12 @@
 		<div class="panel panel-primary">
 			<div class="panel-heading">Chamada</div>
 			<div class="panel-body">
-				<?php echo $this->Bootstrap->input('data_inicio', array('type'=>'date','label'=>'Data Início', 'defaultValue'=>date('Y-m-d'), 'readonly'=>'readonly')); ?>
-				<?php echo $this->Bootstrap->select('tipo_chamada_id', array('options'=>$TiposChamada,'label'=>'Tipo de Chamada')); ?>
-				<?php echo $this->Bootstrap->belongs('assunto_id', array('options'=>$Assuntos,'label'=>'Assunto','url'=>'/assuntos')); ?>
-				<?php echo $this->Bootstrap->belongs('status_id', array('options'=>$Status,'label'=>'Status','url'=>'/status')); ?>
-				<?php echo $this->Bootstrap->belongs('prioridade_id', array('options'=>$Prioridades,'label'=>'Prioridade','url'=>'/prioridades')); ?>
-				<?php echo $this->Bootstrap->text('solicitacao', array('label'=>'Solicitação')); ?>
+				<?php echo $this->Form->input('data_inicio', array('type'=>'text','label'=>'Data Início', 'value'=>date('Y-m-d'), 'readonly'=>'readonly')); ?>
+				<?php echo $this->Form->input('tipo_chamada_id', array('options'=>$TiposChamada,'label'=>'Tipo de Chamada')); ?>
+				<?php echo $this->Form->input('assunto_id', array('options'=>$Assuntos,'label'=>'Assunto','url'=>'/assuntos')); ?>
+				<?php echo $this->Form->input('status_id', array('options'=>$Status,'label'=>'Status','url'=>'/status')); ?>
+				<?php echo $this->Form->input('prioridade_id', array('options'=>$Prioridades,'label'=>'Prioridade','url'=>'/prioridades')); ?>
+				<?php echo $this->Form->input('solicitacao', array('label'=>'Solicitação')); ?>
 			</div>
 		</div>
 		

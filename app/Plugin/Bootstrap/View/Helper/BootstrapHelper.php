@@ -34,8 +34,30 @@ class BootstrapHelper extends AppHelper {
 	}
 
 	// Formularios Bootstrap
+	
+	public function create($name = null, $options = array()) {
+		echo $this->Form->create($name, $options + array(
+			'inputDefaults' => array(
+				'div' => array(
+					'class' => 'form-group'
+				),
+				'class' => 'form-control',
+				'error' => array(
+					'attributes' => array(
+						'class'=>'text-danger',
+						'wrap' => 'p',
+						'scape' => false
+					)
+				)
+			)
+		));
+	}
+	
+	public function input($name=null, $options = array()) {
+		echo $this->Form->input($name, $options);
+	}
 
-	public function input($name = null, $options = array()) {
+	public function oldinput($name = null, $options = array()) {
 		$defaults = array(
 			'label' => $name,
 			'defaultValue' => '',

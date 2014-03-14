@@ -16,12 +16,12 @@
 		<br>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<?php echo $this->Form->create('Atendente',array('type'=>'post')); ?>
-				<?php echo $this->Bootstrap->input('nome', array('label'=>'Nome')); ?>
-				<?php echo $this->Bootstrap->input('email', array('type'=>'email','label'=>'Email')); ?>
-				<?php echo $this->Bootstrap->input('cpf', array('label'=>'CPF')); ?>
-				<?php echo $this->Bootstrap->select('sexo_id', array('options'=>$Sexos,'label'=>'Sexo')); ?>
-				<?php echo $this->Bootstrap->select('nivel_acesso_id', array('options'=>$NiveisAcessos,'label'=>'Nível de Acesso')); ?>
+				<?php echo $this->Bootstrap->create('Atendente',array('type'=>'post')); ?>
+				<?php echo $this->Form->input('nome', array('label'=>'Nome')); ?>
+				<?php echo $this->Form->input('email', array('type'=>'email','label'=>'Email')); ?>
+				<?php echo $this->Form->input('cpf', array('label'=>'CPF')); ?>
+				<?php echo $this->Form->input('sexo_id', array('options'=>$Sexos,'label'=>'Sexo')); ?>
+				<?php echo $this->Form->input('nivel_acesso_id', array('options'=>$NiveisAcessos,'label'=>'Nível de Acesso')); ?>
 				<?php echo $this->Form->submit('Gravar', array('class'=>'btn btn-primary')); ?>
 				<?php echo $this->Form->end(); ?>
 			</div>

@@ -1,26 +1,16 @@
-<?php
-echo $this->Element('Bootstrap.table/table-create',array(
-	'title'=>'Níveis de Acessos',
-	'state'=>'info'
+<?php echo $this->Bootstrap->pageHeader('Níveis de Acesso'); ?>
+
+<?php echo $this->Element('Bootstrap.table/table-create',array(
+	'title'=>'Níveis de Acesso',
+	'state'=>'info',
+	'fields' => array(
+		'Nome'
 	)
-); 
-if (count($NiveisAcessos) == 0) { ?>
+)); ?>
+<?php foreach ($NiveisAcessos as $NiveisAcesso) { ?>
 <tr>
-	<td colspan="8">Nenhum Nível de Acesso encontrado!</td>
+	<td class="col-md-2"><?php echo $this->Bootstrap->basicActions($NiveisAcesso['NiveisAcesso']['id']);?></td>
+	<td><?php echo $NiveisAcesso['NiveisAcesso']['nome']; ?></td>
 </tr>
-<?php } else { ?>
-<tr class="panel">
-	<th class="col-md-1">&nbsp;</th>
-	<th class="col-md-2">Nome</th>
-</tr>
-<?php 
-foreach ($NiveisAcessos as $NivelAcesso) { ?>
-<tr>
-	<td>
-		<?php echo $this->Bootstrap->basicActions($NivelAcesso['NiveisAcesso']['id']); ?>
-	</td>
-	<td><?php echo $NivelAcesso['NiveisAcesso']['nome']; ?></td>
-</tr>
-<?php } ?>
 <?php } ?>
 <?php echo $this->Element('Bootstrap.table/table-end'); ?>
