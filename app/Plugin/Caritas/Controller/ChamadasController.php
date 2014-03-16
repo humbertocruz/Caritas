@@ -16,6 +16,7 @@ class ChamadasController extends CaritasAppController {
 			if ($this->request->data['Chamada']['fornecedor_id'] == 0) unset($this->request->data['Chamada']['fornecedor_id']);
 			$this->Session->delete('BelongsForms.ChamadaAddForm');
 		}
+
 		parent::beforeFilter();
 	}
 	private function sess_filters() {

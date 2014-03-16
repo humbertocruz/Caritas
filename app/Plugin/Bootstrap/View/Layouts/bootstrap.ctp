@@ -28,11 +28,10 @@
         ?>
     </head>
     <body>
+		<?php //pr($superMenu); ?>
         <div class="container">
 	        <?php 
-    	        if (isset($menus)) {
-        	        echo $this->Element( 'Bootstrap.navbar-top' ); 
-				}
+    	         echo $this->Element( 'Bootstrap.navbar-top', array('thisMenu'=>$superMenu) ); 
 			?>
             <?php if (isset( $init_password ) ) { ?>
             <div class="alert alert-danger">

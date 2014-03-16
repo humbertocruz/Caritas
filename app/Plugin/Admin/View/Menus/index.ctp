@@ -5,19 +5,18 @@
 	'state'=>'info'
 )); ?>
 <tr>
-	<th>&nbsp;</th>
-	<th>Texto</th>
-	<th>Plugin</th>
-	<th>Controller</th>
-	<th>Action</th>
+	<th class="col-md-1">&nbsp;</th>
+	<th>Nome</th>
+	<th>Posição</th>
+	<th>Nível de Acesso</th>
 </tr>
 <?php foreach ($Menus as $Menu) { ?>
 <tr>
-	<td class="col-md-2"><?php echo $this->Bootstrap->basicActions($Menu['Menu']['id']);?></td>
-	<td><?php echo $Menu['Menu']['texto']; ?></td>
-	<td><?php echo $Menu['Menu']['plugin']; ?></td>
-	<td><?php echo $Menu['Menu']['controller']; ?></td>
-	<td><?php echo $Menu['Menu']['action']; ?></td>
+	<td><?php echo $this->Bootstrap->basicActions($Menu['Menu']['id']);?></td>
+	<td><?php echo $Menu['Menu']['nome']; ?></td>
+	<td><?php echo $Menu['Menu']['posicao']; ?></td>
+	<td><?php echo $Menu['NiveisAcesso']['nome']; ?></td>
 </tr>
 <?php } ?>
+
 <?php echo $this->Element('Bootstrap.table/table-end'); ?>

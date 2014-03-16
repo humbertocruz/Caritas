@@ -11,7 +11,7 @@
 		&nbsp;
   		<h3 class="panel-title pull-left"><?php echo $title; ?></h3>
 		<?php if (isset($filter_panel)) { ?>
-		<button data-toggle="tooltip" title="Filtros" class="btn-popover btn btn-sm btn-info glyphicon glyphicon-cog pull-right"></button>
+		<button data-toggle="tooltip" title="Filtros" class="btn-popover btn btn-sm btn-info glyphicon glyphicon-filter pull-right"></button>
 		<?php } ?>
  	</div>
  	<div class="panel-body">

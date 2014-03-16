@@ -1,10 +1,3 @@
-<?php
-	$supMenu = 0;
-	// Encontra o Menu Superior
-	foreach ($menus as $menu) {
-		if ($menu['Menu']['title'] == 'Menu Superior') $supMenu = $menu;
-	}
-?>
 <script type="text/javascript">$(document).ready(function(){
 	// Adiciona a class "active" ao menu atual
 	$('ul.dropdown-menu li.active').each(function(){
@@ -12,6 +5,7 @@
 	})
 });
 </script>
+
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<!-- Brand and toggle get grouped for better mobile display -->
 	<div class="navbar-header">
@@ -28,17 +22,16 @@
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav navbar-left">
 			<li><a href="/">Home</a></li>
-			<?php if (!empty($menus)) { ?>
-			<?php foreach ($supMenu['Links'] as $link) { ?>
+			<?php if (isset($thisMenu)) { ?>
+			<?php foreach ($thisMenu as $link) { ?>
 			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $link['Link']['text'];?> <b class="caret"></b></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $link['Link']['texto'];?> <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<?php foreach ($link['children'] as $sublink) {
-						//$plugin = ($sublink['plugin'])?(''):('');
 						$active = ($sublink['Link']['controller'] == $this->params['controller'] AND $sublink['Link']['action'] == $this->params['action'])?('class="active"'):('');
 					?>
 					<li <?php echo $active; ?>>
-					<?php echo $this->Html->link($sublink['Link']['text'], array('plugin'=>$sublink['Link']['plugin'],'controller'=>$sublink['Link']['controller'],'action'=>$sublink['Link']['action'])); ?>
+					<?php echo $this->Html->link($sublink['Link']['texto'], array('plugin'=>$sublink['Link']['plugin'],'controller'=>$sublink['Link']['controller'],'action'=>$sublink['Link']['action'])); ?>
 					</li>
 					<?php } ?>
 				</ul>

@@ -113,15 +113,6 @@ class AdminAppController extends AppController {
 								'controller' => 'menus',
 								'action' => 'index'
 							)
-						),
-						array(
-							'Link' => array(
-								'id' => 1,
-								'text' => 'Permissões',
-								'plugin' => 'admin',
-								'controller' => 'permissoes',
-								'action' => 'index'
-							)
 						)
 					)
 				)
