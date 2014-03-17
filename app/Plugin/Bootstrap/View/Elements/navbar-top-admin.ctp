@@ -28,7 +28,7 @@
 	<!-- Collect the nav links, forms, and other content for toggling -->
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav navbar-left">
-			<li><a href="/">Home</a></li>
+			<li><a href="/admin/panel">Home</a></li>
 			<?php if (!empty($menus) and $usuario) { 
 				$adminMenus = $menus[0];
 			?>

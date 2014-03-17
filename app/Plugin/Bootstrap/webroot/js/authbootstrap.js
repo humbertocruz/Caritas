@@ -2,7 +2,6 @@
 	//console.log('jQuery Ready...');
 	form_auto = $('.form-autosubmit');
 	form_auto.submit();
-	console.log('ok');
 	$('.btn-popover').popover({
 		'html':true,
 		'placement':'left',
@@ -26,4 +25,7 @@
 	}
 	);
 	*/
+	
+	// Auto tab show
+	$('.nav-tabs a[href='+document.location.hash+']').tab('show');
 });

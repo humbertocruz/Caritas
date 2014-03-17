@@ -119,6 +119,8 @@ class AdminAppController extends AppController {
 			)
 		)
 	);
+	
+		$this->set('action_name', $this->action);
 
 		$this->set('menus', $menus);
 		$this->set('usuario', $this->Auth->user());

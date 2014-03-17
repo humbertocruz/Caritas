@@ -138,7 +138,7 @@ class MenusController extends AdminAppController {
 				$data = $this->request->data;
 				$data['Link']['id'] = $id;
 				if ($data['Link']['parent_id'] == 0) {
-					unset($data['Link']['parent_id']);
+					$data['Link']['parent_id'] = null;
 				}
 				$link = $this->Menu->Link->read(null, $id);
 				if ($this->Menu->Link->save($data)) {
@@ -160,7 +160,7 @@ class MenusController extends AdminAppController {
 			'Link.parent_id' => null,
 			'Link.id !=' => $id
 		);
-		$Links = $this->Menu->Link->find('list', array('fields'=>array('id','texto'),'conditions'=>$conditions));
+		$Links = array('0'=>'Nenhum') + $this->Menu->Link->find('list', array('fields'=>array('id','texto'),'conditions'=>$conditions));
 		$this->set('Links',$Links);
 		
 		$Link = $this->Menu->Link->read(null, $id);

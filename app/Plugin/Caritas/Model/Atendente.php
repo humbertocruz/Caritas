@@ -3,6 +3,7 @@
 class Atendente extends CaritasAppModel {
 
 	public $useTable = 'atendentes';
+	public $recursive = 2;
 	
 	public $hasMany = array(
 		'AtendentesProjeto' => array(

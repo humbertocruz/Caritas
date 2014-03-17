@@ -123,9 +123,19 @@ class CaritasAppController extends AppController {
 		$this->Menu->Link->contain(
 			'Menu'
 		);
+		//$user = $this->Auth->user();
+		$conditions = array(
+			'Menu.nivel_acesso_id' => $user['nivel_acesso_id']
+		);
 
-		$Links = $this->Menu->Link->find('threaded');
+		$Links = $this->Menu->Link->find('threaded', array('conditions'=>$conditions));
 		$menus = $Links;
+		
+		$conditions = array(
+			'Permissao.nivel_acesso_id' => $user['nivel_acesso_id']
+		);
+		$Permissoes = $this->Menu->NiveisAcesso->Permissao->find('all', array('conditions'=>$conditions));
+		$this->set('UserPermissoes', $Permissoes);
 		
 		$this->set('superMenu', $menus);
 		$this->set('usuario', $this->Auth->user());

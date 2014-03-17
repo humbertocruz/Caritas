@@ -15,6 +15,8 @@ class BootstrapHelper extends AppHelper {
 	<?php return ob_get_clean(); }
 
 	public function btnLink($text = 'Adicionar', $url = array(), $type = 'default') {
+	
+		pr($this->params['controller']);
 		return $this->Html->link($text, $url, array('class'=>'btn btn-'.$type));
 
 	}
@@ -343,7 +345,7 @@ class BootstrapHelper extends AppHelper {
 	<?php return ob_get_clean();	
 	}
 
-		public function menuActions($id = 1, $actionPrefix = '') { ob_start(); ?>
+	public function menuActions($id = 1, $actionPrefix = '') { ob_start(); ?>
 		<div class="btn-group">
 			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 			Ações&nbsp;<span class="caret"></span>
@@ -351,6 +353,19 @@ class BootstrapHelper extends AppHelper {
 			<ul class="dropdown-menu" role="menu">
 				<li><?php echo $this->Html->Link('Editar', array('action'=>'editLink'.$actionPrefix, $id));?></li>
 				<li><?php echo $this->Form->postLink('Excluir', array('action'=>'delLink'.$actionPrefix, $id), null, 'Tem Certeza?');?></li>
+			</ul>
+		</div>
+	<?php return ob_get_clean();	
+	}
+	
+	public function niveisActions($id = 1, $actionPrefix = '') { ob_start(); ?>
+		<div class="btn-group">
+			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+			Ações&nbsp;<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><?php echo $this->Html->Link('Editar', array('action'=>'editPermissao'.$actionPrefix, $id));?></li>
+				<li><?php echo $this->Form->postLink('Excluir', array('action'=>'delPermissao'.$actionPrefix, $id), null, 'Tem Certeza?');?></li>
 			</ul>
 		</div>
 	<?php return ob_get_clean();	
