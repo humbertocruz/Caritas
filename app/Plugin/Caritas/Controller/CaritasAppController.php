@@ -134,8 +134,27 @@ class CaritasAppController extends AppController {
 		$conditions = array(
 			'Permissao.nivel_acesso_id' => $user['nivel_acesso_id']
 		);
-		$Permissoes = $this->Menu->NiveisAcesso->Permissao->find('all', array('conditions'=>$conditions));
+		$PermissoesUser = $this->Menu->NiveisAcesso->Permissao->find('all', array('conditions'=>$conditions));
+		
+		$Permissoes = array();
+		foreach($PermissoesUser as $Permissao) {
+			$Permissoes[$Permissao['Permissao']['controller']][$Permissao['Permissao']['action']] = true;
+		}
+		$controller = $this->params['controller'];
+		$action = $this->params['action'];
+		
+		if ( ($controller == 'Status' and $action == 'index') or $user['NiveisAcesso']['admin'] == 1 ) {
+			
+		} else {
+			if ( !isset( $Permissoes[$controller][$action] ) ) {
+				$this->Session->setFlash( 'Seu usuário não tem permissão de acesso a esta página!' );
+				$this->redirect( '/' );
+			}
+		}
+		
+		
 		$this->set('UserPermissoes', $Permissoes);
+
 		
 		$this->set('superMenu', $menus);
 		$this->set('usuario', $this->Auth->user());

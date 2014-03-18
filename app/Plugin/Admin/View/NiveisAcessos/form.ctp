@@ -17,6 +17,21 @@ echo $this->Bootstrap->create('NiveisAcesso', array(
 
 echo $this->Form->input('nome', array('label'=>'Nome'));
 
+$options = array(
+           '1' => 'Admin ?'
+           );
+$attributes = array(
+            'class' => '',
+            'label' => false,
+            'type' => 'checkbox',
+            'default'=> 1,
+            'legend' => false,
+            'before' => '<div class="checbox"><label>',
+            'after' => '&nbsp;Admin ?</label></div>'
+            );
+
+echo $this->Form->input('admin', $attributes);
+
 echo $this->Form->submit('Gravar', array('class'=>'btn btn-primary'));
 
 echo $this->Form->end();

@@ -32,6 +32,8 @@ App::uses('Controller', 'Controller');
  */
 class AdminAppController extends AppController {
 
+	public $uses = array('Caritas.Menu');
+
 	public $helpers = array(
 		'Bootstrap.AuthBs',
 		'Bootstrap.Bootstrap',
@@ -122,8 +124,24 @@ class AdminAppController extends AppController {
 	
 		$this->set('action_name', $this->action);
 
+		$user = $this->Auth->user();
+		if ($user) {		
+		$conditions = array(
+			'Permissao.nivel_acesso_id' => $user['nivel_acesso_id']
+		);
+		
+		$PermissoesUser = $this->Menu->NiveisAcesso->Permissao->find('all', array('conditions'=>$conditions));
+		
+		$Permissoes = array();
+		foreach($PermissoesUser as $Permissao) {
+			$Permissoes[$Permissao['Permissao']['controller']][$Permissao['Permissao']['action']] = true;
+		}
+		
+		$this->set('UserPermissoes', $Permissoes);
+
 		$this->set('menus', $menus);
 		$this->set('usuario', $this->Auth->user());
+		}
 	}
 
 }

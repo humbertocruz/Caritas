@@ -16,8 +16,20 @@ class BootstrapHelper extends AppHelper {
 
 	public function btnLink($text = 'Adicionar', $url = array(), $type = 'default') {
 	
-		pr($this->params['controller']);
-		return $this->Html->link($text, $url, array('class'=>'btn btn-'.$type));
+		$Permissoes = $this->_View->viewVars['UserPermissoes'];
+		$user = $this->_View->viewVars['usuario'];
+		
+		$controller = (isset($url['controller']))?($url['controller']):($this->params['controller']);
+		$action = (isset($url['action']))?($url['action']):(null);
+		
+		if ( isset( $Permissoes[$controller][$action] ) or $user['NiveisAcesso']['admin'] == 1 ) {
+			$link = $url;
+			$disabled = '';
+		} else {
+			$link = '#';
+			$disabled = array('disabled'=>'disabled');
+		}
+		return $this->Html->link($text, $link, array($disabled, 'class'=>'btn btn-'.$type));
 
 	}
 	

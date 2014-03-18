@@ -78,8 +78,18 @@
 				<?php echo $this->Form->input('solicitacao', array('label'=>'Solicitação')); ?>
 			</div>
 		</div>
-		
-		<?php echo $this->Form->submit('Gravar', array('class'=>'btn btn-primary')); ?>
+		<!-- Split button -->
+<div class="btn-group">
+  <button type="submit" class="btn btn-primary">Gravar</button>
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    <span class="caret"></span>
+    <span class="sr-only">Ver Lista</span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="#">Gravar e Editar</a></li>
+    <li><a href="#">Gravar e Finalizar</a></li>
+  </ul>
+</div>
 		<?php echo $this->Form->end(); ?>
 	</div>
 	
