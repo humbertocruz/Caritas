@@ -187,9 +187,12 @@ class ChamadasController extends CaritasAppController {
 			unset($data['Chamada']['id']);
 			$this->Chamada->create();
 			if ($this->Chamada->save($data)) {
-			$this->Session->setFlash('Chamada salva com sucesso!');
-			
-			$this->redirect(array('action'=>'index'));
+				$this->Session->setFlash('Chamada salva com sucesso!');
+				if ($data['Chamada']['editar'] == 1) {
+						$this->redirect(array('action'=>'edit',$id));
+				} else {
+					$this->redirect(array('action'=>'index'));
+				}
 			} else {
 				$this->Session->setFlash('Houve um erro ao salvar!');	
 			}
@@ -345,16 +348,17 @@ class ChamadasController extends CaritasAppController {
 			} else {
 				unset($data['Chamada']['instituicao_id']);
 			}
-			if ($data_ini = date_create_from_format('d/m/Y',$data['Chamada']['data_inicio'])) {
-				$d = 0;
-			} else {
-				$data_ini = date_create_from_format('Y-m-d',$data['Chamada']['data_inicio']);
-			}
-			$data['Chamada']['data_inicio'] = date_format($data_ini, 'Y-m-d');
 			$data['Chamada']['id'] = $id;
+			if ($data['Chamada']['finalizar'] == 1) {
+				$data['Chamada']['data_fim'] = date('Y-m-d', time());
+			}
 			$this->Chamada->save($data);
 			$this->Session->setFlash('Chamada salva com sucesso!');
-			$this->redirect(array('action'=>'index'));
+			if ($data['Chamada']['editar'] == 1) {
+				$this->redirect(array('action'=>'edit',$id));
+			} else {
+				$this->redirect(array('action'=>'index'));
+			}
 			
 		} else {
 		// Configura Titulo da Pagina
@@ -516,10 +520,15 @@ class ChamadasController extends CaritasAppController {
 		if ($this->request->isPost()) {
 			$data = $this->data;
 			$data['ChamadasProcedimento']['id'] = $id;
-			$this->Chamada->ChamadasProcedimento->save($data);
-			$ChamadaProcedimento = $this->Chamada->ChamadasProcedimento->read(null, $id);
-			$this->Session->setFlash('Procedimento da Chamada editado com sucesso!');
-			$this->redirect(array('action'=>'edit',$ChamadaProcedimento['ChamadasProcedimento']['chamada_id']));
+			
+			if ( $this->Chamada->ChamadasProcedimento->save($data) ) {
+				$ChamadaProcedimento = $this->Chamada->ChamadasProcedimento->read(null, $id);
+				$this->Session->setFlash('Procedimento da Chamada editado com sucesso!');
+				$this->redirect(array('action'=>'edit',$ChamadaProcedimento['ChamadasProcedimento']['chamada_id']));
+			} else {
+				$this->Session->setFlash('Erro ai gravar Procedimento da Chamada!');
+			}
+			
 		}
 		$ChamadaProcedimento = $this->Chamada->ChamadasProcedimento->read(null, $id);
 		$this->data = $ChamadaProcedimento;

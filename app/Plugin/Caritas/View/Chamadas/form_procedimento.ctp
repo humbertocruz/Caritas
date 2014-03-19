@@ -1,5 +1,5 @@
 <?php
-	echo $this->Bootstrap->create('EditProcedimento');
+	echo $this->Bootstrap->create('ChamadasProcedimento',array('type'=>'post'));
 		
 	echo $this->Form->input('procedimento_id', array(
 		'label'=>'Procedimento',
@@ -9,7 +9,8 @@
 	echo $this->Form->input('data', array(
 		'type' => 'text',
 		'label' => 'Data',
-		'class' => 'datemask form-control'
+		'class' => 'maskedinput form-control',
+		'data-mask' => '99/99/9999'
 	));
 	
 	echo $this->Form->input('procedimento', array(
@@ -24,12 +25,12 @@
 	
 	<script>
 	$(document).ready(function(){
-		$('#EditProcedimentoProcedimentoId').change(function(){
+		$('#ChamadasProcedimentoProcedimentoId').change(function(){
 			$.ajax({
 				'url':'/caritas/Chamadas/carregaProcedimento/'+$(this).val(),
 				'type': 'post',
 				'success': function(data){
-					$('#EditProcedimentoProcedimento').val(data);
+					$('#ChamadasProcedimentoProcedimento').val(data);
 				}
 			});
 		});

@@ -8,7 +8,10 @@
 		'content': $('.filter-panel').html(),
 		'title':'Filtros'
 	});
-	$('.datemask').mask('99/99/9999');
+	$('.maskedinput').each(function(){
+		console.log();
+		$(this).mask($(this).data('mask'));
+	});
 	//.tooltip({
 	//	'placement':'top',
 	//});

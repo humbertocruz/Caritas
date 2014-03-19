@@ -31,6 +31,8 @@ echo $this->Bootstrap->pageHeader($action.' Chamada'.$filha);
 		<?php echo $this->Form->input('chamada_id', array('type'=>'hidden','label'=>false)); ?>
 		<?php echo $this->Form->input('pedido_id', array('type'=>'hidden','label'=>false)); ?>
 		<?php echo $this->Form->input('inst_forn', array('type'=>'hidden','label'=>false,'value'=>1)); ?>
+		<?php echo $this->Form->input('editar', array('type'=>'hidden','label'=>false)); ?>
+		<?php echo $this->Form->input('finalizar', array('type'=>'hidden','label'=>false)); ?>
 		<?php if ( isset($this->request->data['Chamada']['chamada_id'])) {
 				$disabled = array('disabled'=>'disabled');
 			} else {
@@ -103,8 +105,8 @@ echo $this->Bootstrap->pageHeader($action.' Chamada'.$filha);
     <span class="sr-only">Ver Lista</span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li><a href="#">Gravar e Editar</a></li>
-    <li><a href="#">Gravar e Finalizar</a></li>
+    <li><a href="#" id="btn-gravar-editar">Gravar e Editar</a></li>
+    <li><a href="#" id="btn-gravar-finalizar">Gravar e Finalizar</a></li>
   </ul>
 </div>
 		<?php echo $this->Form->end(); ?>
@@ -211,6 +213,18 @@ $(document).ready(function(){
 	if ($('#ChamadaContatoId').val()) {
 		$('#ChamadaContatoId').change();
 	}
+	
+	// Botoes do formularios chamadas
+	$('#btn-gravar-editar').click(function(){
+		$('#ChamadaEditar').val(1);
+		$('#ChamadaEditForm').submit();
+		return false;
+	});
+	$('#btn-gravar-finalizar').click(function(){
+		$('#ChamadaFinalizar').val(1);
+		$('#ChamadaEditForm').submit();
+		return false;
+	});
 	
 	// Contato
 		$('#contato-novo').click(function(){
