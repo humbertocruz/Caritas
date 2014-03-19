@@ -64,6 +64,7 @@ class ChamadasController extends CaritasAppController {
 					'type'=>'text',
 					'model'=>'Chamada',
 					'field'=>'data_inicio',
+					'class' => 'datemask',
 					'value' => null,
 					'operand' => '>',
 					'wildcard'=> ''
@@ -326,7 +327,7 @@ class ChamadasController extends CaritasAppController {
 			$this->Session->setFlash('Procedimento da Chamada editado com sucesso!');
 			$this->redirect(array('action'=>'edit',$chamada_id));
 		}
-		$procedimentos = $this->Chamada->ChamadasProcedimento->Procedimento->find('list', array('fields'=>array('id','nome')));
+		$procedimentos = array('0'=>'Selecione') + $this->Chamada->ChamadasProcedimento->Procedimento->find('list', array('fields'=>array('id','nome')));
 		$this->set('procedimentos',$procedimentos);
 		$this->set('chamada_id', $chamada_id);
 		
@@ -523,7 +524,7 @@ class ChamadasController extends CaritasAppController {
 		$ChamadaProcedimento = $this->Chamada->ChamadasProcedimento->read(null, $id);
 		$this->data = $ChamadaProcedimento;
 		
-		$procedimentos = $this->Chamada->ChamadasProcedimento->Procedimento->find('list', array('fields'=>array('id','nome')));
+		$procedimentos = array('0'=>'Selecione') + $this->Chamada->ChamadasProcedimento->Procedimento->find('list', array('fields'=>array('id','nome')));
 		$this->set('procedimentos',$procedimentos);
 		
 		$this->render('form_procedimento');
@@ -547,6 +548,13 @@ class ChamadasController extends CaritasAppController {
 			$this->Session->setFlash('Procedimento da Chamada Excluído com sucesso!');
 			$this->redirect(array('action'=>'edit', $ChamadaProcedimento['ChamadasProcedimento']['chamada_id']));
 		}
+	}
+	
+	public function carregaProcedimento($id = null) {
+		$this->layout = null;
+		$Procedimento = $this->Chamada->ChamadasProcedimento->Procedimento->read(null, $id);
+		echo $Procedimento['Procedimento']['descricao'];
+		$this->render = null;
 	}
 	
 	public function finalizar($id = null) {

@@ -4,12 +4,15 @@ App::uses('Helper', 'View');
 class CaritasHelper extends AppHelper {
 
 	private function filter_type($field, $field_value) {
+		if (!isset($field['class'])){
+			$field['class'] = '';
+		} 
 		switch ($field['type']) {
 			case 'select':
 				ob_start(); ?>
 				<div class="form-group" title="<?php echo $field['label'];?>">
 					<label><?php echo $field['label'];?></label>
-					<select class="form-control input-sm" name="data[<?php echo $field['model'].'.'.$field['field'].']';?>">
+					<select class="form-control input-sm <?php echo $field['class']; ?>" name="data[<?php echo $field['model'].'.'.$field['field'].']';?>">
 						<?php foreach($field['options'] as $key => $value) { 
 							$selected = ($key == $field_value)?('selected="selected"'):('');
 						?>
@@ -23,7 +26,7 @@ class CaritasHelper extends AppHelper {
 				ob_start(); ?>
 				<div class="form-group" title="<?php echo $field['label'];?>">
 					<label><?php echo $field['label'];?></label>
-					<input value="<?php echo $field['value'];?>" type="text" class="form-control input-sm" name="data[<?php echo $field['model'].'.'.$field['field'].']';?>">
+					<input value="<?php echo $field['value'];?>" type="text" class="form-control input-sm <?php echo $field['class']; ?>" name="data[<?php echo $field['model'].'.'.$field['field'].']';?>">
 				</div>
 				<?php return ob_get_clean();
 				break;

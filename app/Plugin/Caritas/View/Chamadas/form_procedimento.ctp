@@ -8,7 +8,8 @@
 	
 	echo $this->Form->input('data', array(
 		'type' => 'text',
-		'label' => 'Data'
+		'label' => 'Data',
+		'class' => 'datemask form-control'
 	));
 	
 	echo $this->Form->input('procedimento', array(
@@ -19,5 +20,19 @@
 	echo $this->Form->submit('Gravar', array('class'=>'btn btn-primary'));	
 	
 	echo $this->Form->end();
+	?>
 	
+	<script>
+	$(document).ready(function(){
+		$('#EditProcedimentoProcedimentoId').change(function(){
+			$.ajax({
+				'url':'/caritas/Chamadas/carregaProcedimento/'+$(this).val(),
+				'type': 'post',
+				'success': function(data){
+					$('#EditProcedimentoProcedimento').val(data);
+				}
+			});
+		});
+	});
+	</script>
 	

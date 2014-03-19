@@ -10,7 +10,7 @@
         // jQuery
         echo $this->Html->script( 'Bootstrap./bootstrap/jquery-2.1.0.min');
         // MaskedInput
-        echo $this->Html->script( 'Bootstrap.jquery.inputmask.bundle.min' );
+        echo $this->Html->script( 'Bootstrap.jquery.maskedinput.min' );
         // HotKeus
         echo $this->Html->script( 'Bootstrap.jquery.hotkeys' );
 
