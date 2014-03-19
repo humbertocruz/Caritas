@@ -8,7 +8,7 @@ class CargosController extends CaritasAppController {
 		$this->set('title_for_layout','Cargos - Lista');
 
 		// Carrega dados do BD
-		$Cargos = $this->Cargo->find('all');
+		$Cargos = $this->paginate('Cargo');
 		$this->set('Cargos',$Cargos);
 
 	}

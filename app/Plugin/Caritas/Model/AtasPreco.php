@@ -2,7 +2,7 @@
 
 class AtasPreco extends CaritasAppModel {
 
-	public $useTable = 'atas_precos';
+	public $useTable = 'ata_precos';
 	
 	public $belongsTo = array(
 		'Edital'
