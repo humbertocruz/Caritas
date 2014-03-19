@@ -11,6 +11,28 @@ class Chamada extends CaritasAppModel {
 		)
 	);
 	
+	public function afterFind($results, $primary = false) {
+		if (is_array( $results )) {
+		foreach($results as $key => $value) {
+			if ( isset($value['Chamada']['data_inicio']) ) {
+				$results[$key]['Chamada']['data_inicio'] = date('d/m/Y', strtotime( $value['Chamada']['data_inicio'] ) );
+			}
+		}
+		}
+		return $results;
+	}
+	
+	public function beforeSave( $results = array() ) {
+		if (is_array( $results )) {
+		foreach($results as $key => $value) {
+			if ( isset($value['Chamada']['data_inicio']) ) {
+				$results[$key]['Chamada']['data_inicio'] = date('Y-m-d', strtotime( $value['Chamada']['data_inicio'] ) );
+			}
+		}
+		}
+		return $results;
+	}
+	
 	public $hasMany = array(
 		'Filhas' => array(
 			'className' => 'Caritas.Chamada',

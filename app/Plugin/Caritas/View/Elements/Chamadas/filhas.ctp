@@ -30,4 +30,6 @@ foreach ($ChamadasFilhas as $Chamada) { ?>
 	<td><?php echo $Chamada['Chamada']['solicitacao']; ?></td>
 </tr>
 <?php } ?>
-<?php echo $this->Element('Bootstrap.table/table-end'); ?>
+</table>
+</div>
+</div>

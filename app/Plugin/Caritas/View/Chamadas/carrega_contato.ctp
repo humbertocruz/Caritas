@@ -271,7 +271,7 @@
 				'url': '/caritas/chamadas/exclui_fone_contato/'+$('#ExcluiChamadaContatosFoneId').val(),
 				'success': function(data) {
 					$('#del-fone').modal('hide');
-					$('#Chamadacontato_id').change();
+					$('#ChamadaContatoId').change();
 				}
 			});
 		});
@@ -390,7 +390,7 @@
 							$('#ChamadaContatosInstFornDataFim').val(data.ContatosInstituicao.data_fim);
 							$('#ChamadaContatosInstFornSituacaoContatoId').val(data.ContatosInstituicao.situacao_contato_id);
 						} else {
-							$('#Cargo_InstForn_Id').val($('#Chamadafornecedor_id').val());
+							$('#Cargo_InstForn_Id').val($('#ChamadaFornecedorId').val());
 							$('#Cargo_CargoInstForn_Id').val(data.ContatosFornecedor.id);
 							$('#ChamadaContatosInstFornCargoId').val(data.ContatosFornecedor.cargo_id);
 							$('#ChamadaContatosInstFornDataInicio').val(data.ContatosFornecedor.data_inicio);

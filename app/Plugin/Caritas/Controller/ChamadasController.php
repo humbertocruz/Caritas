@@ -199,27 +199,31 @@ class ChamadasController extends CaritasAppController {
 		$this->set('title_for_layout','Chamadas - Adicionar');
 		
 		if ($id != null) {
-		$this->Chamada->Behaviors->attach('Containable');
-		$this->Chamada->contain(
-			'Contato',
-			'Contato.ContatosFone',
-			'Contato.ContatosEmail',
-			'Instituicao',
-			'Instituicao.ContatosInstituicao',
-			'Instituicao.ContatosInstituicao.Contato',
-			'Instituicao.InstituicoesEndereco',
-			'Instituicao.InstituicoesEndereco.Cidade',
-			'Fornecedor',
-			'Fornecedor.FornecedoresEndereco',
-			'Fornecedor.FornecedoresEndereco.Cidade',
-			'Assunto'
-		);
+			$this->Chamada->Behaviors->attach('Containable');
+			$this->Chamada->contain(
+				'Contato',
+				'Contato.ContatosFone',
+				'Contato.ContatosEmail',
+				'Instituicao',
+				'Instituicao.ContatosInstituicao',
+				'Instituicao.ContatosInstituicao.Contato',
+				'Instituicao.InstituicoesEndereco',
+				'Instituicao.InstituicoesEndereco.Cidade',
+				'Fornecedor',
+				'Fornecedor.FornecedoresEndereco',
+				'Fornecedor.FornecedoresEndereco.Cidade',
+				'Assunto'
+			);
 		
-		$Chamada = $this->Chamada->read(null, $id);
-		unset($Chamada['Chamada']['id']);
-		unset($Chamada['Chamada']['data_inicio']);
-		$Chamada['Chamada']['chamada_id'] = $id;
-		$this->request->data = $Chamada;
+			$Chamada = $this->Chamada->read(null, $id);
+			unset($Chamada['Chamada']['id']);
+			$Chamada['Chamada']['data_inicio'] = date('d/m/Y', time());
+			$Chamada['Chamada']['chamada_id'] = $id;
+			$this->request->data = $Chamada;
+		} else {
+			$Chamada = array();
+			$Chamada['Chamada']['data_inicio'] = date('d/m/Y', time());
+			$this->request->data = $Chamada;
 		}
 
 		$TiposChamada = $this->Chamada->TiposChamada->find('list', array('fields'=>array('id','nome')));
