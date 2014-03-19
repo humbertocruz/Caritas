@@ -30,8 +30,17 @@ class BootstrapHelper extends AppHelper {
 			$disabled = array('disabled'=>'disabled');
 		}
 		return $this->Html->link($text, $link, array($disabled, 'class'=>'btn btn-'.$type));
-
 	}
+	
+	public function save_cancel() {
+	ob_start(); ?>
+		<div class="btn-group">
+			<?php
+			echo $this->Form->submit('Gravar', array('class'=>'btn btn-primary','div'=>false));
+			echo $this->Html->link('Cancelar', array('action'=>'index'), array('class'=>'btn btn-default'));
+			?>
+		</div>
+		<?php return ob_get_clean(); }
 	
 	public function sorter($field = '', $text = '', $options = array()) {
 		if ( $this->Paginator->sortKey() == $field ) {

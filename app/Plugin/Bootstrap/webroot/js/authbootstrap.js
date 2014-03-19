@@ -8,10 +8,12 @@
 		'content': $('.filter-panel').html(),
 		'title':'Filtros'
 	});
-	$('.maskedinput').each(function(){
-		console.log();
-		$(this).mask($(this).data('mask'));
-	});
+	$('.maskedinput').datepicker({
+		forceParse: false,
+		'format': 'dd/mm/yyyy'
+	}).mask('99/99/9999');
+	$('.mask_cpf').mask('999.999.999-99');
+	$('.mask_tel').mask('(99) 9999?-9999');
 	//.tooltip({
 	//	'placement':'top',
 	//});

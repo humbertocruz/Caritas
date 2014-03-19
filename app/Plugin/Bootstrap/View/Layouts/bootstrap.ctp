@@ -9,15 +9,18 @@
 
         // jQuery
         echo $this->Html->script( 'Bootstrap./bootstrap/jquery-2.1.0.min');
-        // MaskedInput
-        echo $this->Html->script( 'Bootstrap.jquery.maskedinput.min' );
-        // HotKeus
-        echo $this->Html->script( 'Bootstrap.jquery.hotkeys' );
+        // HotKeys
+        //echo $this->Html->script( 'Bootstrap.jquery.hotkeys' );
 
         // Bootstrap
         echo $this->Html->css( 'Bootstrap./bootstrap/css/bootstrap.min' );
         echo $this->Html->script( 'Bootstrap./bootstrap/js/bootstrap.min' );
-
+		// Bootstrap Datepicker
+        echo $this->Html->script( 'Bootstrap.bootstrap-datepicker' );
+        echo $this->Html->css( 'Bootstrap.datepicker' );
+        // MaskedInput
+        echo $this->Html->script( 'Bootstrap.jquery.maskedinput.min' );
+        
         echo $this->fetch( 'meta' );
         echo $this->fetch( 'css' );
         echo $this->fetch( 'script' );

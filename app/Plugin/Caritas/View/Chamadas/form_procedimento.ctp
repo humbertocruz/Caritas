@@ -10,7 +10,7 @@
 		'type' => 'text',
 		'label' => 'Data',
 		'class' => 'maskedinput form-control',
-		'data-mask' => '99/99/9999'
+		'data-date-format' => 'dd/mm/yyyy'
 	));
 	
 	echo $this->Form->input('procedimento', array(

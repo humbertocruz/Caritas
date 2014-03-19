@@ -131,6 +131,9 @@ class CaritasAppController extends AppController {
 		$Links = $this->Menu->Link->find('threaded', array('conditions'=>$conditions));
 		$menus = $Links;
 		
+		//$allModelNames = Configure::listObjects('model');
+		//pr($allModelNames);
+		
 		$conditions = array(
 			'Permissao.nivel_acesso_id' => $user['nivel_acesso_id']
 		);
@@ -154,7 +157,12 @@ class CaritasAppController extends AppController {
 		
 		
 		$this->set('UserPermissoes', $Permissoes);
-
+		
+		// Texto do header para os forms add e edit
+		$txtAction = '';
+		if ($this->action == 'edit' ) $txtAction = 'Editar ';
+		if ($this->action == 'add' ) $txtAction = 'Adicionar';
+		$this->set('txtAction', $txtAction);
 		
 		$this->set('superMenu', $menus);
 		$this->set('usuario', $this->Auth->user());
