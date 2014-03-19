@@ -292,7 +292,7 @@
 			} else {
 				$('#EditaFormFone').get(0).reset();
 			}
-			$('#ChamadaContatosFoneContatoId').val($('#Chamadacontato_id').val());
+			$('#ChamadaContatosFoneContatoId').val($('#ChamadaContatoId').val());
 			$('#edit-fone').modal('show');
 		});
 		$('#edit-fone .btn-primary').click(function(){
@@ -302,7 +302,7 @@
 				'data': $('#EditaFormFone').serialize(),
 				'success': function(data) {
 					$('#edit-fone').modal('hide');
-					$('#Chamadacontato_id').change();
+					$('#ChamadaContatoId').change();
 				}
 			});
 		});
@@ -318,7 +318,7 @@
 				'url': '/caritas/chamadas/exclui_email_contato/'+$('#ExcluiChamadaContatosEmailId').val(),
 				'success': function(data) {
 					$('#del-email').modal('hide');
-					$('#Chamadacontato_id').change();
+					$('#ChamadaContatoId').change();
 				}
 			});
 		});
@@ -341,7 +341,7 @@
 			} else {
 				$('#EditaFormEmail').get(0).reset();
 			}
-			$('#ChamadaContatosEmailContatoId').val($('#Chamadacontato_id').val());
+			$('#ChamadaContatosEmailContatoId').val($('#ChamadaContatoId').val());
 			$('#edit-email').modal('show');
 		});
 		$('#edit-email .btn-primary').click(function(){
@@ -351,7 +351,7 @@
 				'data': $('#EditaFormEmail').serialize(),
 				'success': function(data) {
 					$('#edit-email').modal('hide');
-					$('#Chamadacontato_id').change();
+					$('#ChamadaContatoId').change();
 				}
 			});
 		});
@@ -367,7 +367,7 @@
 				'url': '/caritas/chamadas/exclui_cargo_contato/'+$('#ExcluiChamadaContatosInstFornId').val()+'/'+$('#Chamadainst_forn').val(),
 				'success': function(data) {
 					$('#del-cargo').modal('hide');
-					$('#Chamadacontato_id').change();
+					$('#ChamadaContatoId').change();
 				}
 			});
 		});
@@ -377,13 +377,13 @@
 			$('#edit-cargo-data').text($(this).data('desc'));
 			if ($(this).data('id')) {
 				cargo_inst_forn_id = $(this).data('id');
-				$('#Cargo_Contato_Id').val($('#Chamadacontato_id').val());
+				$('#Cargo_Contato_Id').val($('#ChamadaContatoId').val());
 				$.ajax({
 					'url':'/caritas/chamadas/ler_cargo_contato/'+cargo_inst_forn_id+'/'+$('#Chamadainst_forn').val(),
 					'dataType':'json',
 					'success': function(data) {
 						if (data['Inst_Forn'] == 1 ) {
-							$('#Cargo_InstForn_Id').val($('#Chamadainstituicao_id').val());
+							$('#Cargo_InstForn_Id').val($('#ChamadaInstituicaoId').val());
 							$('#Cargo_CargoInstForn_Id').val(data.ContatosInstituicao.id);
 							$('#ChamadaContatosInstFornCargoId').val(data.ContatosInstituicao.cargo_id);
 							$('#ChamadaContatosInstFornDataInicio').val(data.ContatosInstituicao.data_inicio);
@@ -400,15 +400,15 @@
 					}
 				});	
 			} else {
-				$('#Cargo_Contato_Id').val($('#Chamadacontato_id').val());
+				$('#Cargo_Contato_Id').val($('#ChamadaContatoId').val());
 				if ($('#Chamadainst_forn').val() == 1 ) {
-					$('#Cargo_InstForn_Id').val($('#Chamadainstituicao_id').val());
+					$('#Cargo_InstForn_Id').val($('#ChamadaInstituicaoId').val());
 				} else {
-					$('#Cargo_InstForn_Id').val($('#Chamadafornecedor_id').val());
+					$('#Cargo_InstForn_Id').val($('#ChamadaFornecedorId').val());
 				}
 				$('#EditaFormCargo').get(0).reset();
 			}
-			$('#ChamadaContatosCargoContatoId').val($('#Chamadacontato_id').val());
+			$('#ChamadaContatosCargoContatoId').val($('#ChamadaContatoId').val());
 			$('#edit-cargo').modal('show');
 		});
 		$('#edit-cargo .btn-primary').click(function(){
@@ -418,7 +418,7 @@
 				'data': $('#EditaFormCargo').serialize(),
 				'success': function(data) {
 					$('#edit-cargo').modal('hide');
-					$('#Chamadacontato_id').change();
+					$('#ChamadaContatoId').change();
 				}
 			});
 		});

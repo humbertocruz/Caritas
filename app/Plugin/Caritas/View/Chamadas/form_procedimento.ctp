@@ -1,22 +1,19 @@
 <?php
-	echo $this->Form->create('EditProcedimento');
+	echo $this->Bootstrap->create('EditProcedimento');
 		
-	echo $this->Bootstrap->belongs('procedimento_id', array(
+	echo $this->Form->input('procedimento_id', array(
 		'label'=>'Procedimento',
-		'options'=>$procedimentos, 
-		'url'=>'/procedimentos',
-		'model' => 'ChamadasProcedimento'
+		'options'=>$procedimentos
 	));
 	
-	echo $this->Bootstrap->input('data', array(
-		'type' => 'date',
-		'label' => 'Data',
-		'model' => 'ChamadasProcedimento'
+	echo $this->Form->input('data', array(
+		'type' => 'text',
+		'label' => 'Data'
 	));
 	
-	echo $this->Bootstrap->text('procedimento', array(
+	echo $this->Form->input('procedimento', array(
 		'label' => 'Descrição',
-		'model' => 'ChamadasProcedimento'
+		'type'=>'textarea'
 	));
 	
 	echo $this->Form->submit('Gravar', array('class'=>'btn btn-primary'));	

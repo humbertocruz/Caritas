@@ -79,7 +79,7 @@
 			</div>
 		</div>
 		<!-- Split button -->
-<div class="btn-group">
+<div class="btn-group dropup">
   <button type="submit" class="btn btn-primary">Gravar</button>
   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
     <span class="caret"></span>
@@ -191,8 +191,8 @@
 
 <script>
 $(document).ready(function(){
-	if ($('#Chamadacontato_id').val()) {
-		$('#Chamadacontato_id').change();
+	if ($('#ChamadacontatoId').val()) {
+		$('#ChamadacontatoId').change();
 	}
 	
 	// Contato
@@ -200,10 +200,10 @@ $(document).ready(function(){
 			$('#NovoFormContato').get(0).reset();
 			if ($('#Chamadainst_forn').val() == 1) {
 				$('#NovoChamadaContatosInstForn').val(1);
-				$('#NovoChamadaContatosInstFornId').val($('#Chamadainstituicao_id').val());
+				$('#NovoChamadaContatosInstFornId').val($('#ChamadainstituicaoId').val());
 			} else {
 				$('#NovoChamadaContatosInstForn').val(2);
-				$('#NovoChamadaContatosInstFornId').val($('#Chamadafornecedor_id').val());
+				$('#NovoChamadaContatosInstFornId').val($('#ChamadafornecedorId').val());
 			}
 			$('#modal-novo-contato').modal('show');
 		});
@@ -215,9 +215,9 @@ $(document).ready(function(){
 				'data': $('#NovoFormContato').serialize(),
 				'success': function(data) {
 					if ($('#Chamadainst_forn').val() == 1) {
-						$('#Chamadainstituicao_id').change();
+						$('#ChamadainstituicaoId').change();
 					} else {
-						$('#Chamadafornecedor_id').change();
+						$('#ChamadafornecedorId').change();
 					}
 					$('#modal-novo-contato').modal('hide');
 				}
