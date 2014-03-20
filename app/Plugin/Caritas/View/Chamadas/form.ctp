@@ -1,6 +1,17 @@
 <?php echo $this->Html->script('Caritas.chamadas/ajax'); ?>
-
-<?php echo $this->Bootstrap->pageHeader('Chamadas'); ?>
+<?php
+if ($this->action == 'add') {
+	$action = 'Adicionar';
+} else {
+	$action = 'Editar';
+}
+if (isset($this->request->data['Chamada']['chamada_id'])) {
+	$filha = ' Filha';
+} else {
+	$filha = '';
+}
+echo $this->Bootstrap->pageHeader($action.' Chamada'.$filha); 
+?>
 
 <ul class="nav nav-tabs" id="chamadas-tabs">
   <li class="active"><a href="#tab-chamadas" data-toggle="tab">Chamadas</a></li>
@@ -20,11 +31,19 @@
 		<?php echo $this->Form->input('chamada_id', array('type'=>'hidden','label'=>false)); ?>
 		<?php echo $this->Form->input('pedido_id', array('type'=>'hidden','label'=>false)); ?>
 		<?php echo $this->Form->input('inst_forn', array('type'=>'hidden','label'=>false,'value'=>1)); ?>
+		<?php echo $this->Form->input('editar', array('type'=>'hidden','label'=>false)); ?>
+		<?php echo $this->Form->input('finalizar', array('type'=>'hidden','label'=>false)); ?>
+		<?php if ( isset($this->request->data['Chamada']['chamada_id'])) {
+				$disabled = array('disabled'=>'disabled');
+			} else {
+				$disabled = array();
+			}
+		?>
 		<div class="panel panel-warning">
 			<div class="panel-heading">Instituição / Fornecedor</div>
 			<div class="panel-body">
-				<?php echo $this->Form->input('estado_id', array('options'=>$Estados,'label'=>'UF')); ?>
-				<?php echo $this->Form->input('cidade_id', array('options'=>$Cidades)); ?>
+				<?php echo $this->Form->input('estado_id', array('options'=>$Estados,'label'=>'UF', $disabled)); ?>
+				<?php echo $this->Form->input('cidade_id', array('options'=>$Cidades,'label'=>'Cidade', $disabled)); ?>
 				<?php
 					if (isset($this->request->data['Chamada']['instituicao_id'])) {
 						$inst_active = 'active';
@@ -44,10 +63,10 @@
 				<!-- Tab panes -->
 				<div class="tab-content">
 					<div class="tab-pane <?php echo $inst_active;?>" id="tipo_inst">
-						<?php echo $this->Form->input('instituicao_id', array('options'=>$Instituicoes,'label'=>'Instituição','url'=>'/instituicoes')); ?>
+						<?php echo $this->Form->input('instituicao_id', array('options'=>$Instituicoes,'label'=>'Instituição','url'=>'/instituicoes', $disabled)); ?>
 					</div>
 					<div class="tab-pane <?php echo $forn_active;?>" id="tipo_forn">
-						<?php echo $this->Form->input('fornecedor_id', array('options'=>$Fornecedores,'label'=>'Fornecedor','url'=>'/fornecedores')); ?>
+						<?php echo $this->Form->input('fornecedor_id', array('options'=>$Fornecedores,'label'=>'Fornecedor','url'=>'/fornecedores', $disabled)); ?>
 					</div>
 				</div>
 				
@@ -70,7 +89,7 @@
 		<div class="panel panel-primary">
 			<div class="panel-heading">Chamada</div>
 			<div class="panel-body">
-				<?php echo $this->Form->input('data_inicio', array('type'=>'text','label'=>'Data Início', 'value'=>date('Y-m-d'), 'readonly'=>'readonly')); ?>
+				<?php echo $this->Form->input('data_inicio', array('type'=>'text','label'=>'Data Início', 'readonly'=>'readonly')); ?>
 				<?php echo $this->Form->input('tipo_chamada_id', array('options'=>$TiposChamada,'label'=>'Tipo de Chamada')); ?>
 				<?php echo $this->Form->input('assunto_id', array('options'=>$Assuntos,'label'=>'Assunto','url'=>'/assuntos')); ?>
 				<?php echo $this->Form->input('status_id', array('options'=>$Status,'label'=>'Status','url'=>'/status')); ?>
@@ -79,15 +98,15 @@
 			</div>
 		</div>
 		<!-- Split button -->
-<div class="btn-group">
+<div class="btn-group dropup">
   <button type="submit" class="btn btn-primary">Gravar</button>
   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
     <span class="caret"></span>
     <span class="sr-only">Ver Lista</span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li><a href="#">Gravar e Editar</a></li>
-    <li><a href="#">Gravar e Finalizar</a></li>
+    <li><a href="#" id="btn-gravar-editar">Gravar e Editar</a></li>
+    <li><a href="#" id="btn-gravar-finalizar">Gravar e Finalizar</a></li>
   </ul>
 </div>
 		<?php echo $this->Form->end(); ?>
@@ -191,19 +210,31 @@
 
 <script>
 $(document).ready(function(){
-	if ($('#Chamadacontato_id').val()) {
-		$('#Chamadacontato_id').change();
+	if ($('#ChamadaContatoId').val()) {
+		$('#ChamadaContatoId').change();
 	}
+	
+	// Botoes do formularios chamadas
+	$('#btn-gravar-editar').click(function(){
+		$('#ChamadaEditar').val(1);
+		$('#ChamadaEditForm').submit();
+		return false;
+	});
+	$('#btn-gravar-finalizar').click(function(){
+		$('#ChamadaFinalizar').val(1);
+		$('#ChamadaEditForm').submit();
+		return false;
+	});
 	
 	// Contato
 		$('#contato-novo').click(function(){
 			$('#NovoFormContato').get(0).reset();
 			if ($('#Chamadainst_forn').val() == 1) {
 				$('#NovoChamadaContatosInstForn').val(1);
-				$('#NovoChamadaContatosInstFornId').val($('#Chamadainstituicao_id').val());
+				$('#NovoChamadaContatosInstFornId').val($('#ChamadaInstituicaoId').val());
 			} else {
 				$('#NovoChamadaContatosInstForn').val(2);
-				$('#NovoChamadaContatosInstFornId').val($('#Chamadafornecedor_id').val());
+				$('#NovoChamadaContatosInstFornId').val($('#ChamadaFornecedorId').val());
 			}
 			$('#modal-novo-contato').modal('show');
 		});
@@ -215,9 +246,9 @@ $(document).ready(function(){
 				'data': $('#NovoFormContato').serialize(),
 				'success': function(data) {
 					if ($('#Chamadainst_forn').val() == 1) {
-						$('#Chamadainstituicao_id').change();
+						$('#ChamadaInstituicaoId').change();
 					} else {
-						$('#Chamadafornecedor_id').change();
+						$('#ChamadaFornecedorId').change();
 					}
 					$('#modal-novo-contato').modal('hide');
 				}

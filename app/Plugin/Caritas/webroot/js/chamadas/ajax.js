@@ -8,15 +8,15 @@ $(document).ready(function(){
 		}
 	});
 	
-	$('#Chamadaestado_id').change(function(){
+	$('#ChamadaEstadoId').change(function(){
 		// Apaga Combos
-		$('#Chamadainstituicao_id').html('');
-		$('#Chamadafornecedor_id').html('');
-		$('#Chamadacontato_id').html('');
+		$('#ChamadaInstituicaoId').html('');
+		$('#ChamadaFornecedorId').html('');
+		$('#ChamadaContatoId').html('');
 		$('#historico').html('');
 		$('#contato-box').html('');
 		// End
-		$('#Chamadacidade_id').popover({
+		$('#ChamadaCidadeId').popover({
 			'placement':'top',
 			'title':'Aguarde',
 			'content':'Carregando dados...'
@@ -24,19 +24,19 @@ $(document).ready(function(){
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_cidades/'+this.value,
 			'success':function(data) {
-				$('#Chamadacidade_id').html(data).popover('destroy');
+				$('#ChamadaCidadeId').html(data).popover('destroy');
 			}
 		});
 	});
 	
-	$('#Chamadacidade_id').change(function(){
+	$('#ChamadaCidadeId').change(function(){
 		// Apaga Combos
-		$('#Chamadafornecedor_id').html('');
-		$('#Chamadacontato_id').html('');
+		$('#ChamadaFornecedorId').html('');
+		$('#ChamadaContatoId').html('');
 		$('#historico').html('');
 		$('#contato-box').html('');
 		// End
-		$('#Chamadainstituicao_id').popover({
+		$('#ChamadaInstituicaoId').popover({
 			'placement':'top',
 			'title':'Aguarde',
 			'content':'Carregando dados...'
@@ -44,22 +44,22 @@ $(document).ready(function(){
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_instituicoes/'+this.value,
 			'success':function(data) {
-				$('#Chamadainstituicao_id').html(data).popover('destroy');
+				$('#ChamadaInstituicaoId').html(data).popover('destroy');
 			}
 		});
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_fornecedores/'+this.value,
 			'success':function(data) {
-				$('#Chamadafornecedor_id').html(data);
+				$('#ChamadaFornecedorId').html(data);
 			}
 		});
 	});
 	
-	$('#Chamadainstituicao_id').change(function(){
+	$('#ChamadaInstituicaoId').change(function(){
 		// Apaga Combos
 		$('#contato-box').html('');
 		// End
-		$('#Chamadacontato_id').popover({
+		$('#ChamadaContatoId').popover({
 			'placement':'top',
 			'title':'Aguarde',
 			'content':'Carregando dados...'
@@ -67,7 +67,7 @@ $(document).ready(function(){
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_contatos/'+this.value,
 			'success':function(data) {
-				$('#Chamadacontato_id').html(data).popover('destroy');
+				$('#ChamadaContatoId').html(data).popover('destroy');
 			}
 		});
 		$('#historico-title').popover({
@@ -83,10 +83,10 @@ $(document).ready(function(){
 			}
 		});
 	});
-	$('#Chamadafornecedor_id').change(function(){
+	$('#ChamadaFornecedorId').change(function(){
 		// Apaga Combos
 		$('#contato-box').html('');
-		$('#Chamadacontato_id').popover({
+		$('#ChamadaContatoId').popover({
 			'placement':'top',
 			'title':'Aguarde',
 			'content':'Carregando dados...'
@@ -94,7 +94,7 @@ $(document).ready(function(){
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_contatos_forn/'+this.value,
 			'success':function(data) {
-				$('#Chamadacontato_id').html(data).popover('destroy');
+				$('#ChamadaContatoId').html(data).popover('destroy');
 			}
 		});
 		$('#historico-title').popover({
@@ -111,16 +111,16 @@ $(document).ready(function(){
 		});
 	});
 	
-	$('#Chamadacontato_id').change(function(){
+	$('#ChamadaContatoId').change(function(){
 		$('#contato-box').popover({
 			'placement':'top',
 			'title':'Aguarde',
 			'content':'Carregando dados...'
 		}).popover('show');
 		if ($('#Chamadainst_forn').val() == 1) {
-			inst_forn_value = $('#Chamadainstituicao_id').val();
+			inst_forn_value = $('#ChamadaInstituicaoId').val();
 		} else {
-			inst_forn_value = $('#Chamadafornecedor_id').val();
+			inst_forn_value = $('#ChamadaFornecedorId').val();
 		}
 		$.ajax({
 			'url':'/caritas/chamadas/carrega_contato/'+this.value+'/'+$('#Chamadainst_forn').val()+'/'+inst_forn_value,

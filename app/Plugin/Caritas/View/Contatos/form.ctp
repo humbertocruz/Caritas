@@ -1,6 +1,4 @@
-<?php echo $this->Html->script('Caritas.chamadas/ajax'); ?>
-
-<?php echo $this->Bootstrap->pageHeader('Contato'); ?>
+<?php echo $this->Bootstrap->pageHeader($txtAction.' Contatos'); ?>
 
 <!-- Nav tabs -->
 <ul class="nav nav-tabs">
@@ -19,12 +17,12 @@
 		<br>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<?php echo $this->Form->create('Contato',array('type'=>'post')); ?>
-				<?php echo $this->Bootstrap->input('nome', array('label'=>'Nome')); ?>
-				<?php echo $this->Bootstrap->input('data_nascimento', array('type'=>'date','label'=>'Data Nascimento')); ?>
-				<?php echo $this->Bootstrap->input('cpf', array('label'=>'CPF')); ?>
-				<?php echo $this->Bootstrap->select('sexo_id', array('options'=>$Sexos,'label'=>'Sexo')); ?>
-				<?php echo $this->Form->submit('Gravar', array('class'=>'btn btn-primary')); ?>
+				<?php echo $this->Bootstrap->create('Contato',array('type'=>'post')); ?>
+				<?php echo $this->Form->input('nome', array('label'=>'Nome')); ?>
+				<?php echo $this->Form->input('data_nascimento', array('type'=>'text','label'=>'Data Nascimento','class'=>'form-control maskedinput')); ?>
+				<?php echo $this->Form->input('cpf', array('label'=>'CPF','class'=>'form-control mask_cpf')); ?>
+				<?php echo $this->Form->input('sexo_id', array('options'=>$Sexos,'label'=>'Sexo')); ?>
+				<?php echo $this->Bootstrap->save_cancel(); ?>
 				<?php echo $this->Form->end(); ?>
 			</div>
 		</div>

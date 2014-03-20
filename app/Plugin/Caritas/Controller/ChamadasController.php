@@ -64,6 +64,7 @@ class ChamadasController extends CaritasAppController {
 					'type'=>'text',
 					'model'=>'Chamada',
 					'field'=>'data_inicio',
+					'class' => 'datemask',
 					'value' => null,
 					'operand' => '>',
 					'wildcard'=> ''
@@ -186,9 +187,12 @@ class ChamadasController extends CaritasAppController {
 			unset($data['Chamada']['id']);
 			$this->Chamada->create();
 			if ($this->Chamada->save($data)) {
-			$this->Session->setFlash('Chamada salva com sucesso!');
-			
-			$this->redirect(array('action'=>'index'));
+				$this->Session->setFlash('Chamada salva com sucesso!');
+				if ($data['Chamada']['editar'] == 1) {
+						$this->redirect(array('action'=>'edit',$id));
+				} else {
+					$this->redirect(array('action'=>'index'));
+				}
 			} else {
 				$this->Session->setFlash('Houve um erro ao salvar!');	
 			}
@@ -199,27 +203,31 @@ class ChamadasController extends CaritasAppController {
 		$this->set('title_for_layout','Chamadas - Adicionar');
 		
 		if ($id != null) {
-		$this->Chamada->Behaviors->attach('Containable');
-		$this->Chamada->contain(
-			'Contato',
-			'Contato.ContatosFone',
-			'Contato.ContatosEmail',
-			'Instituicao',
-			'Instituicao.ContatosInstituicao',
-			'Instituicao.ContatosInstituicao.Contato',
-			'Instituicao.InstituicoesEndereco',
-			'Instituicao.InstituicoesEndereco.Cidade',
-			'Fornecedor',
-			'Fornecedor.FornecedoresEndereco',
-			'Fornecedor.FornecedoresEndereco.Cidade',
-			'Assunto'
-		);
+			$this->Chamada->Behaviors->attach('Containable');
+			$this->Chamada->contain(
+				'Contato',
+				'Contato.ContatosFone',
+				'Contato.ContatosEmail',
+				'Instituicao',
+				'Instituicao.ContatosInstituicao',
+				'Instituicao.ContatosInstituicao.Contato',
+				'Instituicao.InstituicoesEndereco',
+				'Instituicao.InstituicoesEndereco.Cidade',
+				'Fornecedor',
+				'Fornecedor.FornecedoresEndereco',
+				'Fornecedor.FornecedoresEndereco.Cidade',
+				'Assunto'
+			);
 		
-		$Chamada = $this->Chamada->read(null, $id);
-		unset($Chamada['Chamada']['id']);
-		unset($Chamada['Chamada']['data_inicio']);
-		$Chamada['Chamada']['chamada_id'] = $id;
-		$this->request->data = $Chamada;
+			$Chamada = $this->Chamada->read(null, $id);
+			unset($Chamada['Chamada']['id']);
+			$Chamada['Chamada']['data_inicio'] = date('d/m/Y', time());
+			$Chamada['Chamada']['chamada_id'] = $id;
+			$this->request->data = $Chamada;
+		} else {
+			$Chamada = array();
+			$Chamada['Chamada']['data_inicio'] = date('d/m/Y', time());
+			$this->request->data = $Chamada;
 		}
 
 		$TiposChamada = $this->Chamada->TiposChamada->find('list', array('fields'=>array('id','nome')));
@@ -322,7 +330,7 @@ class ChamadasController extends CaritasAppController {
 			$this->Session->setFlash('Procedimento da Chamada editado com sucesso!');
 			$this->redirect(array('action'=>'edit',$chamada_id));
 		}
-		$procedimentos = $this->Chamada->ChamadasProcedimento->Procedimento->find('list', array('fields'=>array('id','nome')));
+		$procedimentos = array('0'=>'Selecione') + $this->Chamada->ChamadasProcedimento->Procedimento->find('list', array('fields'=>array('id','nome')));
 		$this->set('procedimentos',$procedimentos);
 		$this->set('chamada_id', $chamada_id);
 		
@@ -340,16 +348,17 @@ class ChamadasController extends CaritasAppController {
 			} else {
 				unset($data['Chamada']['instituicao_id']);
 			}
-			if ($data_ini = date_create_from_format('d/m/Y',$data['Chamada']['data_inicio'])) {
-				$d = 0;
-			} else {
-				$data_ini = date_create_from_format('Y-m-d',$data['Chamada']['data_inicio']);
-			}
-			$data['Chamada']['data_inicio'] = date_format($data_ini, 'Y-m-d');
 			$data['Chamada']['id'] = $id;
+			if ($data['Chamada']['finalizar'] == 1) {
+				$data['Chamada']['data_fim'] = date('Y-m-d', time());
+			}
 			$this->Chamada->save($data);
 			$this->Session->setFlash('Chamada salva com sucesso!');
-			$this->redirect(array('action'=>'index'));
+			if ($data['Chamada']['editar'] == 1) {
+				$this->redirect(array('action'=>'edit',$id));
+			} else {
+				$this->redirect(array('action'=>'index'));
+			}
 			
 		} else {
 		// Configura Titulo da Pagina
@@ -511,15 +520,20 @@ class ChamadasController extends CaritasAppController {
 		if ($this->request->isPost()) {
 			$data = $this->data;
 			$data['ChamadasProcedimento']['id'] = $id;
-			$this->Chamada->ChamadasProcedimento->save($data);
-			$ChamadaProcedimento = $this->Chamada->ChamadasProcedimento->read(null, $id);
-			$this->Session->setFlash('Procedimento da Chamada editado com sucesso!');
-			$this->redirect(array('action'=>'edit',$ChamadaProcedimento['ChamadasProcedimento']['chamada_id']));
+			
+			if ( $this->Chamada->ChamadasProcedimento->save($data) ) {
+				$ChamadaProcedimento = $this->Chamada->ChamadasProcedimento->read(null, $id);
+				$this->Session->setFlash('Procedimento da Chamada editado com sucesso!');
+				$this->redirect(array('action'=>'edit',$ChamadaProcedimento['ChamadasProcedimento']['chamada_id']));
+			} else {
+				$this->Session->setFlash('Erro ai gravar Procedimento da Chamada!');
+			}
+			
 		}
 		$ChamadaProcedimento = $this->Chamada->ChamadasProcedimento->read(null, $id);
 		$this->data = $ChamadaProcedimento;
 		
-		$procedimentos = $this->Chamada->ChamadasProcedimento->Procedimento->find('list', array('fields'=>array('id','nome')));
+		$procedimentos = array('0'=>'Selecione') + $this->Chamada->ChamadasProcedimento->Procedimento->find('list', array('fields'=>array('id','nome')));
 		$this->set('procedimentos',$procedimentos);
 		
 		$this->render('form_procedimento');
@@ -543,6 +557,13 @@ class ChamadasController extends CaritasAppController {
 			$this->Session->setFlash('Procedimento da Chamada Excluído com sucesso!');
 			$this->redirect(array('action'=>'edit', $ChamadaProcedimento['ChamadasProcedimento']['chamada_id']));
 		}
+	}
+	
+	public function carregaProcedimento($id = null) {
+		$this->layout = null;
+		$Procedimento = $this->Chamada->ChamadasProcedimento->Procedimento->read(null, $id);
+		echo $Procedimento['Procedimento']['descricao'];
+		$this->render = null;
 	}
 	
 	public function finalizar($id = null) {

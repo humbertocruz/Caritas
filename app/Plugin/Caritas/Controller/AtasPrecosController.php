@@ -28,7 +28,7 @@ class AtasPrecosController extends CaritasAppController {
 		// Configura Titulo da Pagina
 		$this->set('title_for_layout','Ata de Preço - Adicionar');
 
-		$Editais = $this->AtasPreco->Edital->find('list', array('fields'=>array('id','numero')));
+		$Editais = array('0'=>'Escolha') + $this->AtasPreco->Edital->find('list', array('fields'=>array('id','numero')));
 		$this->set('Editais',$Editais);
 
 		$this->render('form');
@@ -50,11 +50,11 @@ class AtasPrecosController extends CaritasAppController {
 		// Configura Titulo da Pagina
 		$this->set('title_for_layout','Ata de Preço - Editar');
 		
+		$Editais = array('0'=>'Escolha') + $this->AtasPreco->Edital->find('list', array('fields'=>array('id','numero')));
+		$this->set('Editais',$Editais);
+		
 		$AtasPreco = $this->AtasPreco->read(null, $id);
 		$this->request->data = $AtasPreco;
-		
-		$Editais = $this->AtasPreco->Edital->find('list', array('fields'=>array('id','numero')));
-		$this->set('Editais',$Editais);
 
 		$this->render('form');
 	}

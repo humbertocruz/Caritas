@@ -10,9 +10,7 @@ App::uses('AppHelper', 'View/Helper');
 class AuthBsHelper extends AppHelper {
 
 	public function brdate( $date = null ) {
-		if ($date == null) return ' --x-- ';
-		$date = new DateTime( $date );
-		return $date->format( 'd/m/Y' );
+		return $date;
 	}
 
 	public function hasPerm( $what = null, $perms = null ) {
