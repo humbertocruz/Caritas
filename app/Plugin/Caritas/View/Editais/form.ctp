@@ -1,14 +1,13 @@
+<?php echo $this->Bootstrap->pageHeader($txtAction.' Editais'); ?>
+
 <?php
-echo $this->Form->create('Edital', array('type'=>'post'));
+echo $this->Bootstrap->create('Edital', array('type'=>'post'));
 
-echo $this->Bootstrap->input('numero', array('label'=>'Número'));
+echo $this->Form->input('numero', array('label'=>'Número'));
+echo $this->Form->input('ano', array('label'=>'Ano'));
+echo $this->Form->input('orgao_id', array('label'=>'Orgao','options'=>$Orgaos));
+echo $this->Form->input('projeto_id', array('label'=>'Projeto','options'=>$Projetos));
 
-echo $this->Bootstrap->input('ano', array('label'=>'Ano'));
-
-echo $this->Bootstrap->select('orgao_id', array('label'=>'Orgao','options'=>$Orgaos));
-
-echo $this->Bootstrap->select('projeto_id', array('label'=>'Projeto','options'=>$Projetos));
-
-echo $this->Form->submit('Gravar', array('class'=>'btn btn-primary'));
+echo $this->Bootstrap->save_cancel();
 
 echo $this->Form->end();

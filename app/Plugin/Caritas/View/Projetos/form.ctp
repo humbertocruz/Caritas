@@ -1,8 +1,10 @@
+<?php echo $this->Bootstrap->pageHeader($txtAction.' Projetos'); ?>
+
 <?php
-echo $this->Form->create('Projeto', array('type'=>'post'));
+echo $this->Bootstrap->create('Projeto', array('type'=>'post'));
 
-echo $this->Bootstrap->input('nome', array('label'=>'Nome'));
+echo $this->Form->input('nome', array('label'=>'Nome'));
 
-echo $this->Form->submit('Gravar', array('class'=>'btn btn-primary'));
+echo $this->Bootstrap->save_cancel();
 
 echo $this->Form->end();

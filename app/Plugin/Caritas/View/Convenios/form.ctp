@@ -1,11 +1,13 @@
+<?php echo $this->Bootstrap->pageHeader($txtAction.' Convênios'); ?>
+
 <?php
-echo $this->Form->create('Cidade', array('type'=>'post'));
+echo $this->Bootstrap->create('Cidade', array('type'=>'post'));
 
-echo $this->Bootstrap->input('nome', array('label'=>'Nome'));
-echo $this->Bootstrap->input('codigo_ibge', array('label'=>'IBGE'));
-echo $this->Bootstrap->select('estado_id', array('label'=>'UF','options'=>$Estados));
-echo $this->Bootstrap->input('prefeito', array('label'=>'Prefeito'));
+echo $this->Form->input('nome', array('label'=>'Nome'));
+echo $this->Form->input('codigo_ibge', array('label'=>'IBGE'));
+echo $this->Form->input('estado_id', array('label'=>'UF','options'=>$Estados));
+echo $this->Form->input('prefeito', array('label'=>'Prefeito'));
 
-echo $this->Form->submit('Gravar', array('class'=>'btn btn-primary'));
+echo $this->Bootstrap->save_cancel();
 
 echo $this->Form->end();

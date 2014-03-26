@@ -48,4 +48,9 @@ foreach ($Cidades as $Cidade) { ?>
 	<td><?php echo $Cidade['Estado']['nome']; ?></td>
 </tr>
 <?php } } ?>
-<?php echo $this->Element('Bootstrap.table/table-end'); ?>
+</table>
+		</div>
+		<div class="panel-footer">
+		<?php echo $this->Bootstrap->btnLink( 'Adicionar', array('action'=>'add'), 'success'); ?>
+		</div>
+</div>

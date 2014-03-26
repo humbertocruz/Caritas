@@ -2,11 +2,12 @@
 
 <?php echo $this->Element('Bootstrap.table/table-create',array(
 	'title'=>'Assuntos',
-	'state'=>'info',
-	'fields' => array(
-		'Nome'
-	)
+	'state'=>'info'
 )); ?>
+<tr>
+	<th>&nbsp;</th>
+	<th>Nome</th>
+</tr>
 <?php foreach ($Assuntos as $Assunto) { ?>
 <tr>
 	<td class="col-md-2"><?php echo $this->Bootstrap->basicActions($Assunto['Assunto']['id']);?></td>

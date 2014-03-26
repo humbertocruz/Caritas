@@ -131,8 +131,8 @@ class CaritasAppController extends AppController {
 		$Links = $this->Menu->Link->find('threaded', array('conditions'=>$conditions));
 		$menus = $Links;
 		
-		//$allModelNames = Configure::listObjects('model');
-		//pr($allModelNames);
+		//$allNames = Configure::listObjects('controller');
+		//pr($allNames);
 		
 		$conditions = array(
 			'Permissao.nivel_acesso_id' => $user['nivel_acesso_id']
