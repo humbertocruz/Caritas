@@ -5,7 +5,7 @@ class ChamadasController extends CaritasAppController {
 	public $paginate = array(
 		'limit' => 15,
 		'order' => array(
-			'Chamada.data_inicio' => 'desc'
+			'Chamada.data_inicio' => 'DESC'
 		)
 	);
 	public function beforeFilter() {
@@ -634,7 +634,8 @@ class ChamadasController extends CaritasAppController {
 			'Contato',
 			'Assunto'
 		);
-		$historico = $this->Chamada->find('all', array('order'=>array('Chamada.data_inicio'=>'DESC'),'conditions'=>array('Chamada.instituicao_id'=>$instituicao_id)));
+		//$historico = $this->Chamada->find('all', array('order'=>array('Chamada.data_inicio'=>'DESC'),'conditions'=>array('Chamada.instituicao_id'=>$instituicao_id)));
+		$historico = $this->Paginate('Chamada', array('Chamada.instituicao_id'=>$instituicao_id));
 		$this->set('historico', $historico);
 	
 	}

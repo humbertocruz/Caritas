@@ -2,6 +2,10 @@
 
 class Chamada extends CaritasAppModel {
 
+	public $sort = array(
+		'data_inicio' => 'DESC'
+	);
+
 	public $validade = array(
 		'data_inicio' => array(
 			'rule'			=> 'date',
