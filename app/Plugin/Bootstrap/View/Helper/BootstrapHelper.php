@@ -59,7 +59,7 @@ class BootstrapHelper extends AppHelper {
 	// Formularios Bootstrap
 	
 	public function create($name = null, $options = array()) {
-		echo $this->Form->create($name, $options + array(
+		return $this->Form->create($name, $options + array(
 			'inputDefaults' => array(
 				'div' => array(
 					'class' => 'form-group'
