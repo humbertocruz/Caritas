@@ -3,13 +3,13 @@ class ChamadasController extends CaritasAppController {
 
 	public $uses = array('Caritas.Chamada');
 	public $paginate = array(
-		'limit' => 15,
+		'limit' => 10,
 		'order' => array(
 			'Chamada.data_inicio' => 'DESC'
 		)
 	);
 	public function beforeFilter() {
-		
+		parent::beforeFilter();
 		if ($this->Session->check('BelongsForms.ChamadaAddForm')) {
 			$this->request->data = $this->Session->read('BelongsForms.ChamadaAddForm');
 			if ($this->request->data['Chamada']['instituicao_id'] == 0) unset($this->request->data['Chamada']['instituicao_id']);
@@ -17,7 +17,7 @@ class ChamadasController extends CaritasAppController {
 			$this->Session->delete('BelongsForms.ChamadaAddForm');
 		}
 
-		parent::beforeFilter();
+		
 	}
 	private function sess_filters() {
 		// Filtros
@@ -159,8 +159,6 @@ class ChamadasController extends CaritasAppController {
 		
 		$chamadas = $this->Paginate('Chamada',$filtros);
 		$this->set('Chamadas',$chamadas);
-		
-		
 
 	}
 

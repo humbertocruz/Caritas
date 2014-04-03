@@ -1,31 +1,21 @@
-<div data-spy="affix" data-offset-top="5" data-offset-bottom="20">
-	<div class="container">
-		<span class="pull-right">
-			<?php echo $this->Bootstrap->btnLink( '<span class="glyphicon glyphicon-plus"></span>', array('action'=>'add'), 'success','Adicionar Chamada'); ?>
-			<span data-toggle="tooltip" data-placement="left" title="Filtros" class="btn btn-xs btn-info pull-right"><span class="glyphicon glyphicon-filter"></span></span>
-		</span>
-	</div>
-</div>
+<style>
+	.form-group {
+		float: left;
+		margin-right: 15px;
+	}
+</style>
+
 <?php
 echo $this->Bootstrap->pageHeader('Chamadas');
-$filters_panel = $this->Caritas->filters($filters_chamadas, $this->request->data);
-?>
 
-<div class="panel panel-default">
-	<div class="panel-heading clearfix">
-		<span class="pull-right">
-			<?php echo $this->Bootstrap->paginator($this->paginator); ?>
-		</span>
-		
-	</div>
-
-<table class="table table-bordered">
-
-<?php if ($escolhido_projeto_id == 0) { ?>
+echo $this->Element('Bootstrap.table/table-create',array(
+	'title'=>'Chamadas',
+	'state'=>'info'
+	)
+); 
+if ($escolhido_projeto_id == 0) { ?>
 <tr>
-	<td colspan="8">
-		<p class="text-danger">Escolha o Projeto no menu superior!</p>
-	</td>
+	<td colspan="8">Escolha o Projeto no menu superior!</td>
 </tr>
 <?php } elseif (count($Chamadas) == 0) { ?>
 <tr>
@@ -46,7 +36,7 @@ $filters_panel = $this->Caritas->filters($filters_chamadas, $this->request->data
 foreach ($Chamadas as $Chamada) { ?>
 <tr>
 	<td>
-		<?php echo $this->Bootstrap->chamadaActions($Chamada['Chamada']['id']); ?>
+		<?php echo $this->Bootstrap->chamadaAtendenteActions($Chamada['Chamada']['id']); ?>
 	</td>
 	<td><?php echo $this->AuthBs->brdate($Chamada['Chamada']['data_inicio']);?></td>
 	<td><?php echo ($Chamada['Chamada']['instituicao_id'])?( $Chamada['Instituicao']['nome_fantasia'] ):( $Chamada['Fornecedor']['nome_fantasia'] ); ?></td>
@@ -58,6 +48,4 @@ foreach ($Chamadas as $Chamada) { ?>
 </tr>
 <?php } ?>
 <?php } ?>
-</table>
-<div class="panel-footer clearfix"></div>
-</div>
+<?php echo $this->Element('Bootstrap.table/table-end'); ?>

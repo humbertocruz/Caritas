@@ -67,7 +67,7 @@ class AdminAppController extends AppController {
 		}
 		
 		// Carregar Layout bootstrap
-		$this->layout = 'Bootstrap.admin';
+		$this->layout = 'Bootstrap.bootstrap-admin';
 
 		$menus = array(
 			array(

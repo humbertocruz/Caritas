@@ -8,7 +8,7 @@ class AtasPrecosController extends CaritasAppController {
 		$this->set('title_for_layout','Atas de Preço - Lista');
 
 		// Carrega dados do BD
-		$AtasPrecos = $this->AtasPreco->find('all');
+		$AtasPrecos = $this->paginate('AtasPreco');
 		$this->set('AtasPrecos',$AtasPrecos);
 
 	}

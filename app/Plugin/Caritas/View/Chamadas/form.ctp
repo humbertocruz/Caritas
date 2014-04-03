@@ -1,16 +1,11 @@
 <?php echo $this->Html->script('Caritas.chamadas/ajax'); ?>
 <?php
-if ($this->action == 'add') {
-	$action = 'Adicionar';
-} else {
-	$action = 'Editar';
-}
 if (isset($this->request->data['Chamada']['chamada_id'])) {
 	$filha = ' Filha';
 } else {
 	$filha = '';
 }
-echo $this->Bootstrap->pageHeader($action.' Chamada'.$filha); 
+echo $this->Bootstrap->pageHeader($txtAction.' Chamada'.$filha); 
 ?>
 
 <ul class="nav nav-tabs" id="chamadas-tabs">
@@ -42,8 +37,8 @@ echo $this->Bootstrap->pageHeader($action.' Chamada'.$filha);
 		<div class="panel panel-warning">
 			<div class="panel-heading">Instituição / Fornecedor</div>
 			<div class="panel-body">
-				<?php echo $this->Form->input('estado_id', array('options'=>$Estados,'label'=>'UF', $disabled)); ?>
-				<?php echo $this->Form->input('cidade_id', array('options'=>$Cidades,'label'=>'Cidade', $disabled)); ?>
+				<?php echo $this->Bootstrap->input('estado_id', array('options'=>$Estados,'label'=>'UF', $disabled)); ?>
+				<?php echo $this->Bootstrap->input('cidade_id', array('options'=>$Cidades,'label'=>'Cidade', $disabled)); ?>
 				<?php
 					if (isset($this->request->data['Chamada']['instituicao_id'])) {
 						$inst_active = 'active';
@@ -63,10 +58,10 @@ echo $this->Bootstrap->pageHeader($action.' Chamada'.$filha);
 				<!-- Tab panes -->
 				<div class="tab-content">
 					<div class="tab-pane <?php echo $inst_active;?>" id="tipo_inst">
-						<?php echo $this->Form->input('instituicao_id', array('options'=>$Instituicoes,'label'=>'Instituição','url'=>'/instituicoes', $disabled)); ?>
+						<?php echo $this->Bootstrap->inputBt('instituicao_id', array('options'=>$Instituicoes,'label'=>'Instituição','url'=>'/instituicoes', $disabled)); ?>
 					</div>
 					<div class="tab-pane <?php echo $forn_active;?>" id="tipo_forn">
-						<?php echo $this->Form->input('fornecedor_id', array('options'=>$Fornecedores,'label'=>'Fornecedor','url'=>'/fornecedores', $disabled)); ?>
+						<?php echo $this->Bootstrap->input('fornecedor_id', array('options'=>$Fornecedores,'label'=>'Fornecedor',$disabled)); ?>
 					</div>
 				</div>
 				

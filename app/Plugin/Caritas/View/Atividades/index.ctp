@@ -1,9 +1,11 @@
 <?php echo $this->Bootstrap->pageHeader('Atividades'); ?>
 
-<?php echo $this->Element('Bootstrap.table/table-create',array(
-	'title'=>'Atividades',
-	'state'=>'info'
-)); ?>
+<div class="panel panel-default">
+	<div class="panel-heading clearfix">
+		Atividades
+		<span class="btn btn-xs btn-info pull-right"><span class="glyphicon glyphicon-filter"></span></span>
+	</div>
+		<table class="table">
 <tr>
 	<th>&nbsp;</th>
 	<th>Nome</th>
@@ -15,7 +17,7 @@
 </tr>
 <?php } ?>
 </table>
-		</div>
+		
 		<div class="panel-footer">
 		<?php echo $this->Bootstrap->btnLink( 'Adicionar', array('action'=>'add'), 'success'); ?>
 		</div>

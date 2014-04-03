@@ -117,7 +117,7 @@ class CaritasAppController extends AppController {
 		}
 
 		// Carregar Layout bootstrap
-		$this->layout = 'Bootstrap.bootstrap';
+		$this->layout = 'Bootstrap.default';
 
 		$this->Menu->Link->Behaviors->attach('Containable');
 		$this->Menu->Link->contain(
@@ -164,7 +164,10 @@ class CaritasAppController extends AppController {
 		if ($this->action == 'add' ) $txtAction = 'Adicionar';
 		$this->set('txtAction', $txtAction);
 		
-		$this->set('superMenu', $menus);
+		// Carrega menus
+		$this->set('menus', $menus);
+		
+		// Carrega usuario logado
 		$this->set('usuario', $this->Auth->user());
 	}
 

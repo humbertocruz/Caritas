@@ -1,14 +1,17 @@
 <?php echo $this->Bootstrap->pageHeader('Atas de Preços'); ?>
 
-<?php echo $this->Element('Bootstrap.table/table-create',array(
-	'title'=>'Atas de Preços',
-	'state'=>'info'
-)); ?>
+<div class="panel panel-default">
+	<div class="panel-heading clearfix">
+		Atas de Preços
+		<span class="btn btn-xs btn-info pull-right"><span class="glyphicon glyphicon-filter"></span></span>
+	</div>
+		<table class="table">
+
 <tr>
 	<th>&nbsp;</th>
-	<th>Nome</th>
-	<th>Data</th>
-	<th>Edital</th>
+	<th><?php echo $this->Paginator->sort('nome');?></th>
+	<th><?php echo $this->Paginator->sort('data');?></th>
+	<th><?php echo $this->Paginator->sort('numero');?></th>
 </tr>
 <?php foreach ($AtasPrecos as $AtasPreco) { ?>
 <tr>
@@ -19,7 +22,6 @@
 </tr>
 <?php } ?>
 </table>
-</div>
 <div class="panel-footer">
 	<?php echo $this->Bootstrap->btnLink('Adicionar',array('action'=>'add'), 'success'); ?>
 </div>
