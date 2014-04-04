@@ -3,7 +3,7 @@ class ChamadasController extends CaritasAppController {
 
 	public $uses = array('Caritas.Chamada');
 	public $paginate = array(
-		'limit' => 10,
+		'limit' => 25,
 		'order' => array(
 			'Chamada.data_inicio' => 'DESC'
 		)
@@ -85,6 +85,7 @@ class ChamadasController extends CaritasAppController {
 					}
 				}
 				$this->Session->write('Filtros.Chamadas', $filters_chamadas );
+				$this->redirect(array('action'=>'index'));
 			}
 		}
 
@@ -95,9 +96,9 @@ class ChamadasController extends CaritasAppController {
 			$conditions = array(
 				'Cidade.estado_id' => $filters_chamadas['estado_id']['value']
 			);
-			$Cidades = $this->Chamada->Cidade->find('list', array('conditions'=>$conditions,'fields'=>array('id','nome')));
+			$Cidades = array('0'=>'Todos')+$this->Chamada->Cidade->find('list', array('conditions'=>$conditions,'fields'=>array('id','nome')));
 		} else {
-			$Cidades = array();
+			$Cidades = array('0'=>'Todos');
 		}
 		$municipios = array('0'=>'Todos')+$Cidades;
 		$assuntos = array('0'=>'Todos') + $this->Chamada->Assunto->find('list', array('fields'=>array('id','nome')));
@@ -115,6 +116,12 @@ class ChamadasController extends CaritasAppController {
 		return $filters_chamadas;
 		
 	}
+	
+	public function filter() {
+		//$this->Session->delete('Filtros.Chamadas');
+		$filtros_chamadas = $this->sess_filters();
+	}
+	
 	public function index() {
 		// Configura Titulo da Pagina
 		$this->set('title_for_layout','Chamadas - Lista');
@@ -155,7 +162,7 @@ class ChamadasController extends CaritasAppController {
 		
 		// Filtro Constante Projeto
 		$filtros = array('Chamada.projeto_id'=>$this->escolhido_projeto_id)+$filtros;
-		//pr($filtros_chamadas);
+		//pr($filtros);
 		
 		$chamadas = $this->Paginate('Chamada',$filtros);
 		$this->set('Chamadas',$chamadas);

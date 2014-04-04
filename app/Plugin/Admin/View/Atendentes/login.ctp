@@ -15,7 +15,7 @@
 				
 			</div>
 			<div class="panel-footer clearfix">
-				<?php echo $this->Bootstrap->submit('Entrar'); ?>
+				<?php echo $this->Bootstrap->submit('Entrar', array( 'class' => 'btn-block') ); ?>
 			</div>
 		</div>
 		<?php echo $this->Bootstrap->end(); ?>
