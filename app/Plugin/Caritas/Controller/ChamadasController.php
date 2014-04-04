@@ -387,6 +387,7 @@ class ChamadasController extends CaritasAppController {
 		
 		$Chamada = $this->Chamada->read(null, $id);
 		
+	
 		// Nao editar a data_inicio
 
 		$TiposChamada = $this->Chamada->TiposChamada->find('list', array('fields'=>array('id','nome')));

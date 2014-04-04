@@ -1,10 +1,15 @@
 $(document).ready(function(){
 
+	// Submit
+	$('#btn-submit').click(function(){
+		console.log($(this).data('forms'));
+		$($(this).data('forms')).submit();	
+	});
 
 	// cliques nos checkbox da listagem
 	$('.ChamadaId').click(function() {
 		if ($('.ChamadaId:checked').length == 1) {
-			$('#btn-form-edit').removeClass('disabled').attr('href','/caritas/Chamadas/edit/'+$(this).val());
+			$('#btn-form-edit').removeClass('disabled').attr('href','/caritas/Chamadas/edit/'+$('.ChamadaId:checked').val());
 		} else {
 			$('#btn-form-edit').addClass('disabled').attr('href','/caritas/Chamadas/edit');
 		}

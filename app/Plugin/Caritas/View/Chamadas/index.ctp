@@ -13,14 +13,8 @@
 	</div>
 	<div class="col-md-11">
 
+<?php echo $this->Bootstrap->paginator($this->paginator); ?>
 <div class="panel panel-default">
-	<div class="panel-heading clearfix">
-		<span class="pull-right">
-			<?php echo $this->Bootstrap->paginator($this->paginator); ?>
-		</span>
-		
-	</div>
-
 <table class="table">
 
 <?php if ($escolhido_projeto_id == 0) { ?>
@@ -47,7 +41,7 @@
 <?php 
 foreach ($Chamadas as $Chamada) { ?>
 <tr>
-	<td class="text-center"><?php echo $this->Bootstrap->input('Chamada.id', array('class'=>'ChamadaId','type'=>'checkbox','label'=>false,'div'=>false,'value'=>$Chamada['Instituicao']['id'])); ?></td>
+	<td class="text-center"><?php echo $this->Bootstrap->input('Chamada.id', array('class'=>'ChamadaId','type'=>'checkbox','label'=>false,'div'=>false,'value'=>$Chamada['Chamada']['id'])); ?></td>
 	<td><?php echo $this->AuthBs->brdate($Chamada['Chamada']['data_inicio']);?></td>
 	<td><?php echo ($Chamada['Chamada']['instituicao_id'])?( $Chamada['Instituicao']['nome_fantasia'] ):( $Chamada['Fornecedor']['nome_fantasia'] ); ?></td>
 	<td><?php echo (isset($Chamada['Instituicao']['InstituicoesEndereco'][0]['Cidade']['estado_id']))?($Chamada['Instituicao']['InstituicoesEndereco'][0]['Cidade']['estado_id']):($Chamada['Fornecedor']['FornecedoresEndereco'][0]['Cidade']['estado_id']); ?></td>
@@ -59,7 +53,6 @@ foreach ($Chamadas as $Chamada) { ?>
 <?php } ?>
 <?php } ?>
 </table>
-<div class="panel-footer clearfix"></div>
 </div>
 
 	</div>

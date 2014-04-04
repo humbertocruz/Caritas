@@ -10,10 +10,12 @@ echo $this->Bootstrap->pageHeader($txtAction.' Chamada'.$filha);
 <div class="row">
 	<div class="col-md-2">
 		<ul class="list-group" data-spy="affix" data-offset-top="108">
-			<li class="list-group-item"><?php echo $this->Bootstrap->button( 'Gravar', array('forms'=>'#ChamadaAddForm, #ChamadaEditForm','class'=>'bnt btn-info','title'=>'Filtrar')); ?></li>
-			<li class="list-group-item"><?php echo $this->Bootstrap->button( 'Grava e Editar', array('class'=>'btn-success','data-toggle'=>'tooltip', 'data-placement'=>'left','title'=>'Adicionar')); ?></li>
-			<li class="list-group-item"><?php echo $this->Bootstrap->button( 'Gravar e Finalizar', array('id'=>'btn-form-edit','class'=>'btn-primary','data-toggle'=>'tooltip', 'data-placement'=>'left','title'=>'Editar')); ?></li>
-			<li class="list-group-item"><?php echo $this->Bootstrap->button( 'Cancelar', array('id'=>'btn-form-del','class'=>'btn-danger', 'data-toggle'=>'tooltip', 'data-placement'=>'left','title'=>'Excluir'),'Tem Certeza?'); ?></li>
+			<li class="list-group-item"><?php echo $this->Bootstrap->linkBt( 'Gravar', array('action'=>'filter'), array('class'=>'btn-info','data-toggle'=>'tooltip', 'data-placement'=>'left','title'=>'Filtrar')); ?></li>
+			<li class="list-group-item"><?php echo $this->Bootstrap->linkBt( 'Grava e Editar', array('action'=>'add'), array('class'=>'btn-success','data-toggle'=>'tooltip', 'data-placement'=>'left','title'=>'Adicionar')); ?></li>
+			<li class="list-group-item"><?php echo $this->Bootstrap->linkBt( 'Gravar e Finalizar', array('action'=>'edit'), array('id'=>'btn-form-edit','class'=>'btn-primary disabled','data-toggle'=>'tooltip', 'data-placement'=>'left','title'=>'Editar')); ?></li>
+			<li class="list-group-item">
+			<?php echo $this->Bootstrap->linkBt( 'Cancelar', array('action'=>'del'), array('id'=>'btn-form-del','class'=>'btn-danger disabled', 'data-toggle'=>'tooltip', 'data-placement'=>'left','title'=>'Excluir'),'Tem Certeza?'); ?>
+			</li>
 		</ul>
 	</div>
 	<div class="col-md-10">
