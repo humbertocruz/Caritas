@@ -5,6 +5,8 @@ $(document).ready(function(){
 		console.log($(this).data('forms'));
 		$($(this).data('forms')).submit();	
 	});
+	
+	$('input.daterangepicker').daterangepicker();
 
 	// cliques nos checkbox da listagem
 	$('.ChamadaId').click(function() {

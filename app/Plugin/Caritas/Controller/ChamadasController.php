@@ -118,8 +118,22 @@ class ChamadasController extends CaritasAppController {
 	}
 	
 	public function filter() {
-		//$this->Session->delete('Filtros.Chamadas');
-		$filtros_chamadas = $this->sess_filters();
+		$Assuntos = array('0'=>'Selecione o Assunto') + $this->Chamada->Assunto->find('list', array('fields'=>array('id','nome')));
+		
+		$Status = array('0'=>'Selecione o Status') + $this->Chamada->Status->find('list', array('fields'=>array('id','nome')));
+		
+		$Estados = array('0'=>'Selecione o Estado') + $this->Chamada->Estado->find('list', array('fields'=>array('id','nome')));
+		
+		//$Cidades = array('0'=>'Selecione a Cidade') + $this->Chamada->Cidade->find('list', array('fields'=>array('id','nome'),'conditions'=>$conditions));
+		
+		$data = array(
+			'Assunto' => $Assuntos,
+			'Status' => $Status,
+			'Estado' => $Estados
+		);
+		
+		$this->set('Filter', $data);
+		
 	}
 	
 	public function index() {
