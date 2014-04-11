@@ -3,7 +3,7 @@
 <?php
     echo $this->Bootstrap->create('Filter', array('type'=>'post'));
     
-    echo $this->Bootstrap->input('atendente_id', array('label'=>'Atendente'));
+    echo $this->Bootstrap->input('atendente_id', array('label'=>'Atendente', 'options'=>$Filter['Atendente']));
     echo $this->Bootstrap->input('estado_id', array('label'=>'UF','options'=>$Filter['Estado']));
     echo $this->Bootstrap->input('cidade_id', array('label'=>'Cidade'));
     echo $this->Bootstrap->input('assunto_id', array('label'=>'Assunto','options'=>$Filter['Assunto']));

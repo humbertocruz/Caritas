@@ -8,105 +8,98 @@ if (isset($this->request->data['Chamada']['chamada_id'])) {
 echo $this->Bootstrap->pageHeader($txtAction.' Chamada'.$filha); 
 ?>
 <div class="row">
-	<div class="col-md-2">
+	<div class="col-md-1">
 		<ul class="list-group" data-spy="affix" data-offset-top="108">
-			<li class="list-group-item"><?php echo $this->Bootstrap->button( 'Gravar', array('forms'=>'#ChamadaAddForm, #ChamadaEditForm','class'=>'bnt btn-info','title'=>'Filtrar')); ?></li>
-			<li class="list-group-item"><?php echo $this->Bootstrap->button( 'Grava e Editar', array('class'=>'btn-success','data-toggle'=>'tooltip', 'data-placement'=>'left','title'=>'Adicionar')); ?></li>
-			<li class="list-group-item"><?php echo $this->Bootstrap->button( 'Gravar e Finalizar', array('id'=>'btn-form-edit','class'=>'btn-primary','data-toggle'=>'tooltip', 'data-placement'=>'left','title'=>'Editar')); ?></li>
-			<li class="list-group-item"><?php echo $this->Bootstrap->button( 'Cancelar', array('id'=>'btn-form-del','class'=>'btn-danger', 'data-toggle'=>'tooltip', 'data-placement'=>'left','title'=>'Excluir'),'Tem Certeza?'); ?></li>
+			<li class="list-group-item" title="Salvar"><?php echo $this->Bootstrap->button( '<span class="glyphicon glyphicon-floppy-disk"></span>', array('forms'=>'#ChamadaAddForm, #ChamadaEditForm','style'=>'primary')); ?></li>
+			<li class="list-group-item" title="Salvar e Editar"><?php echo $this->Bootstrap->button( '<span class="glyphicon glyphicon-floppy-saved"></span>', array('class'=>'btn-success','data-toggle'=>'tooltip', 'data-placement'=>'left','style'=>'success')); ?></li>
+			<li class="list-group-item" title="Salvar e Finalizar"><?php echo $this->Bootstrap->button( '<span class="glyphicon glyphicon-saved"></span>', array('id'=>'btn-form-edit','class'=>'btn-primary','data-toggle'=>'tooltip', 'data-placement'=>'left','style'=>'success')); ?></li>
+			<li class="list-group-item" title="Cancelar"><?php echo $this->Bootstrap->link( '<span class="glyphicon glyphicon-ban-circle"></span>', array('action'=>'index')); ?></li>
 		</ul>
 	</div>
-	<div class="col-md-10">
+	<div class="col-md-11">
 <ul class="nav nav-tabs" id="chamadas-tabs">
-  <li class="active"><a href="#tab-chamadas" data-toggle="tab">Chamadas</a></li>
-  <?php if ($action_name == 'edit') { ?>
-  <li><a href="#tab-procedimentos" data-toggle="tab">Procedimentos</a></li>
-  <?php if ($this->request->data['Chamada']['chamada_id'] == 0) { ?>
-  <li><a href="#tab-filhas" data-toggle="tab">Chamadas Filhas</a></li>
-  <?php } ?>
-  <?php } ?>
+	<li class="active"><a href="#tab-chamadas" data-toggle="tab">Chamadas</a></li>
+	<?php if ($action_name == 'edit') { ?>
+		<li><a href="#tab-procedimentos" data-toggle="tab">Procedimentos</a></li>
+		<?php if ($this->request->data['Chamada']['chamada_id'] == 0) { ?>
+		<li><a href="#tab-filhas" data-toggle="tab">Chamadas Filhas</a></li>
+		<?php } ?>
+	<?php } ?>
 </ul>
 <br>
 <div class="tab-content">
-  <div class="tab-pane active" id="tab-chamadas">
-	<div class="row">
-		<div class="col-md-8">
-		<?php echo $this->Bootstrap->create('Chamada',array('type'=>'post')); ?>
-		<?php echo $this->Form->input('chamada_id', array('type'=>'hidden','label'=>false)); ?>
-		<?php echo $this->Form->input('pedido_id', array('type'=>'hidden','label'=>false)); ?>
-		<?php echo $this->Form->input('inst_forn', array('type'=>'hidden','label'=>false,'value'=>1)); ?>
-		<?php echo $this->Form->input('editar', array('type'=>'hidden','label'=>false)); ?>
-		<?php echo $this->Form->input('finalizar', array('type'=>'hidden','label'=>false)); ?>
-		<?php if ( isset($this->request->data['Chamada']['chamada_id'])) {
-				$disabled = array('disabled'=>'disabled');
-			} else {
-				$disabled = array();
-			}
-		?>
-		<div class="panel panel-warning">
-			<div class="panel-heading">Instituição / Fornecedor</div>
-			<div class="panel-body">
-				<?php echo $this->Bootstrap->input('estado_id', array('options'=>$Estados,'label'=>'UF', $disabled)); ?>
-				<?php echo $this->Bootstrap->input('cidade_id', array('options'=>$Cidades,'label'=>'Cidade', $disabled)); ?>
-				<?php
-					if (isset($this->request->data['Chamada']['instituicao_id'])) {
-						$inst_active = 'active';
-						$forn_active = '';
-					} elseif (isset($this->request->data['Chamada']['fornecedor_id'])) {
-						$forn_active = 'active';
-						$inst_active = '';
-					} else {
-						$inst_active = 'active';
-						$forn_active = '';
-					}
+	<div class="tab-pane active" id="tab-chamadas">
+		<div class="row">
+			<div class="col-md-8">
+				<?php echo $this->Bootstrap->create('Chamada',array('type'=>'post')); ?>
+				<?php echo $this->Form->input('chamada_id', array('type'=>'hidden','label'=>false)); ?>
+				<?php echo $this->Form->input('pedido_id', array('type'=>'hidden','label'=>false)); ?>
+				<?php echo $this->Form->input('inst_forn', array('type'=>'hidden','label'=>false,'value'=>1)); ?>
+				<?php echo $this->Form->input('editar', array('type'=>'hidden','label'=>false)); ?>
+				<?php echo $this->Form->input('finalizar', array('type'=>'hidden','label'=>false)); ?>
+				<?php if ( isset($this->request->data['Chamada']['chamada_id'])) {
+					$disabled = array('disabled'=>'disabled');
+				} else {
+					$disabled = array();
+				}
 				?>
-				<ul class="nav nav-tabs" id="tipoTab">
-					<li class="<?php echo $inst_active;?>"><a href="#tipo_inst" data-toggle="tab">Instituição</a></li>
-					<li class="<?php echo $forn_active;?>"><a href="#tipo_forn" data-toggle="tab">Fornecedor</a></li>
-				</ul>
-				<!-- Tab panes -->
-				<div class="tab-content">
-					<div class="tab-pane <?php echo $inst_active;?>" id="tipo_inst">
-						<?php echo $this->Bootstrap->inputBt('instituicao_id', array('options'=>$Instituicoes,'label'=>'Instituição','url'=>'/instituicoes', $disabled)); ?>
-					</div>
-					<div class="tab-pane <?php echo $forn_active;?>" id="tipo_forn">
-						<?php echo $this->Bootstrap->input('fornecedor_id', array('options'=>$Fornecedores,'label'=>'Fornecedor',$disabled)); ?>
+				<div class="panel panel-warning">
+					<div class="panel-heading">Instituição / Fornecedor</div>
+					<div class="panel-body">
+					<?php echo $this->Bootstrap->input('estado_id', array('options'=>$Estados,'label'=>'UF', $disabled)); ?>
+					<?php echo $this->Bootstrap->input('cidade_id', array('options'=>$Cidades,'label'=>'Cidade', $disabled)); ?>
+					<?php
+						if (isset($this->request->data['Chamada']['instituicao_id'])) {
+							$inst_active = 'active';
+							$forn_active = '';
+						} elseif (isset($this->request->data['Chamada']['fornecedor_id'])) {
+							$forn_active = 'active';
+							$inst_active = '';
+						} else {
+							$inst_active = 'active';
+							$forn_active = '';
+						}
+					?>
+					<ul class="nav nav-tabs" id="tipoTab">
+						<li class="<?php echo $inst_active;?>"><a href="#tipo_inst" data-toggle="tab">Instituição</a></li>
+						<li class="<?php echo $forn_active;?>"><a href="#tipo_forn" data-toggle="tab">Fornecedor</a></li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div class="tab-pane <?php echo $inst_active;?>" id="tipo_inst">
+							<?php echo $this->Bootstrap->inputBt('instituicao_id', array('options'=>$Instituicoes,'label'=>'Instituição','url'=>'/instituicoes', $disabled)); ?>
+						</div>
+						<div class="tab-pane <?php echo $forn_active;?>" id="tipo_forn">
+							<?php echo $this->Bootstrap->inputBt('fornecedor_id', array('options'=>$Fornecedores,'label'=>'Fornecedor',$disabled)); ?>
+						</div>
 					</div>
 				</div>
-				
-				
 			</div>
-		</div>
-		
-		<div class="panel panel-success">
-			<div class="panel-heading">Contato</div>
-			<div class="panel-body">
-				<?php echo $this->Form->input('contato_id', array('options'=>$Contatos,'label'=>'Contato')); ?>
-				<span class="btn btn-success disabled" id="contato-novo">Adicionar</span>
-				<hr>
-				<div id="contato-box" class="alert">
-					
+			<div class="panel panel-success">
+				<div class="panel-heading">Contato</div>
+				<div class="panel-body">
+					<?php echo $this->Form->input('contato_id', array('options'=>$Contatos,'label'=>'Contato')); ?>
+					<span class="btn btn-success disabled" id="contato-novo">Adicionar</span>
+					<hr>
+					<div id="contato-box" class="alert"></div>
 				</div>
 			</div>
-		</div>
-		
-		<div class="panel panel-primary">
-			<div class="panel-heading">Chamada</div>
-			<div class="panel-body">
-				<?php echo $this->Form->input('data_inicio', array('type'=>'text','label'=>'Data Início', 'readonly'=>'readonly')); ?>
-				<?php echo $this->Form->input('tipo_chamada_id', array('options'=>$TiposChamada,'label'=>'Tipo de Chamada')); ?>
-				<?php echo $this->Form->input('assunto_id', array('options'=>$Assuntos,'label'=>'Assunto','url'=>'/assuntos')); ?>
-				<?php echo $this->Form->input('status_id', array('options'=>$Status,'label'=>'Status','url'=>'/status')); ?>
-				<?php echo $this->Form->input('prioridade_id', array('options'=>$Prioridades,'label'=>'Prioridade','url'=>'/prioridades')); ?>
-				<?php echo $this->Form->input('solicitacao', array('label'=>'Solicitação')); ?>
+			<div class="panel panel-primary">
+				<div class="panel-heading">Chamada</div>
+				<div class="panel-body">
+					<?php echo $this->Form->input('data_inicio', array('type'=>'text','label'=>'Data Início', 'readonly'=>'readonly')); ?>
+					<?php echo $this->Form->input('tipo_chamada_id', array('options'=>$TiposChamada,'label'=>'Tipo de Chamada')); ?>
+					<?php echo $this->Form->input('assunto_id', array('options'=>$Assuntos,'label'=>'Assunto','url'=>'/assuntos')); ?>
+					<?php echo $this->Form->input('status_id', array('options'=>$Status,'label'=>'Status','url'=>'/status')); ?>
+					<?php echo $this->Form->input('prioridade_id', array('options'=>$Prioridades,'label'=>'Prioridade','url'=>'/prioridades')); ?>
+					<?php echo $this->Form->input('solicitacao', array('label'=>'Solicitação')); ?>
+				</div>
 			</div>
+			<?php echo $this->Form->end(); ?>
 		</div>
-		<?php echo $this->Form->end(); ?>
-	</div>
-	
-	<div class="col-md-4">
-		<div class="panel panel-danger" id="historico-div">
-			<div class="panel-heading">Histórico</div>
+		<div class="col-md-4">
+			<div class="panel panel-danger" id="historico-div">
+				<div class="panel-heading">Histórico</div>
 				<div class="panel-body" id="historico">
 					<table class="table table-bordered" style="background-color: #fff;">
 						<tr>
@@ -127,12 +120,12 @@ echo $this->Bootstrap->pageHeader($txtAction.' Chamada'.$filha);
 		</div>
 	</div>
 </div>
-  <div class="tab-pane" id="tab-procedimentos">
-	  <?php echo $this->Element('Chamadas/procedimentos'); ?>
-  </div>
-  <div class="tab-pane" id="tab-filhas">
-	  <?php echo $this->Element('Chamadas/filhas'); ?>
-  </div>
+<div class="tab-pane" id="tab-procedimentos">
+	<?php echo $this->Element('Chamadas/procedimentos'); ?>
+</div>
+<div class="tab-pane" id="tab-filhas">
+	<?php echo $this->Element('Chamadas/filhas'); ?>
+</div>
 </div>
 </div>
 </div>
