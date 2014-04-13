@@ -14,7 +14,7 @@ class Chamada extends CaritasAppModel {
 			'allowEmpty'	=> false
 		)
 	);
-	
+		
 	public function afterFind($results, $primary = false) {
 		if (is_array( $results )) {
 		foreach($results as $key => $value) {

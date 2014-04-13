@@ -101,20 +101,6 @@ echo $this->Bootstrap->pageHeader($txtAction.' Chamada'.$filha);
 			<div class="panel panel-danger" id="historico-div">
 				<div class="panel-heading">Histórico</div>
 				<div class="panel-body" id="historico">
-					<table class="table table-bordered" style="background-color: #fff;">
-						<tr>
-							<th>Início</th>
-							<th>Assunto</th>
-							<th>Contato</th>
-						</tr>
-						<?php foreach ($historico as $dado) { ?>
-						<tr>
-							<td><?php echo $this->AuthBs->brdate($dado['Chamada']['data_inicio']); ?></td>
-							<td><?php echo $dado['Contato']['nome']; ?></td>
-							<td><?php echo $dado['Assunto']['nome']; ?></td>
-						</tr>
-						<?php } ?>
-					</table>
 				</div>
 			</div>
 		</div>
@@ -196,6 +182,9 @@ echo $this->Bootstrap->pageHeader($txtAction.' Chamada'.$filha);
 
 <script>
 $(document).ready(function(){
+	// Historico
+	$('#ChamadaInstituicaoId').change();
+
 	if ($('#ChamadaContatoId').val()) {
 		$('#ChamadaContatoId').change();
 	}
