@@ -8,23 +8,16 @@
 		</ul>
 	</div>
 	<div class="col-md-11">
+		<?php if ($escolhido_projeto_id == 0) { ?>
+		<p class="text-danger">Escolha o Projeto no menu superior!</p>
+		<?php } elseif (count($Chamadas) == 0) { ?>
+		Nenhuma Chamada encontrada!
+		<?php } else { ?>
 
 <?php echo $this->Bootstrap->paginator($this->paginator); ?>
 <div class="panel panel-default">
 <table class="table">
-
-<?php if ($escolhido_projeto_id == 0) { ?>
-<tr>
-	<td colspan="8">
-		<p class="text-danger">Escolha o Projeto no menu superior!</p>
-	</td>
-</tr>
-<?php } elseif (count($Chamadas) == 0) { ?>
-<tr>
-	<td colspan="8">Nenhuma Chamada encontrada!</td>
-</tr>
-<?php } else { ?>
-<tr class="info">
+<tr class="active">
 	<th class="col-md-1">&nbsp;</th>
 	<th class="col-md-1"><?php echo $this->Bootstrap->sorter('Chamada.data_inicio','Início'); ?></th>
 	<th class="col-md-2">Instituição/Fornecedor</th>
@@ -38,11 +31,12 @@
 foreach ($Chamadas as $Chamada) { ?>
 <tr>
 	<td class="text-center">
+		<div class="btn-group">
 	<?php
 		echo $this->Bootstrap->link('<span class="glyphicon glyphicon-pencil"></span>',array('action'=>'edit', $Chamada['Chamada']['id']), array('style'=>'primary'));
-		echo '&nbsp;';
 		echo $this->Bootstrap->postLink('<span class="glyphicon glyphicon-trash"></span>', array('action'=>'del', $Chamada['Chamada']['id']), array('style'=>'danger'), 'Tem Certeza?');
 	?>
+		</div>
 	</td>
 	<td><?php echo $this->AuthBs->brdate($Chamada['Chamada']['data_inicio']);?></td>
 	<td><?php echo ($Chamada['Chamada']['instituicao_id'])?( $Chamada['Instituicao']['nome_fantasia'] ):( $Chamada['Fornecedor']['nome_fantasia'] ); ?></td>
