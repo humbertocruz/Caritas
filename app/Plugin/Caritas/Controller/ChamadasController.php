@@ -3,12 +3,7 @@ App::uses('CakeTime', 'Utility');
 class ChamadasController extends CaritasAppController {
 
 	public $uses = array('Caritas.Chamada');
-	public $paginate = array(
-		'limit' => 25,
-		'order' => array(
-			'Chamada.data_inicio' => 'DESC'
-		)
-	);
+
 	public function beforeFilter() {
 		parent::beforeFilter();
 		if ($this->Session->check('BelongsForms.ChamadaAddForm')) {
@@ -57,6 +52,7 @@ class ChamadasController extends CaritasAppController {
 	public function index() {
 		// Configura Titulo da Pagina
 		$this->set('title_for_layout','Chamadas - Lista');
+		$this->set('act_filtros', true);
 
 		// Carrega dados do BD
 		$this->Chamada->Behaviors->attach('Containable');
@@ -107,7 +103,7 @@ class ChamadasController extends CaritasAppController {
 		$conditions['Chamada.projeto_id'] = $this->escolhido_projeto_id;
 		
 		$chamadas = $this->Paginator->paginate('Chamada', $conditions);
-		$this->set('Chamadas',$chamadas);
+		$this->set('data',$chamadas);
 
 	}
 
@@ -287,7 +283,7 @@ class ChamadasController extends CaritasAppController {
 	public function edit($id = null) {
 	
 		$this->set('action_name', $this->action);
-	
+		
 		if ($this->request->isPost()) {
 			$data = &$this->request->data;
 			if ($data['Chamada']['inst_forn'] == 1) {

@@ -1,10 +1,13 @@
-<?php echo $this->Bootstrap->pageHeader($txtAction.' Assuntos'); ?>
-<?php
+<?php $this->extend('Bootstrap./Common/form'); ?>
 
-echo $this->Bootstrap->create('Assunto', array('type'=>'post'));
+<?php $this->start('pageHeader'); ?>Assuntos<?php $this->end(); ?>
 
-echo $this->Form->input('nome', array('label'=>'Nome'));
+<?php $this->start('form-create');
+echo $this->Bootstrap->create('Assunto', array('type'=>'POST'));
+$this->end();
 
-echo $this->Bootstrap->save_cancel();
+$this->start('form-body');
+	echo $this->Bootstrap->input('nome');
+$this->end();
+?>
 
-echo $this->Form->end();

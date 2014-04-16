@@ -1,9 +1,13 @@
-<?php echo $this->Bootstrap->pageHeader($txtAction.' Atividades'); ?>
-<?php
-echo $this->Bootstrap->create('Atividade', array('type'=>'post'));
+<?php $this->extend('Bootstrap./Common/form'); ?>
 
-echo $this->Form->input('nome', array('label'=>'Nome'));
+<?php $this->start('pageHeader'); ?>Atividades<?php $this->end(); ?>
 
-echo $this->Bootstrap->save_cancel();
+<?php $this->start('form-create');
+echo $this->Bootstrap->create('Atividade', array('type'=>'POST'));
+$this->end();
 
-echo $this->Form->end();
+$this->start('form-body');
+	echo $this->Bootstrap->input('nome');
+$this->end();
+?>
+

@@ -1,28 +1,23 @@
-<?php echo $this->Bootstrap->pageHeader('Atas de Preços'); ?>
+<?php $this->extend('Bootstrap./Common/index'); ?>
 
-<div class="panel panel-default">
-	<div class="panel-heading clearfix">
-		Atas de Preços
-		<span class="btn btn-xs btn-info pull-right"><span class="glyphicon glyphicon-filter"></span></span>
-	</div>
-		<table class="table">
+<?php $this->start('pageHeader'); ?>Atas de Preços<?php $this->end(); ?>
 
-<tr>
-	<th>&nbsp;</th>
-	<th><?php echo $this->Paginator->sort('nome');?></th>
-	<th><?php echo $this->Paginator->sort('data');?></th>
-	<th><?php echo $this->Paginator->sort('numero');?></th>
-</tr>
-<?php foreach ($AtasPrecos as $AtasPreco) { ?>
-<tr>
-	<td class="col-md-2"><?php echo $this->Bootstrap->basicActions($AtasPreco['AtasPreco']['id']);?></td>
-	<td><?php echo $AtasPreco['AtasPreco']['nome']; ?></td>
-	<td><?php echo $AtasPreco['AtasPreco']['data']; ?></td>
-	<td><?php echo $AtasPreco['Edital']['numero']; ?></td>
-</tr>
+<?php $this->start('table-tr'); ?>
+	<tr class="active">
+		<th class="col-md-2">Ações</th>
+		<th class="col-md-4">Nome</th>
+		<th class="col-md-4">Data</th>
+		<th class="col-md-2">Número</th>
+	</tr>
+<?php $this->end(); ?>
+<?php $this->start('table-body'); ?>
+<?php foreach ($data as $AtasPreco) { ?>
+	<tr>
+		<td><?php echo $this->Bootstrap->basicActions($AtasPreco['AtasPreco']['id']); ?></td>
+		<td><?php echo $AtasPreco['AtasPreco']['nome']; ?></td>
+		<td><?php echo $AtasPreco['AtasPreco']['data']; ?></td>
+		<td><?php echo $AtasPreco['Edital']['numero']; ?></td>
+	</tr>
 <?php } ?>
-</table>
-<div class="panel-footer">
-	<?php echo $this->Bootstrap->btnLink('Adicionar',array('action'=>'add'), 'success'); ?>
-</div>
-</div>
+<?php $this->end(); ?>
+

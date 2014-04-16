@@ -1,10 +1,12 @@
-<?php echo $this->Bootstrap->pageHeader($txtAction.' Cargos'); ?>
+<?php $this->extend('Bootstrap./Common/form'); ?>
 
-<?php
-echo $this->Bootstrap->create('Cargo', array('type'=>'post'));
+<?php $this->start('pageHeader'); ?>Cargos<?php $this->end(); ?>
 
-echo $this->Form->input('nome', array('label'=>'Nome'));
+<?php $this->start('form-create');
+echo $this->Bootstrap->create('Cargo', array('type'=>'POST'));
+$this->end();
 
-echo $this->Bootstrap->save_cancel();
-
-echo $this->Form->end();
+$this->start('form-body');
+	echo $this->Bootstrap->input('nome');
+$this->end();
+?>

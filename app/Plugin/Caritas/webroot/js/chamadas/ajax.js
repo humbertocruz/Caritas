@@ -1,11 +1,5 @@
 $(document).ready(function(){
 
-	// Submit
-	$('#btn-submit').click(function(){
-		console.log($(this).data('forms'));
-		$($(this).data('forms')).submit();	
-	});
-	
 	$('input.daterangepicker').daterangepicker();
 
 	// cliques nos checkbox da listagem
@@ -92,7 +86,7 @@ $(document).ready(function(){
 				$('#ChamadaContatoId').html(data).popover('destroy');
 			}
 		});
-		$('#historico-title').popover({
+		$('#historico').popover({
 			'placement':'top',
 			'title':'Aguarde',
 			'content':'Carregando dados...'
@@ -119,7 +113,7 @@ $(document).ready(function(){
 				$('#ChamadaContatoId').html(data).popover('destroy');
 			}
 		});
-		$('#historico-title').popover({
+		$('#historico').popover({
 			'placement':'top',
 			'title':'Aguarde',
 			'content':'Carregando dados...'

@@ -8,8 +8,8 @@ class AtividadesController extends CaritasAppController {
 		$this->set('title_for_layout','Atividade - Lista');
 
 		// Carrega dados do BD
-		$Atividades = $this->Atividade->find('all');
-		$this->set('Atividades',$Atividades);
+		$Atividades = $this->Paginator->paginate('Atividade');
+		$this->set('data',$Atividades);
 
 	}
 

@@ -1,7 +1,7 @@
 <?php
 
 class Chamada extends CaritasAppModel {
-
+		
 	public $sort = array(
 		'data_inicio' => 'DESC'
 	);

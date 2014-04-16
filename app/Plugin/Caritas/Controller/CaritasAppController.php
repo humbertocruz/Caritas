@@ -35,6 +35,9 @@ class CaritasAppController extends AppController {
 	public $uses = array('Caritas.Projeto', 'Caritas.Menu');
 	
 	public function beforeFilter() {
+		
+		// Botao para Filtros
+		$this->set('act_filtros', false);
 	
 		// Controle de Dados BelongsTo
 		if ($this->request->isPost()) {

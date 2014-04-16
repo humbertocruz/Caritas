@@ -10,8 +10,8 @@ class ContatosController extends CaritasAppController {
 	);
 	public function index() {
 		
-		$Contatos = $this->Paginate('Contato');
-		$this->set('Contatos', $Contatos);
+		$Contatos = $this->Paginator->Paginate('Contato');
+		$this->set('data', $Contatos);
 		
 	}
 	

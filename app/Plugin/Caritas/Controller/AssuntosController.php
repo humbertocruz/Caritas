@@ -7,8 +7,8 @@ class AssuntosController extends CaritasAppController {
 		// Configura Titulo da Pagina
 		$this->set('title_for_layout','Assuntos - Lista');
 		// Carrega dados do BD
-		$assuntos = $this->Assunto->find('all');
-		$this->set('Assuntos',$assuntos);
+		$assuntos = $this->Paginator->paginate('Assunto');
+		$this->set('data',$assuntos);
 	}
 
 	public function add() {
