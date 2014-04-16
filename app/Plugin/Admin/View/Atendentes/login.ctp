@@ -9,13 +9,13 @@
 			<div class="panel-body">
 			<?php
 				
-				echo $this->Bootstrap->input('email',array('label'=>'Email','required'=>'required'));
-				echo $this->Bootstrap->input('senha',array('label'=>'Senha','type'=>'password','value'=>'','required'=>'required'));
+				echo $this->Bootstrap->input('email',array('label'=>'Email'));
+				echo $this->Bootstrap->input('senha',array('label'=>'Senha','type'=>'password','value'=>''));
 				?>
 				
 			</div>
 			<div class="panel-footer clearfix">
-				<?php echo $this->Bootstrap->submit('Entrar', array( 'class' => 'btn-block') ); ?>
+				<?php echo $this->Bootstrap->submit('Entrar', array( 'class' => 'btn btn-primary btn-block') ); ?>
 			</div>
 		</div>
 		<?php echo $this->Bootstrap->end(); ?>

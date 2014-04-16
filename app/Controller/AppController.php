@@ -32,6 +32,32 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
+	public $helpers = array(
+		'Bootstrap.AuthBs',
+		'Bootstrap.Bootstrap',
+		'Html'
+	);
+	
+	public $components = array(
+		'Auth' => array(
+			'loginAction' => array(
+				'controller' => 'atendentes',
+				'action' => 'login',
+				'plugin' => 'admin'
+			),
+			'authError' => 'Did you really think you are allowed to see that?',
+			'authenticate' => array(
+				'Form' => array(
+					'userModel' => 'Caritas.Atendente',
+					'fields' => array('username' => 'email','password'=>'senha')
+				)
+			)
+		),
+		'Session',
+		'Admin.MenuAdmin',
+		'Paginator'
+	);
+
 	public function beforeFilter() {
 	
 		$this->layout = 'Bootstrap.default';

@@ -1,3 +1,4 @@
+
 <?php
 echo $this->Element('Bootstrap.table/table-create',array(
 	'title'=>'Atendentes',

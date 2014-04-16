@@ -79,16 +79,16 @@ class ChamadasController extends CaritasAppController {
 		$filtros = $this->Session->read('Filtros.Chamadas');
 	
 		$conditions = array();
-		if ($filtros['Chamada']['atendente_id'] != '0') {
+		if (isset($filtros['Chamada']['atendente_id']) && $filtros['Chamada']['atendente_id'] != '0') {
 			$conditions['Chamada.atendente_id'] = $filtros['Chamada']['atendente_id'];
 		}
-		if ($filtros['Chamada']['assunto_id'] != '0') {
+		if (isset($filtros['Chamada']['assunto_id']) && $filtros['Chamada']['assunto_id'] != '0') {
 			$conditions['Chamada.assunto_id'] = $filtros['Chamada']['assunto_id'];
 		}
-		if ($filtros['Chamada']['status_id'] != '0') {
+		if (isset($filtros['Chamada']['status_id']) && $filtros['Chamada']['status_id'] != '0') {
 			$conditions['Chamada.status_id'] = $filtros['Chamada']['status_id'];
 		}
-		if ($filtros['Chamada']['estado_id'] != '0') {
+		if (isset($filtros['Chamada']['estado_id']) && $filtros['Chamada']['estado_id'] != '0') {
 			$conditions['Chamada.estado_id'] = $filtros['Chamada']['estado_id'];
 		}
 		if (isset($filtros['Chamada']['cidade_id']) && $filtros['Chamada']['cidade_id'] != '0') {
@@ -105,7 +105,8 @@ class ChamadasController extends CaritasAppController {
 		
 		// Filtro Constante Projeto
 		$conditions['Chamada.projeto_id'] = $this->escolhido_projeto_id;
-		$chamadas = $this->Paginate('Chamada', $conditions);
+		
+		$chamadas = $this->Paginator->paginate('Chamada', $conditions);
 		$this->set('Chamadas',$chamadas);
 
 	}

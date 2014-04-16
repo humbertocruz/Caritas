@@ -31,32 +31,9 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class CaritasAppController extends AppController {
-
-	public $helpers = array(
-		'Bootstrap.AuthBs',
-		'Bootstrap.Bootstrap',
-		'Html'
-	);
 	
 	public $uses = array('Caritas.Projeto', 'Caritas.Menu');
 	
-	public $components = array(
-		'Auth' => array(
-			'loginAction' => array(
-				'controller' => 'atendentes',
-				'action' => 'login',
-				'plugin' => 'admin'
-			),
-			'authError' => 'Did you really think you are allowed to see that?',
-			'authenticate' => array(
-				'Form' => array(
-					'userModel' => 'Atendente',
-					'fields' => array('username' => 'email','password'=>'senha')
-				)
-			)
-		)
-	);
-
 	public function beforeFilter() {
 	
 		// Controle de Dados BelongsTo
