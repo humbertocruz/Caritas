@@ -1,5 +1,5 @@
 <?php
-class MenuAdminComponent extends Component {
+class MenusComponent extends Component {
 	
 	var $AdminMenu = array(
 		array(
