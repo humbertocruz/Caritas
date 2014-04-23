@@ -1,16 +1,16 @@
 <?php
 
-class NiveisAcesso extends CaritasAppModel {
+class NiveisAcesso extends AppModel {
 
 	public $useTable = 'niveis_acessos';
 	
 	public $hasMany = array(
 		'Atendente' => array(
-			'className' => 'Caritas.Atendente',
+			'className' => 'Atendente',
 			'foreignKey' => 'nivel_acesso_id'
 		),
 		'Permissao' => array(
-			'className' => 'Caritas.Permissao',
+			'className' => 'Permissao',
 			'foreignKey' => 'nivel_acesso_id'
 		)
 	);

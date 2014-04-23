@@ -48,19 +48,20 @@ class AppController extends Controller {
 			'authError' => 'Did you really think you are allowed to see that?',
 			'authenticate' => array(
 				'Form' => array(
-					'userModel' => 'Caritas.Atendente',
+					'userModel' => 'Atendente',
 					'fields' => array('username' => 'email','password'=>'senha')
 				)
 			)
 		),
 		'Session',
-		'Admin.MenuAdmin',
+		'Menus',
 		'Paginator'
 	);
 
 	public function beforeFilter() {
 	
 		$this->layout = 'Bootstrap.default';
+		$this->set('usuario', $this->Auth->user);
 	
 	}
 }

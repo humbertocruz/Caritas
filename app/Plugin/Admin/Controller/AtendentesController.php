@@ -1,7 +1,7 @@
 <?php
 class AtendentesController extends AdminAppController {
 
-	public $uses = array('Caritas.Atendente');
+	public $uses = array('Atendente');
 
 	public function home() {
 		

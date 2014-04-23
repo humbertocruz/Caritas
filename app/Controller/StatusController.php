@@ -1,7 +1,7 @@
 <?php
-class StatusController extends CaritasAppController {
+class StatusController extends AppController {
 
-	public $uses = array('Caritas.Status');
+	public $uses = array('Status');
 
 	public function index() {
 		// Configura Titulo da Pagina

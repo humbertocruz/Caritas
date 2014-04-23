@@ -1,24 +1,24 @@
 <?php
 
-class Atendente extends CaritasAppModel {
+class Atendente extends AppModel {
 
 	public $useTable = 'atendentes';
 	public $recursive = 2;
 	
 	public $hasMany = array(
 		'AtendentesProjeto' => array(
-			'className' => 'Caritas.AtendentesProjeto',
+			'className' => 'AtendentesProjeto',
 			'foreignKey' => 'atendente_id'
 		)
 	);
 	
 	public $belongsTo = array(
 		'Sexo' => array(
-			'className' => 'Caritas.Sexo',
+			'className' => 'Sexo',
 			'foreignKey' => 'sexo_id'
 		),
 		'NiveisAcesso' => array(
-			'className' => 'Caritas.NiveisAcesso',
+			'className' => 'NiveisAcesso',
 			'foreignKey' => 'nivel_acesso_id'
 		)
 	);

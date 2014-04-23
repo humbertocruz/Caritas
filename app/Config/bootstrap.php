@@ -108,8 +108,7 @@ CakeLog::config('error', array(
 
 CakePlugin::load(
     array(
-        'Bootstrap' => array('bootstrap'=>true,'routes' => true),
-        'Caritas',
-        'Admin'
+        'Admin' => array('bootstrap'=>false,'routes' => true),
+        'Bootstrap' => array('bootstrap'=>true,'routes' => true)
     )
 );
