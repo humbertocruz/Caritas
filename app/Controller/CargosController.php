@@ -6,10 +6,12 @@ class CargosController extends CaritasAppController {
 	public function index() {
 		// Configura Titulo da Pagina
 		$this->set('title_for_layout','Cargos - Lista');
+		
+		$this->set('act_filtros', false);
 
 		// Carrega dados do BD
-		$Cargos = $this->paginate('Cargo');
-		$this->set('Cargos',$Cargos);
+		$Cargos = $this->Paginator->paginate('Cargo');
+		$this->set('data',$Cargos);
 
 	}
 
@@ -18,7 +20,7 @@ class CargosController extends CaritasAppController {
 			$data = $this->request->data;
 			$this->Cargo->create();
 			if ($this->Cargo->save($data)) {
-				$this->Session->setFlash('Cargo salvo com sucesso!');
+				$this->Bootstrap->setFlash('Cargo salvo com sucesso!');
 				$this->redirect(array('action'=>'index'));
 			} else {
 				$this->Session->setFlash('Houve um erro ao salvar Cargo');
@@ -37,7 +39,7 @@ class CargosController extends CaritasAppController {
 				$data = $this->request->data;
 				$data['Cargo']['id'] = $id;
 				if ($this->Cargo->save($data)) {
-					$this->Session->setFlash('Cargo salvo com sucesso!');
+					$this->Bootstrap->setFlash('Cargo salvo com sucesso!');
 					$this->redirect(array('action'=>'index'));
 				} else {
 					$this->Session->setFlash('Houve um erro ao salvar Cargo!');

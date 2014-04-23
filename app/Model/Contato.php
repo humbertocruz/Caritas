@@ -3,6 +3,8 @@
 class Contato extends CaritasAppModel {
 
 	public $useTable = 'contatos';
+	
+	public $order = array('Contato.nome'=>'ASC');
 
 	public $hasMany = array(
 		'ContatosInstituicao' => array(

@@ -1,22 +1,17 @@
-<?php echo $this->Bootstrap->pageHeader('Cargos'); ?>
+<?php $this->extend('Bootstrap./Common/index'); ?>
+<?php $this->start('pageHeader'); ?>Cargos<?php $this->end(); ?>
 
-<?php echo $this->Element('Bootstrap.table/table-create',array(
-	'title'=>'Cargos',
-	'state'=>'info'
-)); ?>
-<tr>
-	<th>&nbsp;</th>
-	<th>Nome</th>
-</tr>
-<?php foreach ($Cargos as $Cargo) { ?>
-<tr>
-	<td class="col-md-2"><?php echo $this->Bootstrap->basicActions($Cargo['Cargo']['id']);?></td>
-	<td><?php echo $Cargo['Cargo']['nome']; ?></td>
-</tr>
+<?php $this->start('table-tr'); ?>
+	<tr class="active">
+		<th class="col-md-2">Ações</th>
+		<th class="col-md-10"><?php echo $this->Paginator->sort('Cargo.nome','Nome');?></th>
+	</tr>
+<?php $this->end(); ?>
+<?php $this->start('table-body'); ?>
+<?php foreach ($data as $Cargos) { ?>
+	<tr>
+		<td><?php echo $this->Bootstrap->basicActions($Cargos['Cargo']['id']); ?></td>
+		<td><?php echo $Cargos['Cargo']['nome']; ?></td>
+	</tr>
 <?php } ?>
-</table>
-</div>
-<div class="panel-footer">
-	<?php echo $this->Bootstrap->btnLink('Adicionar', array('action'=>'add'), 'success'); ?>
-</div>
-</div>
+<?php $this->end(); ?>
