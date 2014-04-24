@@ -1,67 +1,59 @@
 <?php
-class AssuntosController extends CaritasAppController {
-
-	public $uses = array('Caritas.Assunto');
-
-	public function index() {
-		// Configura Titulo da Pagina
-		$this->set('title_for_layout','Assuntos - Lista');
-		// Carrega dados do BD
-		$assuntos = $this->Paginator->paginate('Assunto');
-		$this->set('data',$assuntos);
-	}
-
-	public function add() {
-		if($this->request->isPost()) {
-			$data = $this->request->data;
-			$this->Assunto->create();
-			if ($this->Assunto->save($data)) {
-				$this->Session->setFlash('Assunto salvo com sucesso!');
-				$this->redirect(array('action'=>'index'));
-			} else {
-				$this->Session->setFlash('Houve um erro ao salvar Assunto');
-			}
-		}
-
-		// Configura Titulo da Pagina
-		$this->set('title_for_layout','Assuntos - Adicionar');
-
-		$this->render('form');
+class AssuntosController extends AppController {
+	
+	public $uses = array('Assunto');
+	
+	public function related($id = 0) {
+		//$Associadas = $this->Site->Associada->find('list',array('fields'=>array('id','nome')));
+		//$this->set('Associadas',$Associadas);
 	}
 	
-	public function edit($id = null) {
-		if($this->request->isPost()) {
-			if ($id != null) {
-				$data = $this->request->data;
-				$data['Assunto']['id'] = $id;
-				if ($this->Assunto->save($data)) {
-					$this->Session->setFlash('Assunto salvo com sucesso!');
-					$this->redirect(array('action'=>'index'));
-				} else {
-					$this->Session->setFlash('Houve um erro ao salvar Assunto!');
-				}
-			}
-		}
-		// Configura Titulo da Pagina
-		$this->set('title_for_layout','Assuntos - Editar');
+	public function filter() {
 		
-		$Assunto = $this->Assunto->read(null, $id);
-		$this->request->data = $Assunto;
-
+	}
+	
+	public function index() {
+		
+		$this->set('title_for_layout','Assuntos');
+		$this->Assunto->Behaviors->attach('Containable');
+		$this->Assunto->contain();
+		
+		$Assuntos = $this->Paginator->paginate('Assunto');
+		$this->set('data', $Assuntos);
+		
+	}
+	
+	public function add() {
+		if ($this->request->isPost()){
+			$data = $this->request->data;
+			$this->Assunto->save($data);
+			$this->Bootstrap->setFlash('Registro salvo com successo!');
+			$this->redirect(array('action'=>'index'));
+		};
+		$this->related();
 		$this->render('form');
 	}
 	
-	public function del($id = null) {
-		if($this->request->isPost()) {
-			if ($id != null) {
-				if ($this->Assunto->delete($id)) {
-					$this->Session->setFlash('Assunto excluído com sucesso!');
-					$this->redirect(array('action'=>'index'));
-				} else {
-					$this->Session->setFlash('Houve um erro ao excluir Assunto!');
-				}
-			}
+	public function edit($assunto_id = null) {
+		if ($this->request->isPost()){
+			$data = $this->request->data;
+			$data['Assunto']['id'] = $assunto_id;
+			$this->Assunto->save($data);
+			$this->Bootstrap->setFlash('Registro salvo com successo!');
+			$this->redirect(array('action'=>'index'));
+		};
+		$this->related($assunto_id);
+		$this->request->data = $this->Assunto->read(null, $assunto_id);
+		$this->render('form');
+	}
+	
+	public function del( $assunto_id = null ) {
+		if ($this->request->isPost()) {
+			$this->Assunto->delete($assunto_id);
+			$this->Bootstrap->setFlash('Registro excluido com successo!','success');
+			$this->redirect(array('action'=>'index'));
+		} else {
+			$this->Bootstrap->setFlash('Erro na exclusão do Registro!','danger');
 		}
 	}
-
 }

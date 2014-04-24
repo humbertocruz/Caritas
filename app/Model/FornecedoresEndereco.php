@@ -1,16 +1,16 @@
 <?php
 
-class FornecedoresEndereco extends CaritasAppModel {
+class FornecedoresEndereco extends AppModel {
 
 	public $useTable = 'fornecedores_enderecos';
 
 	public $belongsTo = array(
 		'Fornecedor' => array(
-			'className' => 'Caritas.Forcedor',
+			'className' => 'Forcedor',
 			'foreignKey' => 'fornecedor_id'
 		),
 		'Cidade' => array(
-			'className' => 'Caritas.Cidade',
+			'className' => 'Cidade',
 			'foreignKey' => 'cidade_id'
 		)
 	);

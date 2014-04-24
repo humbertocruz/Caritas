@@ -1,24 +1,24 @@
 <?php
 
-class ContatosInstituicao extends CaritasAppModel {
+class ContatosInstituicao extends AppModel {
 
 	public $useTable = 'contatos_instituicoes';
 
 	public $belongsTo = array(
 		'Contato' => array(
-			'className' => 'Caritas.Contato',
+			'className' => 'Contato',
 			'foreignKey' => 'contato_id'
 		),
 		'Instituicao' => array(
-			'className' => 'Caritas.Instituicao',
+			'className' => 'Instituicao',
 			'foreignKey' => 'instituicao_id'
 		),
 		'Cargo' => array(
-			'className' => 'Caritas.Cargo',
+			'className' => 'Cargo',
 			'foreignKey' => 'cargo_id'
 		),
 		'SituacoesContato' => array(
-			'className' => 'Caritas.SituacoesContato',
+			'className' => 'SituacoesContato',
 			'foreignKey' => 'situacao_contato_id'
 		)
 	);

@@ -53,6 +53,7 @@ class AppController extends Controller {
 				)
 			)
 		),
+		'Bootstrap.Bootstrap',
 		'Session',
 		'Menus',
 		'Paginator'
@@ -61,7 +62,57 @@ class AppController extends Controller {
 	public function beforeFilter() {
 	
 		$this->layout = 'Bootstrap.default';
-		$this->set('usuario', $this->Auth->user);
+		$this->set('usuario', $this->Auth->user());
+		$this->set('menus', $this->Menus->generate());
+		
+		// Botoes padroes para listagem de dados
+		// É possível sobre-escrever os botôes padrão criando outra variavel "listButtons" no controller ou na view
+		$this->set('indexButtons', array(
+			array(
+				'text' => false,
+				'title' => 'Editar',
+				'action' => 'edit',
+				'icon' => 'pencil'
+			),
+			array(
+				'text' => false,
+				'title' => 'Excluir',
+				'action' => 'del',
+				'icon' => 'remove',
+				'method' => 'post',
+				'style' => 'danger',
+				'message' => 'Tem Certeza?'
+			)
+		));
+		// Ações padroes para listagem de dados
+		// É possível sobre-escrever as açõs padrão criando outra variavel "actionButtons" no controller ou na view
+		$this->indexActions = array(
+			array(
+				'style' => 'success',
+				'text' => 'Adicionar',
+				'title' => 'Adicionar',
+				'action' => 'add',
+				'icon' => 'plus'
+			)
+		);
+		$this->set('indexActions', $this->indexActions);
+		// Ações padroes para o formulario de dados
+		$this->set('formActions', array(
+			array(
+				'style' => 'success',
+				'text' => 'Gravar',
+				'title' => 'Gravar',
+				'icon' => 'floppy-disk',
+				'submit' => true
+			),
+			array(
+				'style' => 'danger',
+				'text' => 'Cancelar',
+				'title' => 'Cancelar',
+				'action' => 'index',
+				'icon' => 'remove'
+			)
+		));
 	
 	}
 }

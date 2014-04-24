@@ -1,6 +1,6 @@
 <?php
 
-class Cidade extends CaritasAppModel {
+class Cidade extends AppModel {
 
 	public $useTable = 'cidades';
 	

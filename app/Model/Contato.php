@@ -1,6 +1,6 @@
 <?php
 
-class Contato extends CaritasAppModel {
+class Contato extends AppModel {
 
 	public $useTable = 'contatos';
 	
@@ -8,26 +8,26 @@ class Contato extends CaritasAppModel {
 
 	public $hasMany = array(
 		'ContatosInstituicao' => array(
-			'className' => 'Caritas.ContatosInstituicao',
+			'className' => 'ContatosInstituicao',
 			'foreignKey' => 'contato_id'
 		),
 		'ContatosFornecedor' => array(
-			'className' => 'Caritas.ContatosFornecedor',
+			'className' => 'ContatosFornecedor',
 			'foreignKey' => 'contato_id'
 		),
 		'ContatosFone' => array(
-			'className' => 'Caritas.ContatosFone',
+			'className' => 'ContatosFone',
 			'foreignKey' => 'contato_id'
 		),
 		'ContatosEmail' => array(
-			'className' => 'Caritas.ContatosEmail',
+			'className' => 'ContatosEmail',
 			'foreignKey' => 'contato_id'
 		)
 	);
 	
 	public $belongsTo = array(
 		'Sexo' => array(
-			'className' => 'Caritas.Sexo',
+			'className' => 'Sexo',
 			'foreignKey' => 'sexo_id'
 		)
 	);

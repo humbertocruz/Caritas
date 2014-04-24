@@ -1,6 +1,6 @@
 <?php
 
-class Convenio extends CaritasAppModel {
+class Convenio extends AppModel {
 
 	public $useTable = 'convenios';
 	

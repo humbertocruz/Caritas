@@ -1,6 +1,6 @@
 <?php
 
-class Chamada extends CaritasAppModel {
+class Chamada extends AppModel {
 		
 	public $sort = array(
 		'data_inicio' => 'DESC'
@@ -35,11 +35,11 @@ class Chamada extends CaritasAppModel {
 	
 	public $hasMany = array(
 		'Filhas' => array(
-			'className' => 'Caritas.Chamada',
+			'className' => 'Chamada',
 			'foreignKey' => 'chamada_id'
 		),
 		'ChamadasProcedimento' => array(
-			'className' => 'Caritas.ChamadasProcedimento',
+			'className' => 'ChamadasProcedimento',
 			'foreignKey' => 'chamada_id'
 		)
 	);
@@ -47,43 +47,43 @@ class Chamada extends CaritasAppModel {
 	public $belongsTo = array(
 
 		'Instituicao' => array(
-			'className' => 'Caritas.Instituicao',
+			'className' => 'Instituicao',
 			'foreignKey' => 'instituicao_id'
 		),
 		'Contato' => array(
-			'className' => 'Caritas.Contato',
+			'className' => 'Contato',
 			'foreignKey' => 'contato_id'
 		),
 		'Fornecedor' => array(
-			'className' => 'Caritas.Fornecedor',
+			'className' => 'Fornecedor',
 			'foreignKey' => 'fornecedor_id'
 		),
 		'Assunto' => array(
-			'className' => 'Caritas.Assunto',
+			'className' => 'Assunto',
 			'foreignKey' => 'assunto_id'
 		),
 		'Atendente' => array(
-			'className' => 'Caritas.Atendente',
+			'className' => 'Atendente',
 			'foreignKey' => 'atendente_id'
 		),
 		'Estado' => array(
-			'className' => 'Caritas.Estado',
+			'className' => 'Estado',
 			'foreignKey' => 'estado_id'
 		),
 		'Cidade' => array(
-			'className' => 'Caritas.Cidade',
+			'className' => 'Cidade',
 			'foreignKey' => 'cidade_id'
 		),
 		'TiposChamada' => array(
-			'className' => 'Caritas.TiposChamada',
+			'className' => 'TiposChamada',
 			'foreignKey' => 'tipo_chamada_id'
 		),
 		'Status' => array(
-			'className' => 'Caritas.Status',
+			'className' => 'Status',
 			'foreignKey' => 'status_id'
 		),
 		'Prioridade' => array(
-			'className' => 'Caritas.Prioridade',
+			'className' => 'Prioridade',
 			'foreignKey' => 'prioridade_id'
 		)
 	);

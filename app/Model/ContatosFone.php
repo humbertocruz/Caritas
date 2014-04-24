@@ -1,12 +1,12 @@
 <?php
 
-class ContatosFone extends CaritasAppModel {
+class ContatosFone extends AppModel {
 
 	public $useTable = 'contatos_fones';
 	
 	public $belongsTo = array(
 		'TiposFone' => array(
-			'className' => 'Caritas.TiposFone',
+			'className' => 'TiposFone',
 			'foreignKey' => 'tipo_fone_id'
 		)
 	);

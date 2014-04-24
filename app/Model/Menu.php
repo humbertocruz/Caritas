@@ -1,19 +1,19 @@
 <?php
 
-class Menu extends CaritasAppModel {
+class Menu extends AppModel {
 
 	public $useTable = 'menus';
 	
 	public $belongsTo = array(
 		'NiveisAcesso' => array(
-			'className' => 'Caritas.NiveisAcesso',
+			'className' => 'NiveisAcesso',
 			'foreignKey' => 'nivel_acesso_id'
 		)
 	);
 	
 	public $hasMany = array(
 		'Link' => array(
-			'className' => 'Caritas.Link',
+			'className' => 'Link',
 			'foreignKey' => 'menu_id'
 		)
 	);

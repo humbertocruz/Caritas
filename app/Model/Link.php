@@ -1,12 +1,12 @@
 <?php
 
-class Link extends CaritasAppModel {
+class Link extends AppModel {
 
 	public $useTable = 'links';
 	
 	public $belongsTo = array(
 		'Menu' => array(
-			'className' => 'Caritas.Menu',
+			'className' => 'Menu',
 			'foreignKey' => 'menu_id'
 		)
 	);

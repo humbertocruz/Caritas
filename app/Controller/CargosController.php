@@ -1,71 +1,59 @@
 <?php
-class CargosController extends CaritasAppController {
-
-	public $uses = array('Caritas.Cargo');
-
+class CargosController extends AppController {
+	
+	public $uses = array('Cargo');
+	
+	public function related($id = 0) {
+		//$Associadas = $this->Site->Associada->find('list',array('fields'=>array('id','nome')));
+		//$this->set('Associadas',$Associadas);
+	}
+	
+	public function filter() {
+		
+	}
+	
 	public function index() {
-		// Configura Titulo da Pagina
-		$this->set('title_for_layout','Cargos - Lista');
 		
-		$this->set('act_filtros', false);
-
-		// Carrega dados do BD
-		$Cargos = $this->Paginator->paginate('Cargo');
-		$this->set('data',$Cargos);
-
+		$this->set('title_for_layout','Assuntos');
+		$this->Cargo->Behaviors->attach('Containable');
+		$this->Cargo->contain();
+		
+		$Assuntos = $this->Paginator->paginate('Cargo');
+		$this->set('data', $Assuntos);
+		
 	}
-
+	
 	public function add() {
-		if($this->request->isPost()) {
+		if ($this->request->isPost()){
 			$data = $this->request->data;
-			$this->Cargo->create();
-			if ($this->Cargo->save($data)) {
-				$this->Bootstrap->setFlash('Cargo salvo com sucesso!');
-				$this->redirect(array('action'=>'index'));
-			} else {
-				$this->Session->setFlash('Houve um erro ao salvar Cargo');
-			}
-		}
-
-		// Configura Titulo da Pagina
-		$this->set('title_for_layout','Cargos - Adicionar');
-
+			$this->Cargo->save($data);
+			$this->Bootstrap->setFlash('Registro salvo com successo!');
+			$this->redirect(array('action'=>'index'));
+		};
+		$this->related();
 		$this->render('form');
 	}
 	
-	public function edit($id = null) {
-		if($this->request->isPost()) {
-			if ($id != null) {
-				$data = $this->request->data;
-				$data['Cargo']['id'] = $id;
-				if ($this->Cargo->save($data)) {
-					$this->Bootstrap->setFlash('Cargo salvo com sucesso!');
-					$this->redirect(array('action'=>'index'));
-				} else {
-					$this->Session->setFlash('Houve um erro ao salvar Cargo!');
-				}
-			}
-		}
-		// Configura Titulo da Pagina
-		$this->set('title_for_layout','Cargos - Editar');
-		
-		$Cargo = $this->Cargo->read(null, $id);
-		$this->request->data = $Cargo;
-
+	public function edit($cargo_id = null) {
+		if ($this->request->isPost()){
+			$data = $this->request->data;
+			$data['Cargo']['id'] = $cargo_id;
+			$this->Cargo->save($data);
+			$this->Bootstrap->setFlash('Registro salvo com successo!');
+			$this->redirect(array('action'=>'index'));
+		};
+		$this->related($cargo_id);
+		$this->request->data = $this->Cargo->read(null, $cargo_id);
 		$this->render('form');
 	}
 	
-	public function del($id = null) {
-		if($this->request->isPost()) {
-			if ($id != null) {
-				if ($this->Cargo->delete($id)) {
-					$this->Session->setFlash('Cargo excluído com sucesso!');
-					$this->redirect(array('action'=>'index'));
-				} else {
-					$this->Session->setFlash('Houve um erro ao excluir Cargo!');
-				}
-			}
+	public function del( $cargo_id = null ) {
+		if ($this->request->isPost()) {
+			$this->Cargo->delete($cargo_id);
+			$this->Bootstrap->setFlash('Registro excluido com successo!','success');
+			$this->redirect(array('action'=>'index'));
+		} else {
+			$this->Bootstrap->setFlash('Erro na exclusão do Registro!','danger');
 		}
 	}
-
 }

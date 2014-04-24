@@ -1,8 +1,8 @@
 <?php
 App::uses('CakeTime', 'Utility');
-class ChamadasController extends CaritasAppController {
+class ChamadasController extends AppController {
 
-	public $uses = array('Caritas.Chamada');
+	public $uses = array('Chamada');
 
 	public function beforeFilter() {
 		parent::beforeFilter();

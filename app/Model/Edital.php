@@ -1,15 +1,15 @@
 <?php
 
-class Edital extends CaritasAppModel {
+class Edital extends AppModel {
 
 	public $useTable = 'editais';
 	
 	public $belongsTo = array(
 		'Orgao' => array(
-			'className' => 'Caritas.Orgao'
+			'className' => 'Orgao'
 		),
 		'Projeto' => array(
-			'className' => 'Caritas.Projeto'
+			'className' => 'Projeto'
 		)
 	);
 

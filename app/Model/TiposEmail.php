@@ -1,6 +1,6 @@
 <?php
 
-class TiposEmail extends CaritasAppModel {
+class TiposEmail extends AppModel {
 
 	public $useTable = 'tipos_email';
 	

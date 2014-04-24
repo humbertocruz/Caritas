@@ -1,16 +1,16 @@
 <?php
 
-class AtendentesProjeto extends CaritasAppModel {
+class AtendentesProjeto extends AppModel {
 
 	public $useTable = 'atendentes_projetos';
 	
 	public $belongsTo = array(
 		'Projeto' => array(
-			'className' => 'Caritas.Projeto',
+			'className' => 'Projeto',
 			'foreignKey' => 'projeto_id'
 		),
 		'Atendente' => array(
-			'className' => 'Caritas.Atendente',
+			'className' => 'Atendente',
 			'foreignKey' => 'atendente_id'
 		)
 	);

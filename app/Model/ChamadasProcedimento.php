@@ -1,12 +1,12 @@
 <?php
 
-class ChamadasProcedimento extends CaritasAppModel {
+class ChamadasProcedimento extends AppModel {
 
 	public $useTable = 'chamadas_procedimentos';
 	
 	public $belongsTo = array(
 		'Procedimento' => array(
-			'className' => 'Caritas.Procedimento',
+			'className' => 'Procedimento',
 			'foreignKey' => 'procedimento_id'
 		)
 	);

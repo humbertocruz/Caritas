@@ -1,16 +1,16 @@
 <?php
 
-class Projeto extends CaritasAppModel {
+class Projeto extends AppModel {
 
 	public $useTable = 'projetos';
 	
 	public $hasMany = array(
 		'AtendentesProjeto' => array(
-			'className' => 'Caritas.AtendentesProjeto',
+			'className' => 'AtendentesProjeto',
 			'foreignKey' => 'projeto_id'
 		),
 		'Chamada' => array(
-			'className' => 'Caritas.Chamada',
+			'className' => 'Chamada',
 			'foreignKey' => 'projeto_id'
 		)
 	);

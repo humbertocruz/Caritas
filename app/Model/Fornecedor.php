@@ -1,6 +1,6 @@
 <?php
 
-class Fornecedor extends CaritasAppModel {
+class Fornecedor extends AppModel {
 
 	public $useTable = 'fornecedores';
 
@@ -9,7 +9,7 @@ class Fornecedor extends CaritasAppModel {
 			'foreignKey' => 'fornecedor_id'
 		),
 		'FornecedoresEndereco' => array(
-			'className' => 'Caritas.FornecedoresEndereco',
+			'className' => 'FornecedoresEndereco',
 			'foreignKey' => 'fornecedor_id'
 		)
 	);

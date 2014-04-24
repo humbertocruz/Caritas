@@ -1,56 +1,32 @@
-<?php echo $this->Bootstrap->pageHeader('Cidades');
-
-
-$filters = array(
-	array(
-		'label'=>'UF',
-		'type'=>'select',
-		'model'=>'Cidade',
-		'field'=>'estado_id',
-		'options' => $filters['estados']
-	),
-	array(
-		'label'=>'Nome',
-		'type'=>'text',
-		'model'=>'Cidade',
-		'field'=>'nome like',
-		'search' => '%'
-	)
-);
-
-$filters_panel = $this->Caritas->filters($filters, $filters_cidades);
-
-echo $this->Element('Bootstrap.table/table-create',array(
-	'title'=>'Cidade',
-	'state'=>'info',
-	'filter_panel' => $filters_panel
-));?>
 <?php
-if ($escolhido_projeto_id == 0) { ?>
-<tr>
-	<td colspan="8">Escolha o Projeto no menu superior!</td>
-</tr>
-<?php } elseif (count($Cidades) == 0) { ?>
-<tr>
-	<td colspan="8">Nenhuma Cidade encontrada!</td>
-</tr>
-<?php } else { ?>
-<tr class="panel">
-	<th class="col-md-1">&nbsp;</th>
-	<th class="col-md-9"><?php echo $this->Bootstrap->sorter('Cidade.nome','Nome'); ?></th>
-	<th class="col-md-2"><?php echo $this->Bootstrap->sorter('Cidade.estado_id','UF'); ?></th>
-</tr>
-<?php
-foreach ($Cidades as $Cidade) { ?>
-<tr>
-	<td class="col-md-2"><?php echo $this->Bootstrap->basicActions($Cidade['Cidade']['id']);?></td>
-	<td><?php echo $Cidade['Cidade']['nome']; ?></td>
-	<td><?php echo $Cidade['Estado']['nome']; ?></td>
-</tr>
-<?php } } ?>
-</table>
-		</div>
-		<div class="panel-footer">
-		<?php echo $this->Bootstrap->btnLink( 'Adicionar', array('action'=>'add'), 'success'); ?>
-		</div>
-</div>
+	$this->extend('Bootstrap./Common/index'); // Extend index padrao
+	$this->assign('pageHeader','Cidades'); // Header da página
+	$this->assign('panelStyle','primary'); // Estilo do painel da página ( 'default' como padrao )
+?>
+
+<?php $this->start('actions');
+	// Lista de acoes da coluna lateral ( se não houver a coluna nao aparece )
+	echo $this->Bootstrap->actions(null, $indexActions);
+$this->end(); ?>
+
+<?php $this->start('table-tr'); ?>
+	<?php // Cabecalho da tabela para a listagem ?>
+	<tr class="active">
+		<th class="col-md-2">&nbsp;</th>
+		<th><?php echo $this->Paginator->sort('estado_id','UF');?></th>
+		<th><?php echo $this->Paginator->sort('nome','Nome');?></th>
+		<th><?php echo $this->Paginator->sort('prefeito','Prefeito');?></th>
+	</tr>
+<?php $this->end(); ?>
+
+<?php $this->start('table-body'); ?>
+<?php // Corpo da tabela para a listagem ?>
+<?php foreach ($data as $Cidade) { ?>
+	<tr>
+		<td><?php echo $this->Bootstrap->actions($Cidade['Cidade']['id'], $indexButtons); ?></td>
+		<td><?php echo $Cidade['Cidade']['estado_id']; ?></td>
+		<td><?php echo $Cidade['Cidade']['nome']; ?></td>
+		<td><?php echo $Cidade['Cidade']['prefeito']; ?></td>
+	</tr>
+<?php } ?>
+<?php $this->end(); ?>

@@ -1,124 +1,74 @@
 <?php
-class CidadesController extends CaritasAppController {
-
-	public $uses = array('Caritas.Cidade');
-	public $paginate = array(
-		'limit' => 15,
-		'order' => array(
-			'Cidade.nome' => 'ASC'
-		)
-	);
-
-	private function filters() {
-		// Filtros
+class CidadesController extends AppController {
+	
+	public $uses = array('Cidade');
+	
+	public function beforeFilter() {
+		parent::beforeFilter();
 		
-		// Zera
-		//$this->Session->delete('Filtros.Cidades');
+		array_push($this->indexActions, array(
+			'style'=>'info',
+			'text' => 'Filtrar',
+			'action' => 'filter',
+			'title' => 'Filtrar',
+			'icon' => 'pencil'
+		));
+		$this->set('indexActions', $this->indexActions);
 		
-		// Configura sessao
-		if ($this->request->isPost()) {
-			if (isset($this->request->data['filter'])) {
-				unset($this->request->data['filter']);
-				foreach($this->request->data as $key=>$value) {
-					if ($value == '0' or $value == '' or $value == null) {
-						unset ($this->request->data[$key]);
-					}
-					if (strstr(' like', $key)) {
-						$this->request->data[$key] = '%'+$value+'%';
-					}
-				}
-				//pr($this->request->data);
-				$this->Session->write('Filtros.Cidades', $this->request->data );
-			}
-		}
-		// Carrega sessao
-		$filtros = $this->Session->read('Filtros.Cidades');
-		$this->set('filters_cidades', $filtros);
-		
-		// Carrega listas para filtro
-		$estados = array('0'=>'Todos') + $this->Cidade->Estado->find('list', array('fields'=>array('id','nome')));
-		$this->set('filters', array('estados'=>$estados));
+	}
+	
+	public function related($id = 0) {
+		$Estados = $this->Cidade->Estado->find('list',array('fields'=>array('id','nome')));
+		$this->set('Estados',$Estados);
+	}
+	
+	public function filter() {
 		
 	}
 	
 	public function index() {
-		// Configura Filtros
-		$this->filters();
 		
-		// Configura Titulo da Pagina
-		$this->set('title_for_layout','Cidades - Lista');
-
-		// Carrega dados do BD
-		if ($this->Session->check('Filtros.Cidades')) {
-			$filtros = $this->Session->read('Filtros.Cidades');
-		} else {
-			$filtros = array(
-				'Cidade.estado_id' => 'XX'
-			);
-		}
+		$this->set('title_for_layout','Cidades');
+		$this->Cidade->Behaviors->attach('Containable');
+		$this->Cidade->contain();
 		
-		$cidades = $this->Paginate('Cidade',$filtros);
-		$this->set('Cidades',$cidades);
-
+		$Cidades = $this->Paginator->paginate('Cidade');
+		$this->set('data', $Cidades);
+		
 	}
-
+	
 	public function add() {
-		if($this->request->isPost()) {
+		if ($this->request->isPost()){
 			$data = $this->request->data;
-			$this->Cidade->create();
-			if ($this->Cidade->save($data)) {
-				$this->Session->setFlash('Cidade salvo com sucesso!');
-				$this->redirect(array('action'=>'index'));
-			} else {
-				$this->Session->setFlash('Houve um erro ao salvar Cidade');
-			}
-		}
-
-		// Configura Titulo da Pagina
-		$this->set('title_for_layout','Cidades - Adicionar');
-		
-		$Estados = $this->Cidade->Estado->find('list',array('fields'=>array('id','nome')));
-		$this->set('Estados',$Estados);
-
+			$this->Cidade->save($data);
+			$this->Bootstrap->setFlash('Registro salvo com successo!');
+			$this->redirect(array('action'=>'index'));
+		};
+		$this->related();
 		$this->render('form');
 	}
 	
-	public function edit($id = null) {
-		if($this->request->isPost()) {
-			if ($id != null) {
-				$data = $this->request->data;
-				$data['Cidade']['id'] = $id;
-				if ($this->Cidade->save($data)) {
-					$this->Session->setFlash('Cidade salvo com sucesso!');
-					$this->redirect(array('action'=>'index'));
-				} else {
-					$this->Session->setFlash('Houve um erro ao salvar Cidade!');
-				}
-			}
-		}
-		// Configura Titulo da Pagina
-		$this->set('title_for_layout','Cidades - Editar');
-		
-		$Estados = $this->Cidade->Estado->find('list',array('fields'=>array('id','nome')));
-		$this->set('Estados',$Estados);
-		
-		$Cidade = $this->Cidade->read(null, $id);
-		$this->request->data = $Cidade;
-
+	public function edit($cidade_id = null) {
+		if ($this->request->isPost()){
+			$data = $this->request->data;
+			$data['Cidade']['id'] = $cidade_id;
+			$this->Cidade->save($data);
+			$this->Bootstrap->setFlash('Registro salvo com successo!');
+			$this->redirect(array('action'=>'index'));
+		};
+		$this->related($cidade_id);
+		$this->request->data = $this->Cidade->read(null, $cidade_id);
 		$this->render('form');
 	}
 	
-	public function del($id = null) {
-		if($this->request->isPost()) {
-			if ($id != null) {
-				if ($this->Cidade->delete($id)) {
-					$this->Session->setFlash('Cidade excluído com sucesso!');
-					$this->redirect(array('action'=>'index'));
-				} else {
-					$this->Session->setFlash('Houve um erro ao excluir Cidade!');
-				}
-			}
+	public function del( $cidade_id = null ) {
+		if ($this->request->isPost()) {
+			$this->Cidade->delete($cidade_id);
+			$this->Bootstrap->setFlash('Registro excluido com successo!','success');
+			$this->redirect(array('action'=>'index'));
+		} else {
+			$this->Bootstrap->setFlash('Erro na exclusão do Registro!','danger');
 		}
 	}
-
+	
 }
