@@ -51,8 +51,6 @@ class UsuariosController extends AdminAppController {
 	function related() {
 		$Grupos = array('0'=>'Selecione') + $this->Usuario->Grupo->find('list',array('fields'=>array('id','nome')));
 		$this->set('Grupos',$Grupos);
-		$Sites = array('0'=>'Selecione') + $this->Usuario->Site->find('list',array('fields'=>array('id','nome')));
-		$this->set('Sites', $Sites);
 	}
 	
 	public function index() {
@@ -149,8 +147,9 @@ class UsuariosController extends AdminAppController {
 					$this->Session->write('selected_site', $site);	
 				}
 				$this->Bootstrap->setFlash('Usuário autenticado com successo!');
-				$this->redirect(array('plugin'=>'Portal','controller'=>'Status','action'=>'index'));
+				$this->redirect(array('plugin'=>'Admin','controller'=>'Status','action'=>'index'));
 			} else {
+				pr($this->Auth->password($this->request->data['Usuario']['senha']));
 				unset($this->request->data['Usuario']['senha']);
 				$this->Bootstrap->setFlash('Erro na autenticação do Usuário!','danger');
 			}

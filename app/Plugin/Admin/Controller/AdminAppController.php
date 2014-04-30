@@ -5,6 +5,11 @@ App::uses('Controller', 'Controller');
 class AdminAppController extends AppController {
 	
 	public $uses = array('Sites.Menu');
+	public $system =  array(
+		'name'=>'Cáritas',
+		'url' => '/'
+	);
+	public $sys_url = '/caritas';
 	
 	public $listActions = array(
 		array(
@@ -52,6 +57,10 @@ class AdminAppController extends AppController {
 			)
 	);
 	
+	public $components = array(
+		'Admin.MenuAdmin'
+	);
+	
 	public function beforeFilter() {
 
 		// Carregar Layout bootstrap
@@ -63,6 +72,9 @@ class AdminAppController extends AppController {
 		$this->set('listActions', $this->listActions);
 		$this->set('indexActions', $this->indexActions);
 		$this->set('formActions', $this->formActions);
+		
+		// Sistema
+		$this->set('system', $this->system);
 		
 	}
 

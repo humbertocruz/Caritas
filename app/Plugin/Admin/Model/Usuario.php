@@ -8,10 +8,13 @@ class Usuario extends AdminAppModel {
 		'Grupo' => array(
 			'className' => 'Admin.Grupo',
 			'foreignKey' => 'grupo_id'
-		),
-		'Site' => array(
-			'className' => 'Portal.Site',
-			'foreignKey' => 'site_id'
+		)
+	);
+	// relacao com usuario do sistema
+	public $hasOne = array(
+		'Atendente' => array(
+			'className' => 'Atendente',
+			'foreignKey' => 'usuario_id'
 		)
 	);
 	

@@ -15,7 +15,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/portal">Admin</a>
+			<a class="navbar-brand" href="/portal"><?php echo $system['name'];?> Admin</a>
 		</div>
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse">
@@ -38,8 +38,7 @@
 				<?php } ?>
 			</ul>
 			<div class="btn-group navbar-right">
-				<a href="/portal" type="button" class="btn btn-default navbar-btn">Portal</a>
-				<a href="/" type="button" class="btn btn-default navbar-btn">Site</a>
+				<a href="<?php echo $system['url'];?>" type="button" class="btn btn-default navbar-btn"><?php echo $system['name'];?></a>
 				<a href="/logout" type="button" class="btn btn-default navbar-btn">Sair</a>
 			</div>
 		</div>

@@ -100,9 +100,10 @@ class ChamadasController extends AppController {
 		$conditions['Chamada.chamada_id'] = null;
 		
 		// Filtro Constante Projeto
-		$conditions['Chamada.projeto_id'] = $this->escolhido_projeto_id;
-		
+		//$conditions['Chamada.projeto_id'] = $this->escolhido_projeto_id;
+
 		$chamadas = $this->Paginator->paginate('Chamada', $conditions);
+		
 		$this->set('data',$chamadas);
 
 	}

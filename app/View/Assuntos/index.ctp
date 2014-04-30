@@ -3,11 +3,10 @@
 	$this->assign('pageHeader','Assuntos'); // Header da página
 	$this->assign('panelStyle','primary'); // Estilo do painel da página ( 'default' como padrao )
 ?>
+<?php 
+// Lista de acoes da linha superior
+$this->assign('actions', $this->Bootstrap->actions(null, $indexActions)); ?>
 
-<?php $this->start('actions');
-	// Lista de acoes da coluna lateral ( se não houver a coluna nao aparece )
-	echo $this->Bootstrap->actions(null, $indexActions);
-$this->end(); ?>
 
 <?php $this->start('table-tr'); ?>
 	<?php // Cabecalho da tabela para a listagem ?>

@@ -29,7 +29,7 @@
 		<div class="container">
 			<?php
 			if (isset($menus)) {
-				echo $this->Element( 'Admin.navbar-top-admin', array('usuario',$usuario) );
+				echo $this->Element( 'Admin.navbar-top-admin', array('usuario',$usuario,'system'=>$system) );
 			}
 			?>
 			<?php echo $this->Session->flash(); ?>

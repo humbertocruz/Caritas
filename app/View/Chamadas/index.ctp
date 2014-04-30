@@ -1,6 +1,9 @@
 <?php $this->extend('Bootstrap./Common/index'); ?>
 
 <?php echo $this->Html->script('Caritas.chamadas/ajax'); ?>
+<?php 
+// Lista de acoes da linha superior
+$this->assign('actions', $this->Bootstrap->actions(null, $indexActions)); ?>
 
 <?php $this->start('pageHeader'); ?>Chamadas<?php $this->end(); ?>
 

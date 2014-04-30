@@ -41,14 +41,14 @@ class AppController extends Controller {
 	public $components = array(
 		'Auth' => array(
 			'loginAction' => array(
-				'controller' => 'atendentes',
+				'controller' => 'usuarios',
 				'action' => 'login',
 				'plugin' => 'admin'
 			),
 			'authError' => 'Did you really think you are allowed to see that?',
 			'authenticate' => array(
 				'Form' => array(
-					'userModel' => 'Atendente',
+					'userModel' => 'Usuario',
 					'fields' => array('username' => 'email','password'=>'senha')
 				)
 			)
@@ -72,7 +72,7 @@ class AppController extends Controller {
 				'text' => false,
 				'title' => 'Editar',
 				'action' => 'edit',
-				'icon' => 'pencil'
+				'icon' => 'edit'
 			),
 			array(
 				'text' => false,
@@ -80,7 +80,6 @@ class AppController extends Controller {
 				'action' => 'del',
 				'icon' => 'remove',
 				'method' => 'post',
-				'style' => 'danger',
 				'message' => 'Tem Certeza?'
 			)
 		));

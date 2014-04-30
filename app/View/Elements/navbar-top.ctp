@@ -39,7 +39,7 @@
 			</ul>
 			<div class="btn-group navbar-right">
 				<a href="/admin" type="button" class="btn btn-default navbar-btn">Admin</a>
-				<a href="/" type="button" class="btn btn-default navbar-btn">Sistema</a>
+				<a href="logout" type="button" class="btn btn-default navbar-btn">Sair</a>
 			</div>
 		</div>
 	</div>
